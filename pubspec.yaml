@@ -40,13 +40,22 @@ dependencies:
   flutter_bloc: ^8.1.2
   get_it: ^7.2.0
   equatable: ^2.0.5
-  freezed: ^2.3.2
   freezed_annotation: ^2.2.0
   spider: ^4.0.0
+  auto_route: ^5.0.4
+  injectable: ^2.1.0
+  json_annotation: ^4.8.0
+  flutter_svg: ^1.1.6
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  freezed: ^2.3.2
+  json_serializable: ^6.6.1
+  auto_route_generator: ^5.0.3
+  injectable_generator: ^2.1.4
+  build_runner: ^2.3.3
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
