@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:selim/resources/app_constants.dart';
 
-import '../../../../resources/resources.dart';
+import '../widgets/footer_widget.dart';
+import '../widgets/widget_blocks.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,36 +10,27 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.colorWhite,
       body: SafeArea(
         child: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           child: Column(
-            children: [
-              Container(
-                height: 362,
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(Images.first),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 28),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SvgPicture.asset(Svgs.selimG),
-                          SvgPicture.asset(Svgs.menu)
-                        ],
-                      )
-                    ],
-                  ),
-                ),
+            children: const [
+              FirstWidget(),
+              SecondWidget(),
+              ThirdWidget(),
+              FourthWidget(
+                isService: false,
+                title: 'Наши преимущества',
               ),
+              FifthWidget(),
+              SixthWidget(),
+              FourthWidget(
+                isService: true,
+                title: 'Сервис',
+              ),
+              SeventhWidget(),
+              FooterWidget(),
             ],
           ),
         ),
