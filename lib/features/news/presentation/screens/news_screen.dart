@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:selim/features/home/presentation/widgets/footer_widget.dart';
-import 'package:selim/features/home/presentation/widgets/items.dart';
 import 'package:selim/features/news/presentation/widgets/custom_appbar.dart';
 
-class ServicesScreen extends StatelessWidget {
-  const ServicesScreen({super.key});
+import '../../../home/presentation/widgets/footer_widget.dart';
+import '../../../home/presentation/widgets/items.dart';
+
+class NewsScreen extends StatelessWidget {
+  const NewsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +18,9 @@ class ServicesScreen extends StatelessWidget {
             slivers: [
               const SliverToBoxAdapter(
                 child: CustomAppbar(
-                  title: 'НАШИ УСЛУГИ',
+                  title: 'НОВОСТИ КОМПАНИИ',
                   subTitle:
-                      'Наши сотрудники прошли сертифицированные тренинги в Учебных центрах ГК DoorHan в г. Москва, г. Алматы, г. Астаны а так же успешно сдали экзамены и являются обладателями сертификатов по направлениям «Воротные системы, ролл ставни, ролл ворота, автоматические системы», «Монтаж автоматики».',
+                      'К вашему вниманию Здесь мы собрали все актуальные новости нашей компании',
                 ),
               ),
               SliverList(

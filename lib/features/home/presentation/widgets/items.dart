@@ -12,9 +12,11 @@ class SuggestItem extends StatelessWidget {
   const SuggestItem({
     Key? key,
     required this.textOnCenter,
+    required this.noText,
   }) : super(key: key);
 
   final bool textOnCenter;
+  final bool noText;
 
   @override
   Widget build(BuildContext context) {
@@ -27,36 +29,38 @@ class SuggestItem extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: textOnCenter
-          ? const Padding(
-              padding: EdgeInsets.only(left: 20),
-              child: Center(
-                child: Text(
-                  'РАСШИРЕНИЕ ДИЗАЙНА ВОРОТ СТАДНАРТНОЙ СЕРИИ RSD01SC BIW',
-                  style: AppConstants.textWhiteS10W800,
-                  softWrap: true,
-                ),
-              ),
-            )
-          : Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 6, left: 6),
-                child: Container(
-                  height: 32,
-                  width: context.width / 3,
-                  decoration: BoxDecoration(
-                    color: AppColors.colorBlack02,
-                    borderRadius: BorderRadius.circular(12),
+      child: noText
+          ? const SizedBox.shrink()
+          : textOnCenter
+              ? const Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Center(
+                    child: Text(
+                      'РАСШИРЕНИЕ ДИЗАЙНА ВОРОТ СТАДНАРТНОЙ СЕРИИ RSD01SC BIW',
+                      style: AppConstants.textWhiteS10W800,
+                      softWrap: true,
+                    ),
                   ),
-                  child: const Center(
-                      child: Text(
-                    'Автоматика',
-                    style: AppConstants.textWhiteS16W800,
-                  )),
+                )
+              : Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 6, left: 6),
+                    child: Container(
+                      height: 32,
+                      width: context.width / 3,
+                      decoration: BoxDecoration(
+                        color: AppColors.colorBlack02,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Center(
+                          child: Text(
+                        'Автоматика',
+                        style: AppConstants.textWhiteS16W800,
+                      )),
+                    ),
+                  ),
                 ),
-              ),
-            ),
     );
   }
 }

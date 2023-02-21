@@ -178,6 +178,7 @@ class _ThirdWidgetState extends State<ThirdWidget> {
               itemBuilder: (context, index) => const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 child: SuggestItem(
+                  noText: false,
                   textOnCenter: false,
                 ),
               ),
@@ -312,7 +313,10 @@ class FifthWidget extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => SizedBox(
                 width: context.width / 1.9,
-                child: const SuggestItem(textOnCenter: true),
+                child: const SuggestItem(
+                  textOnCenter: true,
+                  noText: false,
+                ),
               ),
               separatorBuilder: (context, index) => const SizedBox(
                 width: 20,
