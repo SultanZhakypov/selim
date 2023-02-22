@@ -5,8 +5,8 @@ import 'package:selim/resources/app_constants.dart';
 
 import '../../../home/presentation/widgets/items.dart';
 
-class KarServiceScreen extends StatelessWidget {
-  const KarServiceScreen({super.key});
+class DetailServiceScreen extends StatelessWidget {
+  const DetailServiceScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

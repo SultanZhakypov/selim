@@ -10,9 +10,13 @@ class CustomAppbar extends StatelessWidget {
     Key? key,
     required this.title,
     required this.subTitle,
+    this.padding = 10,
+    this.textAlign = true,
   }) : super(key: key);
   final String title;
   final String subTitle;
+  final double padding;
+  final bool textAlign;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,7 @@ class CustomAppbar extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: EdgeInsets.symmetric(vertical: padding),
             child: Text(
               title,
               style: AppConstants.textBlackS16W700,
@@ -37,7 +41,7 @@ class CustomAppbar extends StatelessWidget {
           Text(
             subTitle,
             style: AppConstants.textBlackS14W300,
-            textAlign: TextAlign.center,
+            textAlign: textAlign ? TextAlign.center : null,
           ),
         ],
       ),

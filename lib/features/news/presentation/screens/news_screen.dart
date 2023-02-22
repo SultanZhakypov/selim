@@ -29,7 +29,7 @@ class NewsScreen extends StatelessWidget {
                   (context, index) => const Padding(
                     padding: EdgeInsets.only(bottom: 20),
                     child: SuggestItem(
-                      textOnCenter: false,
+                      textOnCenter: true,
                       noText: false,
                     ),
                   ),

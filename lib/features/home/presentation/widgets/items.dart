@@ -22,6 +22,7 @@ class SuggestItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: context.height / 4.5,
+      width: context.width / 1.3,
       decoration: BoxDecoration(
         image: const DecorationImage(
           image: AssetImage(Images.justImage),

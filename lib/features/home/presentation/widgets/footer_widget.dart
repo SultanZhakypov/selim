@@ -100,8 +100,14 @@ class FooterWidget extends StatelessWidget {
                   ),
                   Container(
                     height: context.height / 8,
-                    width: context.height / 8,
-                    color: AppColors.colorBlue,
+                    width: context.height / 6,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: const DecorationImage(
+                        image: AssetImage(Images.gis),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ],
               ),
