@@ -3,12 +3,37 @@ import 'package:flutter_svg/svg.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 
-import '../../../../resources/resources.dart';
-import '../../../widgets/custom_textfield.dart';
-import 'buttons.dart';
+import '../../resources/resources.dart';
+import 'custom_textfield.dart';
+import '../home/presentation/widgets/buttons.dart';
+import 'launch_url.dart';
 
-class FooterWidget extends StatelessWidget {
+class FooterWidget extends StatefulWidget {
   const FooterWidget({super.key});
+
+  @override
+  State<FooterWidget> createState() => _FooterWidgetState();
+}
+
+class _FooterWidgetState extends State<FooterWidget> {
+  late TextEditingController _controller;
+  late TextEditingController _controller2;
+  late TextEditingController _controller3;
+  @override
+  void initState() {
+    _controller = TextEditingController();
+    _controller2 = TextEditingController();
+    _controller3 = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _controller2.dispose();
+    _controller3.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +52,8 @@ class FooterWidget extends StatelessWidget {
           SizedBox(
             height: context.height / 15,
             width: context.width,
-            child: const CustomTextField(
+            child: CustomTextField(
+              controller: _controller,
               title: 'имя',
             ),
           ),
@@ -36,7 +62,8 @@ class FooterWidget extends StatelessWidget {
             child: SizedBox(
               height: context.height / 15,
               width: context.width,
-              child: const CustomTextField(
+              child: CustomTextField(
+                controller: _controller2,
                 title: 'телефон',
               ),
             ),
@@ -44,7 +71,8 @@ class FooterWidget extends StatelessWidget {
           SizedBox(
             height: context.height / 5,
             width: context.width,
-            child: const CustomTextField(
+            child: CustomTextField(
+              controller: _controller3,
               title: 'сообщение',
               maxLines: 10,
             ),
@@ -53,7 +81,8 @@ class FooterWidget extends StatelessWidget {
           SizedBox(
             height: context.height / 15,
             width: context.width / 1.5,
-            child: const AppButton(
+            child: AppButton(
+              onPress: () {},
               isVisibleIcon: false,
               title: 'оставить заявку',
             ),
@@ -98,14 +127,17 @@ class FooterWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Container(
-                    height: context.height / 8,
-                    width: context.height / 6,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: const DecorationImage(
-                        image: AssetImage(Images.gis),
-                        fit: BoxFit.cover,
+                  InkWell(
+                    onTap: () async => LaunchURLS.open2gis(context),
+                    child: Container(
+                      height: context.height / 8,
+                      width: context.height / 6,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: const DecorationImage(
+                          image: AssetImage(Images.gis),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
@@ -128,9 +160,14 @@ class FooterWidget extends StatelessWidget {
                       const SizedBox(height: 5),
                       Row(
                         children: [
-                          SvgPicture.asset(Svgs.instagram),
+                          InkWell(
+                              onTap: () async => LaunchURLS.openInsta(context),
+                              child: SvgPicture.asset(Svgs.instagram)),
                           const SizedBox(width: 5),
-                          SvgPicture.asset(Svgs.whatsapp),
+                          InkWell(
+                              onTap: () async =>
+                                  LaunchURLS.openWhatsapp(context),
+                              child: SvgPicture.asset(Svgs.whatsapp)),
                         ],
                       ),
                     ],

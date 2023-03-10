@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:selim/core/routes/routes.dart';
 import 'package:selim/features/widgets/app_unfocuser.dart';
-import 'package:selim/features/news/presentation/screens/services_screen.dart.dart';
 
 void main() => runApp(const MyApp());
 
-final drawerKey = GlobalKey<ScaffoldState>();
+final appRouter = AppRouter();
+final globalKey = GlobalKey<ScaffoldMessengerState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const AppUnfocuser(
-      child: MaterialApp(
+    return AppUnfocuser(
+      child: MaterialApp.router(
+        scaffoldMessengerKey: globalKey,
+        routeInformationParser: appRouter.defaultRouteParser(),
+        routerDelegate: appRouter.delegate(),
         debugShowCheckedModeBanner: false,
-        title: 'Selim',
-        home: ServicesScreen(),
       ),
     );
   }

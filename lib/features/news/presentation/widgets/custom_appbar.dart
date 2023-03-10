@@ -5,18 +5,20 @@ import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 import 'package:selim/resources/resources.dart';
 
-class CustomAppbar extends StatelessWidget {
-  const CustomAppbar({
+class Appbar1 extends StatelessWidget {
+  const Appbar1({
     Key? key,
     required this.title,
     required this.subTitle,
     this.padding = 10,
     this.textAlign = true,
+    required this.drawerkey,
   }) : super(key: key);
   final String title;
   final String subTitle;
   final double padding;
   final bool textAlign;
+  final GlobalKey<ScaffoldState> drawerkey;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,9 @@ class CustomAppbar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SvgPicture.asset(Svgs.selimBlacck),
-              SvgPicture.asset(Svgs.menuBlack),
+              InkWell(
+                  onTap: () => drawerkey.currentState!.openEndDrawer(),
+                  child: SvgPicture.asset(Svgs.menuBlack)),
             ],
           ),
           Padding(
@@ -49,10 +53,13 @@ class CustomAppbar extends StatelessWidget {
   }
 }
 
-class KarAppBar extends StatelessWidget {
-  const KarAppBar({
+class AppBar2 extends StatelessWidget {
+  const AppBar2({
     Key? key,
+    required this.drawerkey,
   }) : super(key: key);
+
+  final GlobalKey<ScaffoldState> drawerkey;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +83,9 @@ class KarAppBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SvgPicture.asset(Svgs.selimG),
-                SvgPicture.asset(Svgs.menu),
+                InkWell(
+                    onTap: () => drawerkey.currentState!.openEndDrawer(),
+                    child: SvgPicture.asset(Svgs.menu)),
               ],
             ),
             const SizedBox(height: 18),

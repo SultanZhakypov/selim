@@ -1,23 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:selim/features/news/presentation/widgets/custom_appbar.dart';
 
-import '../../../home/presentation/widgets/footer_widget.dart';
-import '../../../home/presentation/widgets/items.dart';
+import '../../../widgets/footer_widget.dart';
+import '../../../widgets/items.dart';
+import '../../../widgets/app_drawer.dart';
 
-class NewsScreen extends StatelessWidget {
+class NewsScreen extends StatefulWidget {
   const NewsScreen({super.key});
 
   @override
+  State<NewsScreen> createState() => _NewsScreenState();
+}
+
+class _NewsScreenState extends State<NewsScreen> {
+  final drawerKey = GlobalKey<ScaffoldState>();
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: drawerKey,
+      endDrawer: const AppDrawer(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: CustomScrollView(
             physics: const ClampingScrollPhysics(),
             slivers: [
-              const SliverToBoxAdapter(
-                child: CustomAppbar(
+              SliverToBoxAdapter(
+                child: Appbar1(
+                  drawerkey: drawerKey,
                   title: 'НОВОСТИ КОМПАНИИ',
                   subTitle:
                       'К вашему вниманию Здесь мы собрали все актуальные новости нашей компании',
@@ -28,7 +38,7 @@ class NewsScreen extends StatelessWidget {
                   childCount: 5,
                   (context, index) => const Padding(
                     padding: EdgeInsets.only(bottom: 20),
-                    child: SuggestItem(
+                    child: SuggestCard(
                       textOnCenter: true,
                       noText: false,
                     ),

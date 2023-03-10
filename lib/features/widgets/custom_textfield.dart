@@ -7,16 +7,19 @@ class CustomTextField extends StatelessWidget {
     Key? key,
     required this.title,
     this.maxLines = 1,
+    required this.controller,
   }) : super(key: key);
   final String title;
   final int maxLines;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       maxLines: maxLines,
       validator: (value) =>
-          value!.isEmpty ? 'LocaleKeys.zapolnite_pole.tr()' : null,
+          value!.isEmpty ? 'Заполните поле' : null,
       cursorColor: AppColors.colorBlack,
       textInputAction: TextInputAction.next,
       style: AppConstants.textBlackS14W500,

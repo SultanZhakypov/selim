@@ -35,14 +35,16 @@ class AppButton extends StatelessWidget {
     Key? key,
     required this.title,
     required this.isVisibleIcon,
+    required this.onPress,
   }) : super(key: key);
   final String title;
   final bool isVisibleIcon;
+  final Function() onPress;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPress,
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.colorLightBlue,
         shape: RoundedRectangleBorder(

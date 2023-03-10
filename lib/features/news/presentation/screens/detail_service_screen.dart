@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:selim/features/home/presentation/widgets/footer_widget.dart';
+import 'package:selim/features/widgets/footer_widget.dart';
 import 'package:selim/features/news/presentation/widgets/custom_appbar.dart';
 import 'package:selim/resources/app_constants.dart';
 
-import '../../../home/presentation/widgets/items.dart';
+import '../../../widgets/items.dart';
+import '../../../widgets/app_drawer.dart';
 
-class DetailServiceScreen extends StatelessWidget {
+class DetailServiceScreen extends StatefulWidget {
   const DetailServiceScreen({super.key});
 
   @override
+  State<DetailServiceScreen> createState() => _DetailServiceScreenState();
+}
+
+class _DetailServiceScreenState extends State<DetailServiceScreen> {
+  final drawerKey = GlobalKey<ScaffoldState>();
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: drawerKey,
+      endDrawer: const AppDrawer(),
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            const SliverToBoxAdapter(
-              child: KarAppBar(),
+            SliverToBoxAdapter(
+              child: AppBar2(
+                drawerkey: drawerKey,
+              ),
             ),
             const SliverPadding(
               padding:
@@ -44,7 +55,10 @@ class DetailServiceScreen extends StatelessWidget {
                   childCount: 5,
                   (context, index) => const Padding(
                     padding: EdgeInsets.only(bottom: 30),
-                    child: SuggestItem(textOnCenter: false,noText: false,),
+                    child: SuggestCard(
+                      textOnCenter: false,
+                      noText: false,
+                    ),
                   ),
                 ),
               ),

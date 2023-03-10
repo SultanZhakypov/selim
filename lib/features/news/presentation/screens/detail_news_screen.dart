@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:selim/features/news/presentation/widgets/custom_appbar.dart';
+import 'package:selim/features/widgets/app_drawer.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 import 'package:selim/resources/resources.dart';
 
-import '../../../home/presentation/widgets/footer_widget.dart';
-import '../../../home/presentation/widgets/items.dart';
+import '../../../widgets/footer_widget.dart';
+import '../../../widgets/items.dart';
 
-class DetailNewsScreen extends StatelessWidget {
+class DetailNewsScreen extends StatefulWidget {
   const DetailNewsScreen({super.key});
 
   @override
+  State<DetailNewsScreen> createState() => _DetailNewsScreenState();
+}
+
+class _DetailNewsScreenState extends State<DetailNewsScreen> {
+  final drawerKey = GlobalKey<ScaffoldState>();
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: drawerKey,
+      endDrawer: const AppDrawer(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -20,7 +29,8 @@ class DetailNewsScreen extends StatelessWidget {
             physics: const ClampingScrollPhysics(),
             slivers: [
               SliverToBoxAdapter(
-                child: CustomAppbar(
+                child: Appbar1(
+                  drawerkey: drawerKey,
                   textAlign: false,
                   padding: 32,
                   title:
@@ -54,7 +64,7 @@ class DetailNewsScreen extends StatelessWidget {
                   height: context.height / 4.3,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => const SuggestItem(
+                    itemBuilder: (context, index) => const SuggestCard(
                       textOnCenter: true,
                       noText: false,
                     ),

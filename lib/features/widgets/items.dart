@@ -1,15 +1,12 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
+import '../../resources/resources.dart';
 
-import '../../../../resources/resources.dart';
-
-class SuggestItem extends StatelessWidget {
-  const SuggestItem({
+class SuggestCard extends StatelessWidget {
+  const SuggestCard({
     Key? key,
     required this.textOnCenter,
     required this.noText,
@@ -66,16 +63,16 @@ class SuggestItem extends StatelessWidget {
   }
 }
 
-class WorkItem extends StatefulWidget {
-  const WorkItem({
+class WorkCard extends StatefulWidget {
+  const WorkCard({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<WorkItem> createState() => _WorkItemState();
+  State<WorkCard> createState() => _WorkCardState();
 }
 
-class _WorkItemState extends State<WorkItem> {
+class _WorkCardState extends State<WorkCard> {
   PageController? pageController;
 
   double viewportFraction = 0.8;
@@ -133,8 +130,8 @@ class _WorkItemState extends State<WorkItem> {
   }
 }
 
-class AdvantageItem extends StatelessWidget {
-  const AdvantageItem({
+class AdvantageCard extends StatelessWidget {
+  const AdvantageCard({
     Key? key,
     required this.svg,
     required this.title,
@@ -167,8 +164,8 @@ class AdvantageItem extends StatelessWidget {
   }
 }
 
-class ClientItem extends StatelessWidget {
-  const ClientItem({
+class ClientCard extends StatelessWidget {
+  const ClientCard({
     Key? key,
   }) : super(key: key);
 
@@ -185,7 +182,7 @@ class ClientItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               boxShadow: const [
                 BoxShadow(
-                    color: Color.fromARGB(95, 151, 149, 149), blurRadius: 0.5),
+                    color: Color.fromARGB(95, 151, 149, 149), blurRadius: 0.5)
               ]),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),

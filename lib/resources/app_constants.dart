@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AppConstants {
   static const textWhiteS25W700 = TextStyle(
@@ -19,6 +19,8 @@ class AppConstants {
       color: AppColors.colorBlack, fontFamily: 'Montserrat600', fontSize: 14);
   static const textBlackS16W700 = TextStyle(
       color: AppColors.colorBlack, fontFamily: 'Montserrat700', fontSize: 16);
+  static const textBlackS20W700 = TextStyle(
+      color: AppColors.colorBlack, fontFamily: 'Montserrat700', fontSize: 20);
   static const textBlackS14W300 = TextStyle(
       color: AppColors.colorBlack, fontFamily: 'Montserrat300', fontSize: 14);
   static const textBlackS14W500 = TextStyle(
@@ -43,5 +45,4 @@ class AppColors {
   static const footerColor = Color(0xff5061FF);
   static const colorBlack02 = Color.fromRGBO(0, 0, 0, 0.2);
   static const colorTransparent = Color.fromRGBO(65, 65, 65, 0.15);
-  
 }

@@ -12,10 +12,9 @@ class AppUnfocuser extends StatelessWidget {
       behavior: HitTestBehavior.translucent,
       child: child,
       onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus &&
-            currentFocus.focusedChild != null) {
-          currentFocus.focusedChild!.unfocus();
+        final FocusScopeNode currentScope = FocusScope.of(context);
+        if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+          FocusManager.instance.primaryFocus?.unfocus();
         }
       },
     );

@@ -47,22 +47,22 @@ dependencies:
   json_annotation: ^4.8.0
   flutter_svg: ^1.1.6
   cached_network_image: ^3.2.3
+  url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^2.3.2
+  flutter_native_splash: ^2.2.19
   json_serializable: ^6.6.1
   auto_route_generator: ^5.0.3
   injectable_generator: ^2.1.4
   build_runner: ^2.3.3
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+flutter_native_splash:
+ image: assets/images/splash.png
+ color: "#ffffff"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

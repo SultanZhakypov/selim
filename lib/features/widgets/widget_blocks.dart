@@ -1,18 +1,22 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:selim/core/routes/routes.dart';
 
 import 'package:selim/features/home/presentation/widgets/buttons.dart';
 import 'package:selim/features/home/presentation/widgets/constants.dart';
-import 'package:selim/features/home/presentation/widgets/items.dart';
+import 'package:selim/features/widgets/items.dart';
 import 'package:selim/resources/extensions.dart';
 import 'package:selim/resources/resources.dart';
 
-import '../../../../resources/app_constants.dart';
+import '../../resources/app_constants.dart';
 
 class FirstWidget extends StatelessWidget {
   const FirstWidget({
     Key? key,
+    required this.drawerKey,
   }) : super(key: key);
+  final GlobalKey<ScaffoldState> drawerKey;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,9 @@ class FirstWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SvgPicture.asset(Svgs.selimG),
-                SvgPicture.asset(Svgs.menu)
+                InkWell(
+                    onTap: () => drawerKey.currentState!.openEndDrawer(),
+                    child: SvgPicture.asset(Svgs.menu))
               ],
             ),
             SizedBox(
@@ -54,10 +60,13 @@ class FirstWidget extends StatelessWidget {
             const SizedBox(height: 25),
             SizedBox(
               width: context.width / 1.8,
-              child: const AppButton(
-                title: 'заказать ворота',
-                isVisibleIcon: true,
-              ),
+              child: Builder(builder: (context) {
+                return AppButton(
+                  onPress: () {},
+                  title: 'заказать ворота',
+                  isVisibleIcon: true,
+                );
+              }),
             ),
           ],
         ),
@@ -175,9 +184,8 @@ class _ThirdWidgetState extends State<ThirdWidget> {
             child: PageView.builder(
               controller: pageController,
               itemCount: 5,
-              itemBuilder: (context, index) => const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40),
-                child: SuggestItem(
+              itemBuilder: (context, index) => const Center(
+                child: SuggestCard(
                   noText: false,
                   textOnCenter: false,
                 ),
@@ -210,9 +218,13 @@ class _ThirdWidgetState extends State<ThirdWidget> {
                       ),
                     ),
                   ),
-                  child: const Text(
-                    'смотреть все',
-                    style: AppConstants.textWhiteInterS12W400,
+                  child: InkWell(
+                    onTap: () =>
+                        context.router.push(const ServicesScreenRoute()),
+                    child: const Text(
+                      'смотреть все',
+                      style: AppConstants.textWhiteInterS12W400,
+                    ),
                   ),
                 ),
                 AppArrowButton(
@@ -264,7 +276,7 @@ class FourthWidget extends StatelessWidget {
             child: ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => AdvantageItem(
+              itemBuilder: (context, index) => AdvantageCard(
                 svg: isService
                     ? AppText.svgsServices[index]
                     : AppText.svgs[index],
@@ -313,7 +325,7 @@ class FifthWidget extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => SizedBox(
                 width: context.width / 1.9,
-                child: const SuggestItem(
+                child: const SuggestCard(
                   textOnCenter: true,
                   noText: false,
                 ),
@@ -339,9 +351,12 @@ class FifthWidget extends StatelessWidget {
                 ),
               ),
             ),
-            child: const Text(
-              'все новости',
-              style: AppConstants.textWhiteInterS12W400,
+            child: InkWell(
+              onTap: () => context.router.push(const NewsScreenRoute()),
+              child: const Text(
+                'все новости',
+                style: AppConstants.textWhiteInterS12W400,
+              ),
             ),
           ),
           const SizedBox(height: 32),
@@ -375,7 +390,7 @@ class SixthWidget extends StatelessWidget {
           ),
           SizedBox(height: 15),
           Expanded(
-            child: WorkItem(),
+            child: WorkCard(),
           ),
         ],
       ),
@@ -383,38 +398,66 @@ class SixthWidget extends StatelessWidget {
   }
 }
 
-class SeventhWidget extends StatelessWidget {
+class SeventhWidget extends StatefulWidget {
   const SeventhWidget({super.key});
 
   @override
+  State<SeventhWidget> createState() => _SeventhWidgetState();
+}
+
+class _SeventhWidgetState extends State<SeventhWidget> {
+  late PageController pageController;
+
+  @override
+  void initState() {
+    pageController = PageController();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Center(
-          child: Text(
-            'Отзывы наших клиентов',
-            style: AppConstants.textBlackS16W700,
+    return SizedBox(
+      height: context.height / 3,
+      child: Column(
+        children: [
+          const Center(
+            child: Text(
+              'Отзывы наших клиентов',
+              style: AppConstants.textBlackS16W700,
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        const ClientItem(),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              AppArrowButton(
-                onPress: () {},
-                icon: Icons.arrow_back_ios,
-              ),
-              AppArrowButton(
-                onPress: () {},
-                icon: Icons.arrow_forward_ios,
-              ),
-            ],
+          const SizedBox(height: 20),
+          Expanded(
+            child: PageView.builder(
+              controller: pageController,
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                return const Center(child: ClientCard());
+              },
+            ),
           ),
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                AppArrowButton(
+                  onPress: () => pageController.previousPage(
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.ease,
+                  ),
+                  icon: Icons.arrow_back_ios,
+                ),
+                AppArrowButton(
+                  onPress: () => pageController.nextPage(
+                      duration: const Duration(seconds: 1), curve: Curves.ease),
+                  icon: Icons.arrow_forward_ios,
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -23,4 +23,5 @@ class Svgs {
   static const String time = 'assets/svgs/time.svg';
   static const String whatsapp = 'assets/svgs/whatsapp.svg';
   static const String zakazatVorota = 'assets/svgs/zakazat_vorota.svg';
+  static const String success = 'assets/svgs/success.svg';
 }

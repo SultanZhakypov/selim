@@ -1,25 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:selim/features/home/presentation/widgets/footer_widget.dart';
+import 'package:selim/features/widgets/footer_widget.dart';
 import 'package:selim/features/news/presentation/widgets/custom_appbar.dart';
 import 'package:selim/resources/extensions.dart';
 
 import '../../../../resources/app_constants.dart';
+import '../../../widgets/app_drawer.dart';
 
-class ServicesScreen extends StatelessWidget {
+class ServicesScreen extends StatefulWidget {
   const ServicesScreen({
     super.key,
   });
 
   @override
+  State<ServicesScreen> createState() => _ServicesScreenState();
+}
+
+class _ServicesScreenState extends State<ServicesScreen> {
+  final drawerKey = GlobalKey<ScaffoldState>();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: drawerKey,
+      endDrawer: const AppDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              const CustomAppbar(
+              Appbar1(
+                  drawerkey: drawerKey,
                   textAlign: false,
                   title: 'НАШИ РАБОТЫ',
                   subTitle:
@@ -73,7 +84,7 @@ class LocationListItem extends StatelessWidget {
   Widget _buildParallaxBackground(BuildContext context) {
     return Flow(
       delegate: ParallaxFlowDelegate(
-        scrollable: Scrollable.of(context)!,
+        scrollable: Scrollable.of(context),
         listItemContext: context,
         backgroundImageKey: _backgroundImageKey,
       ),
@@ -195,13 +206,13 @@ class Parallax extends SingleChildRenderObjectWidget {
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    return RenderParallax(scrollable: Scrollable.of(context)!);
+    return RenderParallax(scrollable: Scrollable.of(context));
   }
 
   @override
   void updateRenderObject(
       BuildContext context, covariant RenderParallax renderObject) {
-    renderObject.scrollable = Scrollable.of(context)!;
+    renderObject.scrollable = Scrollable.of(context);
   }
 }
 
