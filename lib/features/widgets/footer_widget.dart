@@ -38,7 +38,7 @@ class _FooterWidgetState extends State<FooterWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
+      padding: const EdgeInsets.only(top: 15),
       child: Column(
         children: [
           const SizedBox(height: 32),
@@ -49,16 +49,19 @@ class _FooterWidgetState extends State<FooterWidget> {
             ),
           ),
           const SizedBox(height: 25),
-          SizedBox(
-            height: context.height / 15,
-            width: context.width,
-            child: CustomTextField(
-              controller: _controller,
-              title: 'имя',
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SizedBox(
+              height: context.height / 15,
+              width: context.width,
+              child: CustomTextField(
+                controller: _controller,
+                title: 'имя',
+              ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
+            padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
             child: SizedBox(
               height: context.height / 15,
               width: context.width,
@@ -68,13 +71,16 @@ class _FooterWidgetState extends State<FooterWidget> {
               ),
             ),
           ),
-          SizedBox(
-            height: context.height / 5,
-            width: context.width,
-            child: CustomTextField(
-              controller: _controller3,
-              title: 'сообщение',
-              maxLines: 10,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SizedBox(
+              height: context.height / 5,
+              width: context.width,
+              child: CustomTextField(
+                controller: _controller3,
+                title: 'сообщение',
+                maxLines: 10,
+              ),
             ),
           ),
           const SizedBox(height: 15),
@@ -87,149 +93,160 @@ class _FooterWidgetState extends State<FooterWidget> {
               title: 'оставить заявку',
             ),
           ),
-          SizedBox(height: context.height / 13),
-          Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          SizedBox(height: context.height * 0.15),
+          DecoratedBox(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(Images.footerimage),
+                fit: BoxFit.fill,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+              child: Column(
                 children: [
-                  SvgPicture.asset(Svgs.selimBluee),
-                  Column(
-                    children: const [
-                      Text(
-                        'РЕЖИМ РАБОТЫ',
-                        style: AppConstants.textBlackS12W500,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SvgPicture.asset(Svgs.selimBluee),
+                      Column(
+                        children: const [
+                          Text(
+                            'РЕЖИМ РАБОТЫ',
+                            style: AppConstants.textBlackS12W500,
+                          ),
+                          Text(
+                            'Пн-Пт 8:30–18:30',
+                            style: AppConstants.textBlackS12W500,
+                          ),
+                          Text(
+                            'Суббота 8:30–14:00',
+                            style: AppConstants.textBlackS12W500,
+                          ),
+                          Text(
+                            'TЕЛЕФОН',
+                            style: AppConstants.textBlackS12W500,
+                          ),
+                          Text(
+                            '+996 (552) 57 07 55',
+                            style: AppConstants.textBlackS12W500,
+                          ),
+                          Text(
+                            '+996 (500) 88 80 51',
+                            style: AppConstants.textBlackS12W500,
+                          ),
+                          Text(
+                            '+996 (772) 32 76 76',
+                            style: AppConstants.textBlackS12W500,
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Пн-Пт 8:30–18:30',
-                        style: AppConstants.textBlackS12W500,
-                      ),
-                      Text(
-                        'Суббота 8:30–14:00',
-                        style: AppConstants.textBlackS12W500,
-                      ),
-                      Text(
-                        'TЕЛЕФОН',
-                        style: AppConstants.textBlackS12W500,
-                      ),
-                      Text(
-                        '+996 (552) 57 07 55',
-                        style: AppConstants.textBlackS12W500,
-                      ),
-                      Text(
-                        '+996 (500) 88 80 51',
-                        style: AppConstants.textBlackS12W500,
-                      ),
-                      Text(
-                        '+996 (772) 32 76 76',
-                        style: AppConstants.textBlackS12W500,
+                      InkWell(
+                        onTap: () async => LaunchURLS.open2gis(context),
+                        child: Container(
+                          height: context.height * 0.15,
+                          width: context.height / 6,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(Images.map),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                  InkWell(
-                    onTap: () async => LaunchURLS.open2gis(context),
-                    child: Container(
-                      height: context.height / 8,
-                      width: context.height / 6,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: const DecorationImage(
-                          image: AssetImage(Images.gis),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 15),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
+                  const SizedBox(height: 15),
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      InkWell(
-                        onTap: () {},
-                        child: const Text(
-                          'Социальные \nсети',
-                          style: AppConstants.textBlackS12W500,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InkWell(
-                              onTap: () async => LaunchURLS.openInsta(context),
-                              child: SvgPicture.asset(Svgs.instagram)),
-                          const SizedBox(width: 5),
+                            onTap: () {},
+                            child: const Text(
+                              'Социальные \nсети',
+                              style: AppConstants.textBlackS12W500,
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            children: [
+                              InkWell(
+                                  onTap: () async =>
+                                      LaunchURLS.openInsta(context),
+                                  child: SvgPicture.asset(Svgs.instagram)),
+                              const SizedBox(width: 5),
+                              InkWell(
+                                  onTap: () async =>
+                                      LaunchURLS.openWhatsapp(context),
+                                  child: SvgPicture.asset(Svgs.whatsapp)),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 32),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: () {},
+                              child: const Text(
+                                'Главная',
+                                style: AppConstants.textBlackS12W500,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: const Text(
+                                'О нас',
+                                style: AppConstants.textBlackS12W500,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: const Text(
+                                'Услуги',
+                                style: AppConstants.textBlackS12W500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                           InkWell(
-                              onTap: () async =>
-                                  LaunchURLS.openWhatsapp(context),
-                              child: SvgPicture.asset(Svgs.whatsapp)),
+                            onTap: () {},
+                            child: const Text(
+                              'Работы',
+                              style: AppConstants.textBlackS12W500,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: const Text(
+                              'Отзывы',
+                              style: AppConstants.textBlackS12W500,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: const Text(
+                              'Новости',
+                              style: AppConstants.textBlackS12W500,
+                            ),
+                          ),
                         ],
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          onTap: () {},
-                          child: const Text(
-                            'Главная',
-                            style: AppConstants.textBlackS12W500,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: const Text(
-                            'О нас',
-                            style: AppConstants.textBlackS12W500,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          child: const Text(
-                            'Услуги',
-                            style: AppConstants.textBlackS12W500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: const Text(
-                          'Работы',
-                          style: AppConstants.textBlackS12W500,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: const Text(
-                          'Отзывы',
-                          style: AppConstants.textBlackS12W500,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: const Text(
-                          'Новости',
-                          style: AppConstants.textBlackS12W500,
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
-            ],
+            ),
           ),
         ],
       ),

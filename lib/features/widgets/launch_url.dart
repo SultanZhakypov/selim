@@ -42,7 +42,7 @@ class LaunchURLS {
   static Future openInsta(BuildContext context) async {
     return await launchURLS(
       context,
-      url: "instagram://user?username=megalab.kg",
+      url: "instagram://user?username=selimtrade",
       showMessageIOS: 'Инстаграм не установлен',
       urlForMarket: 'market://details?id=com.instagram.android',
     );
@@ -51,7 +51,7 @@ class LaunchURLS {
   static Future open2gis(BuildContext context) async {
     return await launchURLS(
       context,
-      url: "dgis://2gis.kg/bishkek/geo/70000001019867493",
+      url: "dgis://2gis.kg/bishkek/geo/70000001033618938",
       showMessageIOS: '2GIS не установлен',
       urlForMarket: 'market://details?id=ru.dublgis.dgismobile',
     );

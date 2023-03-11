@@ -17,9 +17,7 @@ class SuggestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: context.height / 4.5,
-      width: context.width / 1.3,
+    return DecoratedBox(
       decoration: BoxDecoration(
         image: const DecorationImage(
           image: AssetImage(Images.justImage),
@@ -144,9 +142,11 @@ class AdvantageCard extends StatelessWidget {
     return Container(
       width: context.width / 1.6,
       decoration: BoxDecoration(
-        color: AppColors.colorWhite,
-        borderRadius: BorderRadius.circular(10),
-      ),
+          color: AppColors.colorWhite,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(color: Color.fromARGB(95, 151, 149, 149), blurRadius: 0.5)
+          ]),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -175,7 +175,6 @@ class ClientCard extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.only(top: 10),
-          height: context.height / 5.5,
           width: context.width / 1.5,
           decoration: BoxDecoration(
               color: AppColors.colorWhite,
@@ -209,10 +208,12 @@ class ClientCard extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 14),
-                Text(
-                  'Ворота стоят уже более двух лет. За это время с ними не было никаких проблем. Спасибо, Selim Trade!',
-                  style: AppConstants.textBlackS12W500.copyWith(height: 1.5),
-                  softWrap: true,
+                Expanded(
+                  child: Text(
+                    'Ворота стоят уже более двух лет. За это время с ними не было никаких проблем. Спасибо, Selim Trade!',
+                    style: AppConstants.textBlackS12W500.copyWith(height: 1.5),
+                    overflow: TextOverflow.visible,
+                  ),
                 )
               ],
             ),

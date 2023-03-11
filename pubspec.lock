@@ -253,10 +253,10 @@ packages:
     dependency: "direct main"
     description:
       name: dio
-      sha256: "9fdbf71baeb250fc9da847f6cb2052196f62c19906a3657adfc18631a667d316"
+      sha256: "3709d74615bba5e443eb141f6a7f4bcc4788f8fae6f743edadfb79c2a8e6287e"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0"
+    version: "5.0.1"
   equatable:
     dependency: "direct main"
     description:
@@ -785,18 +785,18 @@ packages:
     dependency: "direct main"
     description:
       name: spider
-      sha256: "997b8fe6022fdf26043fec373d02dba42057a82bde8679b588fbf9e2ce629884"
+      sha256: c5d4ad21dfc63999c72498f63ba673fef72dbecc815bad4b4ed1fad45c92a19d
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "4.2.0"
   sprintf:
     dependency: transitive
     description:
       name: sprintf
-      sha256: ec76d38910b6f1c854ce1353c62d37e7ef82b53dc5ab048c25400d35970776d1
+      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.2"
+    version: "7.0.0"
   sqflite:
     dependency: transitive
     description:

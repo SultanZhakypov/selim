@@ -1,50 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:selim/resources/app_constants.dart';
-import '../../../widgets/app_drawer.dart';
-import '../../../widgets/footer_widget.dart';
-import '../../../widgets/widget_blocks.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:selim/features/home/presentation/bloc/home_bloc.dart';
+import 'package:selim/features/widgets/widget_blocks.dart';
+import 'package:selim/injectable/init_injectable.dart';
+import 'package:selim/resources/extensions.dart';
+import 'package:selim/resources/resources.dart';
 
-class HomeScreen extends StatefulWidget {
+import '../../../widgets/footer_widget.dart';
+
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final drawerKey = GlobalKey<ScaffoldState>();
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: drawerKey,
-      backgroundColor: AppColors.colorWhite,
-      endDrawer: const AppDrawer(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
-          child: Column(
-            children: [
-              FirstWidget(
-                drawerKey: drawerKey,
-              ),
-              const SecondWidget(),
-              const ThirdWidget(),
-              const FourthWidget(
-                isService: false,
-                title: 'Наши преимущества',
-              ),
-              const FifthWidget(),
-              const SixthWidget(),
-              const FourthWidget(
-                isService: true,
-                title: 'Сервис',
-              ),
-              const SeventhWidget(),
-              const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: FooterWidget()),
-            ],
+    return BlocProvider(
+      create: (context) => sl<HomeBloc>()..add(const HomeEvent.getMainInfo()),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: Stack(
+              children: [
+                Image.asset(Images.bagimage),
+                Column(
+                  children: [
+                    const HeaderWidget(),
+                    SizedBox(height: context.height * 0.18),
+                    const MainInfoWidget(),
+                    SizedBox(height: context.height * 0.1),
+                    const SuggestWidget(),
+                    SizedBox(height: context.height * 0.03),
+                    const AdvantageOrService(
+                      isService: false,
+                      title: 'Наши преимущества',
+                    ),
+                    const NewsWidget(),
+                    const SizedBox(height: 32),
+                    const UsWorkWidget(),
+                    const AdvantageOrService(
+                      isService: true,
+                      title: 'Сервис',
+                    ),
+                    const SizedBox(height: 32),
+                    const FeedBackWidget(),
+                    const SizedBox(height: 32),
+                    const FooterWidget()
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

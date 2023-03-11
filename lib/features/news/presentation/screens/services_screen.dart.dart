@@ -32,7 +32,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
               Appbar1(
                   drawerkey: drawerKey,
                   textAlign: false,
-                  title: 'НАШИ РАБОТЫ',
+                  title: 'НАШИ УСЛУГИ',
                   subTitle:
                       'Здесь мы собрали наши лучшие проекты, чтобы вы могли вдохновиться идеями для собственного проекта. Вы найдёте проект по душе и нраву, который захотите воплотить в жизнь.'),
               for (final image in locations)
