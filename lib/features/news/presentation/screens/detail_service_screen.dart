@@ -4,29 +4,18 @@ import 'package:selim/features/news/presentation/widgets/custom_appbar.dart';
 import 'package:selim/resources/app_constants.dart';
 
 import '../../../widgets/items.dart';
-import '../../../widgets/app_drawer.dart';
 
-class DetailServiceScreen extends StatefulWidget {
+class DetailServiceScreen extends StatelessWidget {
   const DetailServiceScreen({super.key});
 
   @override
-  State<DetailServiceScreen> createState() => _DetailServiceScreenState();
-}
-
-class _DetailServiceScreenState extends State<DetailServiceScreen> {
-  final drawerKey = GlobalKey<ScaffoldState>();
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: drawerKey,
-      endDrawer: const AppDrawer(),
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            SliverToBoxAdapter(
-              child: AppBar2(
-                drawerkey: drawerKey,
-              ),
+            const SliverToBoxAdapter(
+              child: AppBar2(),
             ),
             const SliverPadding(
               padding:

@@ -3,29 +3,50 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:selim/features/home/presentation/bloc/home_bloc.dart';
 import 'package:selim/features/widgets/widget_blocks.dart';
 import 'package:selim/injectable/init_injectable.dart';
+import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 import 'package:selim/resources/resources.dart';
 
 import '../../../widgets/footer_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<HomeBloc>()..add(const HomeEvent.getMainInfo()),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.backgroundColor,
         body: SafeArea(
           child: SingleChildScrollView(
+            controller: _scrollController,
             physics: const ClampingScrollPhysics(),
             child: Stack(
               children: [
                 Image.asset(Images.bagimage),
                 Column(
                   children: [
-                    const HeaderWidget(),
+                    HeaderWidget(controller: _scrollController),
                     SizedBox(height: context.height * 0.18),
                     const MainInfoWidget(),
                     SizedBox(height: context.height * 0.1),

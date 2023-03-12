@@ -2,9 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
-@singleton
-class DioSettings {
-  DioSettings() {
+class ApiClient {
+  ApiClient() {
     setup();
   }
   final _dio = Dio(
@@ -40,5 +39,10 @@ class DioSettings {
 
     interceptors.addAll([if (kDebugMode) headerInterceptor, logInterceptor]);
   }
+}
 
+@module
+abstract class RegisterModule {
+  @lazySingleton
+  Dio get dio => ApiClient().dio;
 }

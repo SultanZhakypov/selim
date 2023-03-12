@@ -1,46 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:selim/features/widgets/footer_widget.dart';
 import 'package:selim/features/news/presentation/widgets/custom_appbar.dart';
+import 'package:selim/features/widgets/footer_widget.dart';
 import 'package:selim/resources/extensions.dart';
 
 import '../../../../resources/app_constants.dart';
-import '../../../widgets/app_drawer.dart';
 
-class ServicesScreen extends StatefulWidget {
+class ServicesScreen extends StatelessWidget {
   const ServicesScreen({
     super.key,
   });
 
   @override
-  State<ServicesScreen> createState() => _ServicesScreenState();
-}
-
-class _ServicesScreenState extends State<ServicesScreen> {
-  final drawerKey = GlobalKey<ScaffoldState>();
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: drawerKey,
-      endDrawer: const AppDrawer(),
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              Appbar1(
-                  drawerkey: drawerKey,
-                  textAlign: false,
-                  title: 'НАШИ УСЛУГИ',
-                  subTitle:
-                      'Здесь мы собрали наши лучшие проекты, чтобы вы могли вдохновиться идеями для собственного проекта. Вы найдёте проект по душе и нраву, который захотите воплотить в жизнь.'),
-              for (final image in locations)
-                LocationListItem(
-                  imageUrl: image.imageUrl,
-                  name: "Автоматика",
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: CustomScrollView(
+            slivers: [
+              const SliverToBoxAdapter(
+                child: Appbar1(
+                    textAlign: false,
+                    title: 'НАШИ УСЛУГИ',
+                    subTitle:
+                        'Здесь мы собрали наши лучшие проекты, чтобы вы могли вдохновиться идеями для собственного проекта. Вы найдёте проект по душе и нраву, который захотите воплотить в жизнь.'),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: locations.length,
+                  (context, index) => LocationListItem(
+                    imageUrl: locations[index].imageUrl,
+                    name: 'Автоматика',
+                  ),
                 ),
-              const FooterWidget(),
+              ),
+              const SliverToBoxAdapter(
+                child: FooterWidget(),
+              ),
             ],
           ),
         ),

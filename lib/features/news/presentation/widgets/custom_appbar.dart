@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:selim/features/widgets/app_shows.dart';
 
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
@@ -12,13 +13,11 @@ class Appbar1 extends StatelessWidget {
     required this.subTitle,
     this.padding = 10,
     this.textAlign = true,
-    required this.drawerkey,
   }) : super(key: key);
   final String title;
   final String subTitle;
   final double padding;
   final bool textAlign;
-  final GlobalKey<ScaffoldState> drawerkey;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +30,7 @@ class Appbar1 extends StatelessWidget {
             children: [
               SvgPicture.asset(Svgs.selimBlacck),
               InkWell(
-                  onTap: () => drawerkey.currentState!.openEndDrawer(),
+                  onTap: () => AppShows.openPopUpMenu(context),
                   child: SvgPicture.asset(Svgs.menuBlack)),
             ],
           ),
@@ -54,12 +53,7 @@ class Appbar1 extends StatelessWidget {
 }
 
 class AppBar2 extends StatelessWidget {
-  const AppBar2({
-    Key? key,
-    required this.drawerkey,
-  }) : super(key: key);
-
-  final GlobalKey<ScaffoldState> drawerkey;
+  const AppBar2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +78,7 @@ class AppBar2 extends StatelessWidget {
               children: [
                 SvgPicture.asset(Svgs.selimG),
                 InkWell(
-                    onTap: () => drawerkey.currentState!.openEndDrawer(),
+                    onTap: () => AppShows.openPopUpMenu(context),
                     child: SvgPicture.asset(Svgs.menu)),
               ],
             ),

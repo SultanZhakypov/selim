@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:selim/features/news/presentation/widgets/custom_appbar.dart';
-import 'package:selim/features/widgets/app_drawer.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 import 'package:selim/resources/resources.dart';
@@ -8,20 +7,12 @@ import 'package:selim/resources/resources.dart';
 import '../../../widgets/footer_widget.dart';
 import '../../../widgets/items.dart';
 
-class DetailNewsScreen extends StatefulWidget {
+class DetailNewsScreen extends StatelessWidget {
   const DetailNewsScreen({super.key});
 
   @override
-  State<DetailNewsScreen> createState() => _DetailNewsScreenState();
-}
-
-class _DetailNewsScreenState extends State<DetailNewsScreen> {
-  final drawerKey = GlobalKey<ScaffoldState>();
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: drawerKey,
-      endDrawer: const AppDrawer(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -30,7 +21,6 @@ class _DetailNewsScreenState extends State<DetailNewsScreen> {
             slivers: [
               SliverToBoxAdapter(
                 child: Appbar1(
-                  drawerkey: drawerKey,
                   textAlign: false,
                   padding: 32,
                   title:

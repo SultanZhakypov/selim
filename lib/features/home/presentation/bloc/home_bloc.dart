@@ -10,15 +10,16 @@ part 'home_bloc.freezed.dart';
 
 @injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final HomeUseCase _homeUseCase;
+  final HomeUsecaseImpl _homeUseCase;
   HomeBloc(this._homeUseCase) : super(const _Initial()) {
     on<HomeEvent>((event, emit) async {
       emit(const _$_Loading());
       try {
-        final result = await _homeUseCase.mainInfo;
-        emit(_$_Success(mainInfo: result));
+        await _homeUseCase.getMainInfo();
+
+        emit(_$_Success(mainInfo: _homeUseCase.mainInfo));
       } catch (e) {
-        emit(const _$_Error());
+        emit( _$_Error(errorText: e.toString()));
       }
     });
   }

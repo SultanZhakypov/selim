@@ -2,26 +2,21 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+
 import 'package:selim/core/routes/routes.dart';
 import 'package:selim/features/home/presentation/bloc/home_bloc.dart';
-
 import 'package:selim/features/home/presentation/widgets/buttons.dart';
 import 'package:selim/features/home/presentation/widgets/constants.dart';
+import 'package:selim/features/widgets/app_shows.dart';
 import 'package:selim/features/widgets/items.dart';
 import 'package:selim/resources/extensions.dart';
 import 'package:selim/resources/resources.dart';
-
 import '../../resources/app_constants.dart';
 
-class HeaderWidget extends StatefulWidget {
-  const HeaderWidget({Key? key}) : super(key: key);
+class HeaderWidget extends StatelessWidget {
+  const HeaderWidget({Key? key, required this.controller}) : super(key: key);
+  final ScrollController controller;
 
-  @override
-  State<HeaderWidget> createState() => _HeaderWidgetState();
-}
-
-class _HeaderWidgetState extends State<HeaderWidget> {
-  final GlobalKey<PopupMenuButtonState<int>> _menuKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -29,47 +24,14 @@ class _HeaderWidgetState extends State<HeaderWidget> {
       child: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
           return state.maybeWhen(
-            orElse: () => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SvgPicture.asset(Svgs.selimG),
-                    InkWell(
-                        onTap: () {
-                          _menuKey.currentState!.showButtonMenu();
-                          openPopUpMenu(context);
-                        },
-                        child: SvgPicture.asset(Svgs.menu))
-                  ],
-                ),
-                SizedBox(
-                  height: context.height / 18,
-                ),
-                Text(
-                  'Современная  и надёжная защита'.toUpperCase(),
-                  style: AppConstants.textWhiteS25W700,
-                  softWrap: true,
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  'Найдите идеальный вариант сами  или предоставьте это нам',
-                  style: AppConstants.textWhiteS14W600,
-                  softWrap: true,
-                ),
-                const SizedBox(height: 25),
-                SizedBox(
-                  width: context.width / 1.8,
-                  child: Builder(builder: (context) {
-                    return AppButton(
-                      onPress: () {},
-                      title: 'заказать ворота',
-                      isVisibleIcon: true,
-                    );
-                  }),
-                ),
-              ],
+            orElse: () => const Center(
+              child: Text('orELSE'),
+            ),
+            error: (e) => Center(
+              child: Text(e),
+            ),
+            loading: () => const Center(
+              child: CircularProgressIndicator.adaptive(),
             ),
             success: (mainInfo) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,7 +40,9 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SvgPicture.asset(Svgs.selimG),
-                    SvgPicture.asset(Svgs.menu)
+                    InkWell(
+                        onTap: () => AppShows.openPopUpMenu(context),
+                        child: SvgPicture.asset(Svgs.menu))
                   ],
                 ),
                 SizedBox(
@@ -98,14 +62,12 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                 const SizedBox(height: 25),
                 SizedBox(
                   width: context.width / 1.8,
-                  child: Builder(
-                    builder: (context) {
-                      return AppButton(
-                        onPress: () {},
-                        title: 'заказать ворота',
-                        isVisibleIcon: true,
-                      );
-                    },
+                  child: AppButton(
+                    onPress: () => controller.animateTo(2500,
+                        duration: const Duration(milliseconds: 2000),
+                        curve: Curves.easeInOutExpo),
+                    title: 'заказать ворота',
+                    isVisibleIcon: true,
                   ),
                 ),
               ],
@@ -113,52 +75,6 @@ class _HeaderWidgetState extends State<HeaderWidget> {
           );
         },
       ),
-    );
-  }
-
-  PopupMenuButton openPopUpMenu(BuildContext context) {
-    return PopupMenuButton(
-      key: _menuKey,
-      onSelected: (value) {
-        switch (value) {
-          case 1:
-            context.router.push(const HomeScreenRoute());
-            break;
-          case 2:
-            context.router.push(const ServicesScreenRoute());
-            break;
-          case 3:
-            context.router.push(const NewsScreenRoute());
-            break;
-          case 4:
-            context.router.push(const WorksScreenRoute());
-            break;
-          default:
-        }
-      },
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          value: 1,
-          child: Row(
-            children: [
-              const Text('Главная'),
-              SvgPicture.asset(Svgs.selimBluee),
-            ],
-          ),
-        ),
-        const PopupMenuItem(
-          value: 2,
-          child: Text('Услуги'),
-        ),
-        const PopupMenuItem(
-          value: 3,
-          child: Text('Новости'),
-        ),
-        const PopupMenuItem(
-          value: 4,
-          child: Text('Наши работы'),
-        ),
-      ],
     );
   }
 }
@@ -281,7 +197,8 @@ class _SuggestWidgetState extends State<SuggestWidget> {
                     icon: Icons.arrow_back_ios,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        context.router.push(const ServicesScreenRoute()),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       foregroundColor: Colors.black,
@@ -294,13 +211,9 @@ class _SuggestWidgetState extends State<SuggestWidget> {
                         ),
                       ),
                     ),
-                    child: InkWell(
-                      onTap: () =>
-                          context.router.push(const ServicesScreenRoute()),
-                      child: const Text(
-                        'смотреть все',
-                        style: AppConstants.textWhiteInterS12W400,
-                      ),
+                    child: const Text(
+                      'смотреть все',
+                      style: AppConstants.textWhiteInterS12W400,
                     ),
                   ),
                   AppArrowButton(
@@ -402,7 +315,7 @@ class NewsWidget extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () => context.router.push(const NewsScreenRoute()),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
               foregroundColor: Colors.black,
@@ -415,12 +328,9 @@ class NewsWidget extends StatelessWidget {
                 ),
               ),
             ),
-            child: InkWell(
-              onTap: () => context.router.push(const NewsScreenRoute()),
-              child: const Text(
-                'все новости',
-                style: AppConstants.textWhiteInterS12W400,
-              ),
+            child: const Text(
+              'все новости',
+              style: AppConstants.textWhiteInterS12W400,
             ),
           ),
           const SizedBox(height: 32),

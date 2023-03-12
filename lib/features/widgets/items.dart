@@ -17,7 +17,8 @@ class SuggestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
+    return Container(
+      height: context.height * 0.3,
       decoration: BoxDecoration(
         image: const DecorationImage(
           image: AssetImage(Images.justImage),

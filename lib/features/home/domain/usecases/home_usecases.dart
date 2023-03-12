@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:injectable/injectable.dart';
 import 'package:selim/features/home/data/repositories/home_repo.dart';
 import 'package:selim/features/home/domain/entities/maininfo_entity.dart';
@@ -7,17 +9,18 @@ abstract class HomeUseCase {
   get mainInfo;
 }
 
-@Singleton(as: HomeUseCase)
+@LazySingleton()
 class HomeUsecaseImpl implements HomeUseCase {
   HomeUsecaseImpl(this._homeRepo);
   final HomeRepo _homeRepo;
   late MainInfoEntity mainInfoEntity;
 
   @override
-  getMainInfo() async {
+ getMainInfo() async {
     try {
       mainInfoEntity = await _homeRepo.getMainInfo();
     } catch (e) {
+      
       rethrow;
     }
   }

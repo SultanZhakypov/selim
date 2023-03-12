@@ -1,10 +1,12 @@
+import '../../data/models/main_info_model.dart';
+
 class MainInfoEntity {
   final String title;
   final String subtitle;
   final String image;
-  final List phoneNumber;
-  final List socialMedia;
-  final List schedule;
+  final List<PhoneNumber> phoneNumber;
+  final List<SocialMedia> socialMedia;
+  final List<Schedule> schedule;
   MainInfoEntity({
     required this.title,
     required this.subtitle,

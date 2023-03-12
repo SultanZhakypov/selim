@@ -169,7 +169,7 @@ mixin _$HomeState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(MainInfoEntity? mainInfo) success,
-    required TResult Function() error,
+    required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) =>
       throw _privateConstructorUsedError;
@@ -177,7 +177,7 @@ mixin _$HomeState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(MainInfoEntity? mainInfo)? success,
-    TResult? Function()? error,
+    TResult? Function(String errorText)? error,
     TResult? Function()? loading,
   }) =>
       throw _privateConstructorUsedError;
@@ -185,7 +185,7 @@ mixin _$HomeState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(MainInfoEntity? mainInfo)? success,
-    TResult Function()? error,
+    TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
   }) =>
@@ -273,7 +273,7 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(MainInfoEntity? mainInfo) success,
-    required TResult Function() error,
+    required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) {
     return initial();
@@ -284,7 +284,7 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(MainInfoEntity? mainInfo)? success,
-    TResult? Function()? error,
+    TResult? Function(String errorText)? error,
     TResult? Function()? loading,
   }) {
     return initial?.call();
@@ -295,7 +295,7 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(MainInfoEntity? mainInfo)? success,
-    TResult Function()? error,
+    TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
   }) {
@@ -413,7 +413,7 @@ class _$_Success implements _Success {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(MainInfoEntity? mainInfo) success,
-    required TResult Function() error,
+    required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) {
     return success(mainInfo);
@@ -424,7 +424,7 @@ class _$_Success implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(MainInfoEntity? mainInfo)? success,
-    TResult? Function()? error,
+    TResult? Function(String errorText)? error,
     TResult? Function()? loading,
   }) {
     return success?.call(mainInfo);
@@ -435,7 +435,7 @@ class _$_Success implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(MainInfoEntity? mainInfo)? success,
-    TResult Function()? error,
+    TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
   }) {
@@ -496,6 +496,8 @@ abstract class _Success implements HomeState {
 abstract class _$$_ErrorCopyWith<$Res> {
   factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
       __$$_ErrorCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String errorText});
 }
 
 /// @nodoc
@@ -504,36 +506,61 @@ class __$$_ErrorCopyWithImpl<$Res>
     implements _$$_ErrorCopyWith<$Res> {
   __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? errorText = null,
+  }) {
+    return _then(_$_Error(
+      errorText: null == errorText
+          ? _value.errorText
+          : errorText // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Error implements _Error {
-  const _$_Error();
+  const _$_Error({required this.errorText});
+
+  @override
+  final String errorText;
 
   @override
   String toString() {
-    return 'HomeState.error()';
+    return 'HomeState.error(errorText: $errorText)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Error);
+        (other.runtimeType == runtimeType &&
+            other is _$_Error &&
+            (identical(other.errorText, errorText) ||
+                other.errorText == errorText));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, errorText);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      __$$_ErrorCopyWithImpl<_$_Error>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(MainInfoEntity? mainInfo) success,
-    required TResult Function() error,
+    required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) {
-    return error();
+    return error(errorText);
   }
 
   @override
@@ -541,10 +568,10 @@ class _$_Error implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(MainInfoEntity? mainInfo)? success,
-    TResult? Function()? error,
+    TResult? Function(String errorText)? error,
     TResult? Function()? loading,
   }) {
-    return error?.call();
+    return error?.call(errorText);
   }
 
   @override
@@ -552,12 +579,12 @@ class _$_Error implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(MainInfoEntity? mainInfo)? success,
-    TResult Function()? error,
+    TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error();
+      return error(errorText);
     }
     return orElse();
   }
@@ -601,7 +628,12 @@ class _$_Error implements _Error {
 }
 
 abstract class _Error implements HomeState {
-  const factory _Error() = _$_Error;
+  const factory _Error({required final String errorText}) = _$_Error;
+
+  String get errorText;
+  @JsonKey(ignore: true)
+  _$$_ErrorCopyWith<_$_Error> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -643,7 +675,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function(MainInfoEntity? mainInfo) success,
-    required TResult Function() error,
+    required TResult Function(String errorText) error,
     required TResult Function() loading,
   }) {
     return loading();
@@ -654,7 +686,7 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function(MainInfoEntity? mainInfo)? success,
-    TResult? Function()? error,
+    TResult? Function(String errorText)? error,
     TResult? Function()? loading,
   }) {
     return loading?.call();
@@ -665,7 +697,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function(MainInfoEntity? mainInfo)? success,
-    TResult Function()? error,
+    TResult Function(String errorText)? error,
     TResult Function()? loading,
     required TResult orElse(),
   }) {

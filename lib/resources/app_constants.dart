@@ -39,6 +39,7 @@ class AppConstants {
 
 class AppColors {
   static const colorWhite = Color(0xffFCFCFC);
+  static const backgroundColor = Color(0xffFFFFFF);
   static const colorBlack = Color(0xff414141);
   static const colorBlue = Color(0xff001645);
   static const colorLightBlue = Color(0xff105BFB);
