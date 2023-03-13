@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:selim/features/home/presentation/bloc/home_bloc.dart';
 import 'package:selim/features/widgets/widget_blocks.dart';
-import 'package:selim/injectable/init_injectable.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 import 'package:selim/resources/resources.dart';
-
 import '../../../widgets/footer_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,44 +29,41 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<HomeBloc>()..add(const HomeEvent.getMainInfo()),
-      child: Scaffold(
-        backgroundColor: AppColors.backgroundColor,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            physics: const ClampingScrollPhysics(),
-            child: Stack(
-              children: [
-                Image.asset(Images.bagimage),
-                Column(
-                  children: [
-                    HeaderWidget(controller: _scrollController),
-                    SizedBox(height: context.height * 0.18),
-                    const MainInfoWidget(),
-                    SizedBox(height: context.height * 0.1),
-                    const SuggestWidget(),
-                    SizedBox(height: context.height * 0.03),
-                    const AdvantageOrService(
-                      isService: false,
-                      title: 'Наши преимущества',
-                    ),
-                    const NewsWidget(),
-                    const SizedBox(height: 32),
-                    const UsWorkWidget(),
-                    const AdvantageOrService(
-                      isService: true,
-                      title: 'Сервис',
-                    ),
-                    const SizedBox(height: 32),
-                    const FeedBackWidget(),
-                    const SizedBox(height: 32),
-                    const FooterWidget()
-                  ],
-                ),
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          physics: const ClampingScrollPhysics(),
+          child: Stack(
+            children: [
+              Image.asset(Images.bagimage),
+              Column(
+                children: [
+                  HeaderWidget(controller: _scrollController),
+                  SizedBox(height: context.height * 0.18),
+                  const MainInfoWidget(),
+                  SizedBox(height: context.height * 0.1),
+                  const SuggestWidget(),
+                  SizedBox(height: context.height * 0.03),
+                  const AdvantageOrService(
+                    isService: false,
+                    title: 'Наши преимущества',
+                  ),
+                  const NewsWidget(),
+                  const SizedBox(height: 32),
+                  const UsWorkWidget(),
+                  const AdvantageOrService(
+                    isService: true,
+                    title: 'Сервис',
+                  ),
+                  const SizedBox(height: 32),
+                  const FeedBackWidget(),
+                  const SizedBox(height: 32),
+                  const FooterWidget()
+                ],
+              ),
+            ],
           ),
         ),
       ),

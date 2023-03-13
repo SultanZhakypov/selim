@@ -1,4 +1,4 @@
-import '../../data/models/main_info_model.dart';
+import '../../data/models/main_info/main_info_model.dart';
 
 class MainInfoEntity {
   final String title;

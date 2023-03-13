@@ -10,9 +10,10 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:selim/features/home/data/repositories/home_repo.dart' as _i4;
 import 'package:selim/features/home/domain/usecases/home_usecases.dart' as _i5;
-import 'package:selim/features/home/presentation/bloc/home_bloc.dart' as _i6;
+import 'package:selim/features/home/presentation/cubit/main_info_cubit.dart'
+    as _i6;
 
-import '../core/api_client/api_client.dart' as _i7;
+import '../core/api_client/api_client.dart' as _i8;
 
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
@@ -32,8 +33,10 @@ _i1.GetIt $initGetIt(
   gh.lazySingleton<_i4.HomeRepo>(() => _i4.HomeRepoImpl(gh<_i3.Dio>()));
   gh.lazySingleton<_i5.HomeUsecaseImpl>(
       () => _i5.HomeUsecaseImpl(gh<_i4.HomeRepo>()));
-  gh.factory<_i6.HomeBloc>(() => _i6.HomeBloc(gh<_i5.HomeUsecaseImpl>()));
+  gh.factory<_i6.MainInfoCubit>(
+      () => _i6.MainInfoCubit(gh<_i5.HomeUsecaseImpl>()));
+
   return getIt;
 }
 
-class _$RegisterModule extends _i7.RegisterModule {}
+class _$RegisterModule extends _i8.RegisterModule {}
