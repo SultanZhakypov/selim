@@ -2,13 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:selim/core/routes/routes.dart';
 import 'package:selim/features/home/presentation/bloc/home_bloc.dart';
 import 'package:selim/features/home/presentation/widgets/buttons.dart';
 import 'package:selim/features/home/presentation/widgets/constants.dart';
 import 'package:selim/features/widgets/app_shows.dart';
 import 'package:selim/features/widgets/items.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:selim/resources/extensions.dart';
 import 'package:selim/resources/resources.dart';
 import '../../resources/app_constants.dart';
@@ -21,59 +21,70 @@ class HeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 28, left: 16, right: 16),
-      child: BlocBuilder<HomeBloc, HomeState>(
-        builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () => const Center(
-              child: Text('orELSE'),
-            ),
-            error: (e) => Center(
-              child: Text(e),
-            ),
-            loading: () => const Center(
-              child: CircularProgressIndicator.adaptive(),
-            ),
-            success: (mainInfo) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SvgPicture.asset(Svgs.selimG),
-                    InkWell(
-                        onTap: () => AppShows.openPopUpMenu(context),
-                        child: SvgPicture.asset(Svgs.menu))
-                  ],
-                ),
-                SizedBox(
-                  height: context.height / 18,
-                ),
-                Text(
-                  mainInfo!.title.toUpperCase(),
-                  style: AppConstants.textWhiteS25W700,
-                  softWrap: true,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  mainInfo.subtitle,
-                  style: AppConstants.textWhiteS14W600,
-                  softWrap: true,
-                ),
-                const SizedBox(height: 25),
-                SizedBox(
-                  width: context.width / 1.8,
-                  child: AppButton(
-                    onPress: () => controller.animateTo(2500,
-                        duration: const Duration(milliseconds: 2000),
-                        curve: Curves.easeInOutExpo),
-                    title: 'заказать ворота',
-                    isVisibleIcon: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SvgPicture.asset(Svgs.selimG),
+              InkWell(
+                  onTap: () => AppShows.openPopUpMenu(context),
+                  child: SvgPicture.asset(Svgs.menu))
+            ],
+          ),
+          SizedBox(
+            height: context.height / 18,
+          ),
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () => const SizedBox.shrink(),
+                error: (e) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 49),
+                  child: Center(
+                    child: Text(e, style: AppConstants.textWhiteS14W600),
                   ),
                 ),
-              ],
+                loading: () => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 27),
+                  child: Center(
+                    child: LoadingAnimationWidget.horizontalRotatingDots(
+                      color: Colors.white,
+                      size: 50,
+                    ),
+                  ),
+                ),
+                success: (mainInfo) => Column(
+                  children: [
+                    Text(
+                      mainInfo!.title.toUpperCase(),
+                      style: AppConstants.textWhiteS25W700,
+                      softWrap: true,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      mainInfo.subtitle,
+                      style: AppConstants.textWhiteS14W600,
+                      softWrap: true,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 25),
+          SizedBox(
+            width: context.width / 1.8,
+            child: AppButton(
+              onPress: () => controller.animateTo(2500,
+                  duration: const Duration(milliseconds: 2000),
+                  curve: Curves.easeInOutExpo),
+              title: 'заказать ворота',
+              isVisibleIcon: true,
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

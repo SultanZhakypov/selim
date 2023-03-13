@@ -1,30 +1,23 @@
-import 'dart:developer';
-
 import 'package:injectable/injectable.dart';
 import 'package:selim/features/home/data/repositories/home_repo.dart';
 import 'package:selim/features/home/domain/entities/maininfo_entity.dart';
 
 abstract class HomeUseCase {
-  getMainInfo();
-  get mainInfo;
+  Future<MainInfoEntity> getMainInfo();
 }
 
 @LazySingleton()
 class HomeUsecaseImpl implements HomeUseCase {
   HomeUsecaseImpl(this._homeRepo);
   final HomeRepo _homeRepo;
-  late MainInfoEntity mainInfoEntity;
 
   @override
- getMainInfo() async {
+  Future<MainInfoEntity> getMainInfo() async {
     try {
-      mainInfoEntity = await _homeRepo.getMainInfo();
+      final result = await _homeRepo.getMainInfo();
+      return result.first;
     } catch (e) {
-      
       rethrow;
     }
   }
-
-  @override
-  get mainInfo => mainInfoEntity;
 }

@@ -15,11 +15,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEvent>((event, emit) async {
       emit(const _$_Loading());
       try {
-        await _homeUseCase.getMainInfo();
+        final result = await _homeUseCase.getMainInfo();
 
-        emit(_$_Success(mainInfo: _homeUseCase.mainInfo));
+        emit(_$_Success(mainInfo: result));
       } catch (e) {
-        emit( _$_Error(errorText: e.toString()));
+        emit(_$_Error(errorText: e.toString()));
       }
     });
   }

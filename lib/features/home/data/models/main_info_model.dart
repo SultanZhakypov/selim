@@ -23,9 +23,9 @@ class MainInfoModel with _$MainInfoModel implements MainInfoEntity {
 @freezed
 class PhoneNumber with _$PhoneNumber {
   const factory PhoneNumber({
-    required int id,
-    required String number,
-    required int mainInfo,
+    @Default(1) int id,
+    @Default('') String number,
+    @JsonKey(name: 'main_info') @Default(1) int mainInfo,
   }) = _PhoneNumber;
 
   factory PhoneNumber.fromJson(Map<String, dynamic> json) =>
@@ -35,11 +35,11 @@ class PhoneNumber with _$PhoneNumber {
 @freezed
 class Schedule with _$Schedule {
   const factory Schedule({
-    required int id,
-    required String day,
-    required String startTime,
-    required String endTime,
-    required int mainInfo,
+    @Default(1) int id,
+    @Default('') String day,
+    @Default('') String startTime,
+    @Default('') String endTime,
+    @JsonKey(name: 'main_info') @Default(1)int mainInfo,
   }) = _Schedule;
 
   factory Schedule.fromJson(Map<String, dynamic> json) =>
@@ -49,10 +49,10 @@ class Schedule with _$Schedule {
 @freezed
 class SocialMedia with _$SocialMedia {
   const factory SocialMedia({
-    required int id,
-    required String instagram,
-    required String whatsapp,
-    required int mainInfo,
+    @Default(1) int id,
+    @Default('') String instagram,
+    @Default('') String whatsapp,
+   @JsonKey(name: 'main_info') @Default(1)int mainInfo,
   }) = _SocialMedia;
 
   factory SocialMedia.fromJson(Map<String, dynamic> json) =>

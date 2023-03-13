@@ -304,6 +304,7 @@ PhoneNumber _$PhoneNumberFromJson(Map<String, dynamic> json) {
 mixin _$PhoneNumber {
   int get id => throw _privateConstructorUsedError;
   String get number => throw _privateConstructorUsedError;
+  @JsonKey(name: 'main_info')
   int get mainInfo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -318,7 +319,7 @@ abstract class $PhoneNumberCopyWith<$Res> {
           PhoneNumber value, $Res Function(PhoneNumber) then) =
       _$PhoneNumberCopyWithImpl<$Res, PhoneNumber>;
   @useResult
-  $Res call({int id, String number, int mainInfo});
+  $Res call({int id, String number, @JsonKey(name: 'main_info') int mainInfo});
 }
 
 /// @nodoc
@@ -363,7 +364,7 @@ abstract class _$$_PhoneNumberCopyWith<$Res>
       __$$_PhoneNumberCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String number, int mainInfo});
+  $Res call({int id, String number, @JsonKey(name: 'main_info') int mainInfo});
 }
 
 /// @nodoc
@@ -402,16 +403,21 @@ class __$$_PhoneNumberCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PhoneNumber implements _PhoneNumber {
   const _$_PhoneNumber(
-      {required this.id, required this.number, required this.mainInfo});
+      {this.id = 1,
+      this.number = '',
+      @JsonKey(name: 'main_info') this.mainInfo = 1});
 
   factory _$_PhoneNumber.fromJson(Map<String, dynamic> json) =>
       _$$_PhoneNumberFromJson(json);
 
   @override
+  @JsonKey()
   final int id;
   @override
+  @JsonKey()
   final String number;
   @override
+  @JsonKey(name: 'main_info')
   final int mainInfo;
 
   @override
@@ -450,9 +456,9 @@ class _$_PhoneNumber implements _PhoneNumber {
 
 abstract class _PhoneNumber implements PhoneNumber {
   const factory _PhoneNumber(
-      {required final int id,
-      required final String number,
-      required final int mainInfo}) = _$_PhoneNumber;
+      {final int id,
+      final String number,
+      @JsonKey(name: 'main_info') final int mainInfo}) = _$_PhoneNumber;
 
   factory _PhoneNumber.fromJson(Map<String, dynamic> json) =
       _$_PhoneNumber.fromJson;
@@ -462,6 +468,7 @@ abstract class _PhoneNumber implements PhoneNumber {
   @override
   String get number;
   @override
+  @JsonKey(name: 'main_info')
   int get mainInfo;
   @override
   @JsonKey(ignore: true)
@@ -479,6 +486,7 @@ mixin _$Schedule {
   String get day => throw _privateConstructorUsedError;
   String get startTime => throw _privateConstructorUsedError;
   String get endTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'main_info')
   int get mainInfo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -493,7 +501,11 @@ abstract class $ScheduleCopyWith<$Res> {
       _$ScheduleCopyWithImpl<$Res, Schedule>;
   @useResult
   $Res call(
-      {int id, String day, String startTime, String endTime, int mainInfo});
+      {int id,
+      String day,
+      String startTime,
+      String endTime,
+      @JsonKey(name: 'main_info') int mainInfo});
 }
 
 /// @nodoc
@@ -548,7 +560,11 @@ abstract class _$$_ScheduleCopyWith<$Res> implements $ScheduleCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id, String day, String startTime, String endTime, int mainInfo});
+      {int id,
+      String day,
+      String startTime,
+      String endTime,
+      @JsonKey(name: 'main_info') int mainInfo});
 }
 
 /// @nodoc
@@ -597,24 +613,29 @@ class __$$_ScheduleCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Schedule implements _Schedule {
   const _$_Schedule(
-      {required this.id,
-      required this.day,
-      required this.startTime,
-      required this.endTime,
-      required this.mainInfo});
+      {this.id = 1,
+      this.day = '',
+      this.startTime = '',
+      this.endTime = '',
+      @JsonKey(name: 'main_info') this.mainInfo = 1});
 
   factory _$_Schedule.fromJson(Map<String, dynamic> json) =>
       _$$_ScheduleFromJson(json);
 
   @override
+  @JsonKey()
   final int id;
   @override
+  @JsonKey()
   final String day;
   @override
+  @JsonKey()
   final String startTime;
   @override
+  @JsonKey()
   final String endTime;
   @override
+  @JsonKey(name: 'main_info')
   final int mainInfo;
 
   @override
@@ -657,11 +678,11 @@ class _$_Schedule implements _Schedule {
 
 abstract class _Schedule implements Schedule {
   const factory _Schedule(
-      {required final int id,
-      required final String day,
-      required final String startTime,
-      required final String endTime,
-      required final int mainInfo}) = _$_Schedule;
+      {final int id,
+      final String day,
+      final String startTime,
+      final String endTime,
+      @JsonKey(name: 'main_info') final int mainInfo}) = _$_Schedule;
 
   factory _Schedule.fromJson(Map<String, dynamic> json) = _$_Schedule.fromJson;
 
@@ -674,6 +695,7 @@ abstract class _Schedule implements Schedule {
   @override
   String get endTime;
   @override
+  @JsonKey(name: 'main_info')
   int get mainInfo;
   @override
   @JsonKey(ignore: true)
@@ -690,6 +712,7 @@ mixin _$SocialMedia {
   int get id => throw _privateConstructorUsedError;
   String get instagram => throw _privateConstructorUsedError;
   String get whatsapp => throw _privateConstructorUsedError;
+  @JsonKey(name: 'main_info')
   int get mainInfo => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -704,7 +727,11 @@ abstract class $SocialMediaCopyWith<$Res> {
           SocialMedia value, $Res Function(SocialMedia) then) =
       _$SocialMediaCopyWithImpl<$Res, SocialMedia>;
   @useResult
-  $Res call({int id, String instagram, String whatsapp, int mainInfo});
+  $Res call(
+      {int id,
+      String instagram,
+      String whatsapp,
+      @JsonKey(name: 'main_info') int mainInfo});
 }
 
 /// @nodoc
@@ -754,7 +781,11 @@ abstract class _$$_SocialMediaCopyWith<$Res>
       __$$_SocialMediaCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String instagram, String whatsapp, int mainInfo});
+  $Res call(
+      {int id,
+      String instagram,
+      String whatsapp,
+      @JsonKey(name: 'main_info') int mainInfo});
 }
 
 /// @nodoc
@@ -798,21 +829,25 @@ class __$$_SocialMediaCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SocialMedia implements _SocialMedia {
   const _$_SocialMedia(
-      {required this.id,
-      required this.instagram,
-      required this.whatsapp,
-      required this.mainInfo});
+      {this.id = 1,
+      this.instagram = '',
+      this.whatsapp = '',
+      @JsonKey(name: 'main_info') this.mainInfo = 1});
 
   factory _$_SocialMedia.fromJson(Map<String, dynamic> json) =>
       _$$_SocialMediaFromJson(json);
 
   @override
+  @JsonKey()
   final int id;
   @override
+  @JsonKey()
   final String instagram;
   @override
+  @JsonKey()
   final String whatsapp;
   @override
+  @JsonKey(name: 'main_info')
   final int mainInfo;
 
   @override
@@ -855,10 +890,10 @@ class _$_SocialMedia implements _SocialMedia {
 
 abstract class _SocialMedia implements SocialMedia {
   const factory _SocialMedia(
-      {required final int id,
-      required final String instagram,
-      required final String whatsapp,
-      required final int mainInfo}) = _$_SocialMedia;
+      {final int id,
+      final String instagram,
+      final String whatsapp,
+      @JsonKey(name: 'main_info') final int mainInfo}) = _$_SocialMedia;
 
   factory _SocialMedia.fromJson(Map<String, dynamic> json) =
       _$_SocialMedia.fromJson;
@@ -870,6 +905,7 @@ abstract class _SocialMedia implements SocialMedia {
   @override
   String get whatsapp;
   @override
+  @JsonKey(name: 'main_info')
   int get mainInfo;
   @override
   @JsonKey(ignore: true)

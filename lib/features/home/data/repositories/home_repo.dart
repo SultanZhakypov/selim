@@ -5,7 +5,7 @@ import 'package:selim/features/home/data/models/main_info_model.dart';
 import 'package:selim/features/home/domain/entities/maininfo_entity.dart';
 
 abstract class HomeRepo {
-  Future<MainInfoEntity> getMainInfo();
+  Future<List<MainInfoEntity>> getMainInfo();
 }
 
 @LazySingleton(as: HomeRepo)
@@ -13,10 +13,11 @@ class HomeRepoImpl implements HomeRepo {
   HomeRepoImpl(this._dio);
   final Dio _dio;
   @override
-  Future<MainInfoModel> getMainInfo() async {
+  Future<List<MainInfoModel>> getMainInfo() async {
     try {
       final response = await _dio.get('main_info/main_info/');
-      return MainInfoModel.fromJson(response.data);
+      final info = response.data;
+      return (info as List).map((e) => MainInfoModel.fromJson(e)).toList();
     } on DioError catch (e) {
       throw DioException.fromDioError(e);
     }

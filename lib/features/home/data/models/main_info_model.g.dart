@@ -37,24 +37,24 @@ Map<String, dynamic> _$$_MainInfoModelToJson(_$_MainInfoModel instance) =>
 
 _$_PhoneNumber _$$_PhoneNumberFromJson(Map<String, dynamic> json) =>
     _$_PhoneNumber(
-      id: json['id'] as int,
-      number: json['number'] as String,
-      mainInfo: json['mainInfo'] as int,
+      id: json['id'] as int? ?? 1,
+      number: json['number'] as String? ?? '',
+      mainInfo: json['main_info'] as int? ?? 1,
     );
 
 Map<String, dynamic> _$$_PhoneNumberToJson(_$_PhoneNumber instance) =>
     <String, dynamic>{
       'id': instance.id,
       'number': instance.number,
-      'mainInfo': instance.mainInfo,
+      'main_info': instance.mainInfo,
     };
 
 _$_Schedule _$$_ScheduleFromJson(Map<String, dynamic> json) => _$_Schedule(
-      id: json['id'] as int,
-      day: json['day'] as String,
-      startTime: json['startTime'] as String,
-      endTime: json['endTime'] as String,
-      mainInfo: json['mainInfo'] as int,
+      id: json['id'] as int? ?? 1,
+      day: json['day'] as String? ?? '',
+      startTime: json['startTime'] as String? ?? '',
+      endTime: json['endTime'] as String? ?? '',
+      mainInfo: json['main_info'] as int? ?? 1,
     );
 
 Map<String, dynamic> _$$_ScheduleToJson(_$_Schedule instance) =>
@@ -63,15 +63,15 @@ Map<String, dynamic> _$$_ScheduleToJson(_$_Schedule instance) =>
       'day': instance.day,
       'startTime': instance.startTime,
       'endTime': instance.endTime,
-      'mainInfo': instance.mainInfo,
+      'main_info': instance.mainInfo,
     };
 
 _$_SocialMedia _$$_SocialMediaFromJson(Map<String, dynamic> json) =>
     _$_SocialMedia(
-      id: json['id'] as int,
-      instagram: json['instagram'] as String,
-      whatsapp: json['whatsapp'] as String,
-      mainInfo: json['mainInfo'] as int,
+      id: json['id'] as int? ?? 1,
+      instagram: json['instagram'] as String? ?? '',
+      whatsapp: json['whatsapp'] as String? ?? '',
+      mainInfo: json['main_info'] as int? ?? 1,
     );
 
 Map<String, dynamic> _$$_SocialMediaToJson(_$_SocialMedia instance) =>
@@ -79,5 +79,5 @@ Map<String, dynamic> _$$_SocialMediaToJson(_$_SocialMedia instance) =>
       'id': instance.id,
       'instagram': instance.instagram,
       'whatsapp': instance.whatsapp,
-      'mainInfo': instance.mainInfo,
+      'main_info': instance.mainInfo,
     };
