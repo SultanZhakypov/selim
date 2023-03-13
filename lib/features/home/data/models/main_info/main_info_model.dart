@@ -37,9 +37,9 @@ class Schedule with _$Schedule {
   const factory Schedule({
     @Default(1) int id,
     @Default('') String day,
-    @Default('') String startTime,
-    @Default('') String endTime,
-    @JsonKey(name: 'main_info') @Default(1)int mainInfo,
+    @JsonKey(name: 'start_time') @Default('') String startTime,
+    @JsonKey(name: 'end_time') @Default('') String endTime,
+    @JsonKey(name: 'main_info') @Default(1) int mainInfo,
   }) = _Schedule;
 
   factory Schedule.fromJson(Map<String, dynamic> json) =>
@@ -52,7 +52,7 @@ class SocialMedia with _$SocialMedia {
     @Default(1) int id,
     @Default('') String instagram,
     @Default('') String whatsapp,
-   @JsonKey(name: 'main_info') @Default(1)int mainInfo,
+    @JsonKey(name: 'main_info') @Default(1) int mainInfo,
   }) = _SocialMedia;
 
   factory SocialMedia.fromJson(Map<String, dynamic> json) =>

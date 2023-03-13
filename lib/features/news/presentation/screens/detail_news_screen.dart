@@ -14,12 +14,12 @@ class DetailNewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: CustomScrollView(
-            physics: const ClampingScrollPhysics(),
-            slivers: [
-              SliverToBoxAdapter(
+        child: CustomScrollView(
+          physics: const ClampingScrollPhysics(),
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverToBoxAdapter(
                 child: Appbar1(
                   textAlign: false,
                   padding: 32,
@@ -30,7 +30,10 @@ class DetailNewsScreen extends StatelessWidget {
                       'Компания «SelimTrade» сообщает вам о расширении вариантов дизайна гаражных секционных ворот стандартной серии RSD01SC BIW. С 10 марта 2016 года для заказа стали доступны ворота с дизайном панели «доска» в трёх цветовых решениях (RAL 9003, RAL 8014 и «золотой дуб»).',
                 ),
               ),
-              SliverList(
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverList(
                 delegate: SliverChildListDelegate(
                   [
                     Image.asset(Images.image24),
@@ -38,18 +41,21 @@ class DetailNewsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SliverPadding(
-                padding: EdgeInsets.only(bottom: 27, top: 51),
-                sliver: SliverToBoxAdapter(
-                  child: Center(
-                    child: Text(
-                      'ПОХОЖИЕ НОВОСТИ',
-                      style: AppConstants.textBlackS16W700,
-                    ),
+            ),
+            const SliverPadding(
+              padding: EdgeInsets.only(bottom: 27, top: 51),
+              sliver: SliverToBoxAdapter(
+                child: Center(
+                  child: Text(
+                    'ПОХОЖИЕ НОВОСТИ',
+                    style: AppConstants.textBlackS16W700,
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverToBoxAdapter(
                 child: SizedBox(
                   height: context.height / 4.3,
                   child: ListView.separated(
@@ -64,11 +70,11 @@ class DetailNewsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: FooterWidget(),
-              ),
-            ],
-          ),
+            ),
+            const SliverToBoxAdapter(
+              child: FooterWidget(),
+            ),
+          ],
         ),
       ),
     );

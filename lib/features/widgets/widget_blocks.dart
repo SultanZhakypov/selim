@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:selim/core/routes/routes.dart';
+import 'package:selim/features/home/presentation/cubit/about_us_cubit.dart';
 import 'package:selim/features/home/presentation/widgets/buttons.dart';
 import 'package:selim/features/home/presentation/widgets/constants.dart';
 import 'package:selim/features/widgets/app_shows.dart';
@@ -13,6 +14,7 @@ import 'package:selim/resources/resources.dart';
 import '../../injectable/init_injectable.dart';
 import '../../resources/app_constants.dart';
 import '../home/presentation/cubit/main_info_cubit.dart';
+import '../news/presentation/cubit/advantage_cubit.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({Key? key, required this.controller}) : super(key: key);
@@ -107,62 +109,67 @@ class MainInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      // child: BlocBuilder<HomeBloc, HomeState>(
-      //   builder: (context, state) {
-      //     return state.maybeWhen(
-      //       orElse: () {
-      //         return const SizedBox.shrink();
-      //       },
-      //       // aboutUsSuccess: (aboutUs) => Column(
-      //       //   crossAxisAlignment: CrossAxisAlignment.start,
-      //       //   children: [
-      //       //     const Text(
-      //       //       'Кто такие Selim trade?',
-      //       //       style: AppConstants.textBlackS16W700,
-      //       //     ),
-      //       //     const SizedBox(height: 10),
-      //       //     Container(
-      //       //       height: context.height / 4,
-      //       //       width: context.width / 1.2,
-      //       //       decoration: BoxDecoration(
-      //       //         color: AppColors.colorWhite,
-      //       //         borderRadius: BorderRadius.circular(5),
-      //       //       ),
-      //       //       child: Padding(
-      //       //         padding:
-      //       //             const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-      //       //         child: Column(
-      //       //           crossAxisAlignment: CrossAxisAlignment.start,
-      //       //           children: const [
-      //       //             Text(
-      //       //               'Мы являемся официальным представителем DOORHAN.',
-      //       //               style: AppConstants.textBlackS14W300,
-      //       //               softWrap: true,
-      //       //             ),
-      //       //             Padding(
-      //       //               padding: EdgeInsets.symmetric(vertical: 10),
-      //       //               child: Text(
-      //       //                 'Производственно — монтажная компания Selim trade основана в 2003 году.',
-      //       //                 style: AppConstants.textBlackS14W300,
-      //       //                 softWrap: true,
-      //       //               ),
-      //       //             ),
-      //       //             Text(
-      //       //               'Основа нашей деятельности — это продажа и монтаж: ворот, рольставней, шлагбаумов, рол штор, жалюзи и многое другое.',
-      //       //               style: AppConstants.textBlackS14W300,
-      //       //               softWrap: true,
-      //       //             ),
-      //       //           ],
-      //       //         ),
-      //       //       ),
-      //       //     ),
-      //       //   ],
-      //       // ),
-      //     );
-      //   },
-      // ),
+    return BlocProvider(
+      create: (context) => sl<AboutUsCubit>()..getAboutUs(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: BlocBuilder<AboutUsCubit, AboutUsState>(
+          builder: (context, state) {
+            if (state is AboutUsLoading) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 27),
+                child: Center(
+                  child: LoadingAnimationWidget.horizontalRotatingDots(
+                    color: Colors.black,
+                    size: 50,
+                  ),
+                ),
+              );
+            }
+
+            if (state is AboutUsSuccess) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    state.aboutUs.title,
+                    style: AppConstants.textBlackS16W700,
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    height: context.height / 4,
+                    width: context.width / 1.2,
+                    decoration: BoxDecoration(
+                      color: AppColors.colorWhite,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 3),
+                      child: Text(
+                        state.aboutUs.text,
+                        style: AppConstants.textBlackS14W300,
+                        softWrap: true,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+
+            if (state is AboutUsError) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 49),
+                child: Center(
+                  child:
+                      Text(state.error, style: AppConstants.textWhiteS14W600),
+                ),
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
+      ),
     );
   }
 }
@@ -204,12 +211,16 @@ class _SuggestWidgetState extends State<SuggestWidget> {
               child: PageView.builder(
                 controller: pageController,
                 itemCount: 5,
-                itemBuilder: (context, index) => const Center(
+                itemBuilder: (context, index) => Center(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: SuggestCard(
-                      noText: false,
-                      textOnCenter: false,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: InkWell(
+                      onTap: () =>
+                          context.router.push(const DetailServiceScreenRoute()),
+                      child: const SuggestCard(
+                        noText: false,
+                        textOnCenter: false,
+                      ),
                     ),
                   ),
                 ),
@@ -275,37 +286,53 @@ class AdvantageOrService extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: context.height * 0.3,
-      child: Column(
-        children: [
-          const SizedBox(height: 32),
-          Center(
-            child: Text(
-              title,
-              style: AppConstants.textBlackS16W700,
-            ),
-          ),
-          const SizedBox(height: 15),
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => AdvantageCard(
-                svg: isService
-                    ? AppText.svgsServices[index]
-                    : AppText.svgs[index],
-                title: isService
-                    ? AppText.services[index]
-                    : AppText.advantages[index],
+    return BlocProvider(
+      create: (context) =>
+          sl<AdvantageOrServiceCubit>()..getAdvantagesAndService(),
+      child: SizedBox(
+        height: context.height * 0.3,
+        child: Column(
+          children: [
+            const SizedBox(height: 32),
+            Center(
+              child: Text(
+                title,
+                style: AppConstants.textBlackS16W700,
               ),
-              separatorBuilder: (context, index) => const SizedBox(width: 10),
-              itemCount:
-                  isService ? AppText.svgsServices.length : AppText.svgs.length,
             ),
-          ),
-          const SizedBox(height: 32),
-        ],
+            const SizedBox(height: 15),
+            BlocBuilder<AdvantageOrServiceCubit, AdvantageOrServiceState>(
+              builder: (context, state) {
+                if (state is AdvantageError) {
+                  return const Text('text');
+                }
+                if (state is AdvantageSuccess) {
+                  return Expanded(
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => AdvantageCard(
+                        image: isService
+                            ? state.services[index].image
+                            : state.advantages[index].image,
+                        title: isService
+                            ? state.services[index].text
+                            : state.advantages[index].text,
+                      ),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 10),
+                      itemCount: isService
+                          ? AppText.svgsServices.length
+                          : AppText.svgs.length,
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+            const SizedBox(height: 32),
+          ],
+        ),
       ),
     );
   }

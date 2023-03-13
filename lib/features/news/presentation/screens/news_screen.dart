@@ -11,19 +11,22 @@ class NewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: CustomScrollView(
-            physics: const ClampingScrollPhysics(),
-            slivers: [
-              const SliverToBoxAdapter(
+        child: CustomScrollView(
+          physics: const ClampingScrollPhysics(),
+          slivers: [
+            const SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverToBoxAdapter(
                 child: Appbar1(
                   title: 'НОВОСТИ КОМПАНИИ',
                   subTitle:
                       'К вашему вниманию Здесь мы собрали все актуальные новости нашей компании',
                 ),
               ),
-              SliverList(
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   childCount: 5,
                   (context, index) => const Padding(
@@ -35,11 +38,11 @@ class NewsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: FooterWidget(),
-              ),
-            ],
-          ),
+            ),
+            const SliverToBoxAdapter(
+              child: FooterWidget(),
+            ),
+          ],
         ),
       ),
     );

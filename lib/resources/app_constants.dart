@@ -7,6 +7,10 @@ class AppConstants {
       color: AppColors.colorWhite, fontFamily: 'Montserrat800', fontSize: 16);
   static const textWhiteS10W800 = TextStyle(
       color: AppColors.colorWhite, fontFamily: 'Montserrat800', fontSize: 10);
+  static const textWhiteS229W800 = TextStyle(
+      color: Color.fromRGBO(235, 235, 235, 0.5),
+      fontFamily: 'Montserrat800',
+      fontSize: 229);
   static const textWhiteS14W600 = TextStyle(
       color: AppColors.colorWhite, fontFamily: 'Montserrat600', fontSize: 14);
   static const textBlueS14W600 = TextStyle(

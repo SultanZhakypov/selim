@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:selim/features/widgets/cached_image.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 import '../../resources/resources.dart';
@@ -132,10 +132,10 @@ class _WorkCardState extends State<WorkCard> {
 class AdvantageCard extends StatelessWidget {
   const AdvantageCard({
     Key? key,
-    required this.svg,
+    required this.image,
     required this.title,
   }) : super(key: key);
-  final String svg;
+  final String image;
   final String title;
 
   @override
@@ -151,7 +151,7 @@ class AdvantageCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset(svg),
+          CachedImage(imageUrl: image),
           const SizedBox(height: 5),
           Text(
             title,

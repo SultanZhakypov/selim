@@ -7,26 +7,27 @@ import 'package:selim/resources/extensions.dart';
 import '../../../../resources/app_constants.dart';
 
 class ServicesScreen extends StatelessWidget {
-  const ServicesScreen({
-    super.key,
-  });
+  const ServicesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: CustomScrollView(
-            slivers: [
-              const SliverToBoxAdapter(
+        child: CustomScrollView(
+          slivers: [
+            const SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverToBoxAdapter(
                 child: Appbar1(
                     textAlign: false,
                     title: 'НАШИ УСЛУГИ',
                     subTitle:
                         'Здесь мы собрали наши лучшие проекты, чтобы вы могли вдохновиться идеями для собственного проекта. Вы найдёте проект по душе и нраву, который захотите воплотить в жизнь.'),
               ),
-              SliverList(
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   childCount: locations.length,
                   (context, index) => LocationListItem(
@@ -35,11 +36,11 @@ class ServicesScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: FooterWidget(),
-              ),
-            ],
-          ),
+            ),
+            const SliverToBoxAdapter(
+              child: FooterWidget(),
+            ),
+          ],
         ),
       ),
     );

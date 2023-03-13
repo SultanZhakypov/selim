@@ -484,7 +484,9 @@ Schedule _$ScheduleFromJson(Map<String, dynamic> json) {
 mixin _$Schedule {
   int get id => throw _privateConstructorUsedError;
   String get day => throw _privateConstructorUsedError;
+  @JsonKey(name: 'start_time')
   String get startTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'end_time')
   String get endTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'main_info')
   int get mainInfo => throw _privateConstructorUsedError;
@@ -503,8 +505,8 @@ abstract class $ScheduleCopyWith<$Res> {
   $Res call(
       {int id,
       String day,
-      String startTime,
-      String endTime,
+      @JsonKey(name: 'start_time') String startTime,
+      @JsonKey(name: 'end_time') String endTime,
       @JsonKey(name: 'main_info') int mainInfo});
 }
 
@@ -562,8 +564,8 @@ abstract class _$$_ScheduleCopyWith<$Res> implements $ScheduleCopyWith<$Res> {
   $Res call(
       {int id,
       String day,
-      String startTime,
-      String endTime,
+      @JsonKey(name: 'start_time') String startTime,
+      @JsonKey(name: 'end_time') String endTime,
       @JsonKey(name: 'main_info') int mainInfo});
 }
 
@@ -615,8 +617,8 @@ class _$_Schedule implements _Schedule {
   const _$_Schedule(
       {this.id = 1,
       this.day = '',
-      this.startTime = '',
-      this.endTime = '',
+      @JsonKey(name: 'start_time') this.startTime = '',
+      @JsonKey(name: 'end_time') this.endTime = '',
       @JsonKey(name: 'main_info') this.mainInfo = 1});
 
   factory _$_Schedule.fromJson(Map<String, dynamic> json) =>
@@ -629,10 +631,10 @@ class _$_Schedule implements _Schedule {
   @JsonKey()
   final String day;
   @override
-  @JsonKey()
+  @JsonKey(name: 'start_time')
   final String startTime;
   @override
-  @JsonKey()
+  @JsonKey(name: 'end_time')
   final String endTime;
   @override
   @JsonKey(name: 'main_info')
@@ -680,8 +682,8 @@ abstract class _Schedule implements Schedule {
   const factory _Schedule(
       {final int id,
       final String day,
-      final String startTime,
-      final String endTime,
+      @JsonKey(name: 'start_time') final String startTime,
+      @JsonKey(name: 'end_time') final String endTime,
       @JsonKey(name: 'main_info') final int mainInfo}) = _$_Schedule;
 
   factory _Schedule.fromJson(Map<String, dynamic> json) = _$_Schedule.fromJson;
@@ -691,8 +693,10 @@ abstract class _Schedule implements Schedule {
   @override
   String get day;
   @override
+  @JsonKey(name: 'start_time')
   String get startTime;
   @override
+  @JsonKey(name: 'end_time')
   String get endTime;
   @override
   @JsonKey(name: 'main_info')

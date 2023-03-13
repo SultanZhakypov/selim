@@ -10,6 +10,8 @@ import '../models/about_us/about_us_model.dart';
 abstract class HomeRepo {
   Future<List<MainInfoEntity>> getMainInfo();
   Future<List<AboutUsEntity>> getAboutUs();
+  Future<List<PhoneNumber>> getPhoneNumber();
+  Future<List<Schedule>> getSchedule();
 }
 
 @LazySingleton(as: HomeRepo)
@@ -33,6 +35,28 @@ class HomeRepoImpl implements HomeRepo {
       final response = await _dio.get('main_info/about_us/');
       final info = response.data;
       return (info as List).map((e) => AboutUsModel.fromJson(e)).toList();
+    } on DioError catch (e) {
+      throw DioException.fromDioError(e);
+    }
+  }
+
+  @override
+  Future<List<PhoneNumber>> getPhoneNumber() async {
+    try {
+      final response = await _dio.get('main_info/phone_number/');
+      final info = response.data;
+      return (info as List).map((e) => PhoneNumber.fromJson(e)).toList();
+    } on DioError catch (e) {
+      throw DioException.fromDioError(e);
+    }
+  }
+
+  @override
+  Future<List<Schedule>> getSchedule() async {
+    try {
+      final response = await _dio.get('main_info/schedule/');
+      final info = response.data;
+      return (info as List).map((e) => Schedule.fromJson(e)).toList();
     } on DioError catch (e) {
       throw DioException.fromDioError(e);
     }

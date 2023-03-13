@@ -54,7 +54,7 @@ class DetailServiceScreen extends StatelessWidget {
             ),
             const SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.only(bottom: 40, top: 15),
+                padding: EdgeInsets.only(top: 15),
                 child: Center(
                     child: Text(
                   'ОСНОВНЫЕ ПРЕИМУЩЕСТВА',
@@ -67,32 +67,35 @@ class DetailServiceScreen extends StatelessWidget {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   childCount: 5,
-                  (context, index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 30),
-                    child: Column(
-                      children: [
-                        const Text(
-                          'ПРОМЫШЛЕННЫЙ МАСШТАБ',
-                          style: AppConstants.textBlackS20W600,
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Данная серия ворот спроектирована специально для перекрытия больших проёмов на промышленных объектах.',
-                          style: AppConstants.textBlackS14W300
-                              .copyWith(height: 1.5),
-                        ),
-                      ],
-                    ),
+                  (context, index) => Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      const Text(
+                        '1',
+                        style: AppConstants.textWhiteS229W800,
+                      ),
+                      Column(
+                        children: [
+                          const Text(
+                            'ПРОМЫШЛЕННЫЙ МАСШТАБ',
+                            style: AppConstants.textBlackS20W600,
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            'Данная серия ворот спроектирована специально для перекрытия больших проёмов на промышленных объектах.',
+                            style: AppConstants.textBlackS14W300
+                                .copyWith(height: 1.5),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-            const SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              sliver: SliverToBoxAdapter(
-                child: FooterWidget(),
-              ),
+            const SliverToBoxAdapter(
+              child: FooterWidget(),
             ),
           ],
         ),

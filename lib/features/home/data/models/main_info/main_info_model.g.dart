@@ -52,8 +52,8 @@ Map<String, dynamic> _$$_PhoneNumberToJson(_$_PhoneNumber instance) =>
 _$_Schedule _$$_ScheduleFromJson(Map<String, dynamic> json) => _$_Schedule(
       id: json['id'] as int? ?? 1,
       day: json['day'] as String? ?? '',
-      startTime: json['startTime'] as String? ?? '',
-      endTime: json['endTime'] as String? ?? '',
+      startTime: json['start_time'] as String? ?? '',
+      endTime: json['end_time'] as String? ?? '',
       mainInfo: json['main_info'] as int? ?? 1,
     );
 
@@ -61,8 +61,8 @@ Map<String, dynamic> _$$_ScheduleToJson(_$_Schedule instance) =>
     <String, dynamic>{
       'id': instance.id,
       'day': instance.day,
-      'startTime': instance.startTime,
-      'endTime': instance.endTime,
+      'start_time': instance.startTime,
+      'end_time': instance.endTime,
       'main_info': instance.mainInfo,
     };
 

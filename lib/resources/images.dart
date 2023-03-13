@@ -15,4 +15,5 @@ class Images {
   static const String map = 'assets/images/map.png';
   static const String splash = 'assets/images/splash.png';
   static const String usWork = 'assets/images/us_work.png';
+  static const String gropu = 'assets/images/Group.png';
 }
