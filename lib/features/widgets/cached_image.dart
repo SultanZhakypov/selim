@@ -6,10 +6,7 @@ import 'package:selim/resources/extensions.dart';
 import '../../resources/app_constants.dart';
 
 class CachedImage extends StatelessWidget {
-  const CachedImage({
-    super.key,
-    required this.imageUrl,
-  });
+  const CachedImage({super.key, required this.imageUrl});
   final String imageUrl;
 
   @override
@@ -17,6 +14,7 @@ class CachedImage extends StatelessWidget {
     return CachedNetworkImage(
         imageUrl: imageUrl,
         height: context.height * 0.095,
+        fit: BoxFit.fill,
         placeholder: (context, url) {
           return Center(
             child: LoadingAnimationWidget.staggeredDotsWave(
@@ -33,7 +31,11 @@ class CachedImage extends StatelessWidget {
           );
         },
         errorWidget: (context, url, error) {
-          return const Center(child: Text('ERROR'));
+          return const Center(
+              child: Text(
+            'ERROR',
+            style: AppConstants.textBlackS14W500,
+          ));
         });
   }
 }

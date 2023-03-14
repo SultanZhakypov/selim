@@ -12,6 +12,8 @@ import 'package:selim/features/home/data/repositories/home_repo.dart' as _i4;
 import 'package:selim/features/home/domain/usecases/home_usecases.dart' as _i5;
 import 'package:selim/features/home/presentation/cubit/about_us_cubit.dart'
     as _i11;
+import 'package:selim/features/home/presentation/cubit/feedback_cubit.dart'
+    as _i13;
 import 'package:selim/features/home/presentation/cubit/main_info_cubit.dart'
     as _i6;
 import 'package:selim/features/home/presentation/cubit/phone_number_cubit.dart'
@@ -23,7 +25,7 @@ import 'package:selim/features/news/domain/usecases/news_usecases.dart' as _i8;
 import 'package:selim/features/news/presentation/cubit/advantage_cubit.dart'
     as _i12;
 
-import '../core/api_client/api_client.dart' as _i13;
+import '../core/api_client/api_client.dart' as _i14;
 
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
@@ -56,7 +58,9 @@ _i1.GetIt $initGetIt(
       () => _i11.AboutUsCubit(gh<_i5.HomeUsecaseImpl>()));
   gh.factory<_i12.AdvantageOrServiceCubit>(
       () => _i12.AdvantageOrServiceCubit(gh<_i8.NewsUseCaseImpl>()));
+  gh.factory<_i13.FeedbackCubit>(
+      () => _i13.FeedbackCubit(gh<_i5.HomeUsecaseImpl>()));
   return getIt;
 }
 
-class _$RegisterModule extends _i13.RegisterModule {}
+class _$RegisterModule extends _i14.RegisterModule {}

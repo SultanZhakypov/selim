@@ -14,7 +14,8 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-AdvantageOrServiceModel _$AdvantageModelFromJson(Map<String, dynamic> json) {
+AdvantageOrServiceModel _$AdvantageOrServiceModelFromJson(
+    Map<String, dynamic> json) {
   return _AdvantageModel.fromJson(json);
 }
 
@@ -26,23 +27,24 @@ mixin _$AdvantageOrServiceModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $AdvantageModelCopyWith<AdvantageOrServiceModel> get copyWith =>
+  $AdvantageOrServiceModelCopyWith<AdvantageOrServiceModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AdvantageModelCopyWith<$Res> {
-  factory $AdvantageModelCopyWith(AdvantageOrServiceModel value,
+abstract class $AdvantageOrServiceModelCopyWith<$Res> {
+  factory $AdvantageOrServiceModelCopyWith(AdvantageOrServiceModel value,
           $Res Function(AdvantageOrServiceModel) then) =
-      _$AdvantageModelCopyWithImpl<$Res, AdvantageOrServiceModel>;
+      _$AdvantageOrServiceModelCopyWithImpl<$Res, AdvantageOrServiceModel>;
   @useResult
   $Res call({int id, String image, String text});
 }
 
 /// @nodoc
-class _$AdvantageModelCopyWithImpl<$Res, $Val extends AdvantageOrServiceModel>
-    implements $AdvantageModelCopyWith<$Res> {
-  _$AdvantageModelCopyWithImpl(this._value, this._then);
+class _$AdvantageOrServiceModelCopyWithImpl<$Res,
+        $Val extends AdvantageOrServiceModel>
+    implements $AdvantageOrServiceModelCopyWith<$Res> {
+  _$AdvantageOrServiceModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -75,7 +77,7 @@ class _$AdvantageModelCopyWithImpl<$Res, $Val extends AdvantageOrServiceModel>
 
 /// @nodoc
 abstract class _$$_AdvantageModelCopyWith<$Res>
-    implements $AdvantageModelCopyWith<$Res> {
+    implements $AdvantageOrServiceModelCopyWith<$Res> {
   factory _$$_AdvantageModelCopyWith(
           _$_AdvantageModel value, $Res Function(_$_AdvantageModel) then) =
       __$$_AdvantageModelCopyWithImpl<$Res>;
@@ -86,7 +88,7 @@ abstract class _$$_AdvantageModelCopyWith<$Res>
 
 /// @nodoc
 class __$$_AdvantageModelCopyWithImpl<$Res>
-    extends _$AdvantageModelCopyWithImpl<$Res, _$_AdvantageModel>
+    extends _$AdvantageOrServiceModelCopyWithImpl<$Res, _$_AdvantageModel>
     implements _$$_AdvantageModelCopyWith<$Res> {
   __$$_AdvantageModelCopyWithImpl(
       _$_AdvantageModel _value, $Res Function(_$_AdvantageModel) _then)
@@ -136,7 +138,7 @@ class _$_AdvantageModel implements _AdvantageModel {
 
   @override
   String toString() {
-    return 'AdvantageModel(id: $id, image: $image, text: $text)';
+    return 'AdvantageOrServiceModel(id: $id, image: $image, text: $text)';
   }
 
   @override

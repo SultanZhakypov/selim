@@ -16,5 +16,5 @@ class AdvantageOrServiceModel
   }) = _AdvantageModel;
 
   factory AdvantageOrServiceModel.fromJson(Map<String, dynamic> json) =>
-      _$AdvantageModelFromJson(json);
+      _$AdvantageOrServiceModelFromJson(json);
 }

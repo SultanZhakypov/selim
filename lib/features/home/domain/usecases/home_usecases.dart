@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:selim/features/home/data/models/feedback/feedback_model.dart';
 import 'package:selim/features/home/data/repositories/home_repo.dart';
 import 'package:selim/features/home/domain/entities/maininfo_entity.dart';
 
@@ -10,6 +11,11 @@ abstract class HomeUseCase {
   Future<AboutUsEntity> getAboutUs();
   Future<List<PhoneNumber>> getPhoneNumber();
   Future<List<Schedule>> getSchedule();
+  Future<FeedbackModel> postFeedBack({
+    required String name,
+    required String message,
+    required String phone,
+  });
 }
 
 @LazySingleton()
@@ -51,6 +57,21 @@ class HomeUsecaseImpl implements HomeUseCase {
   Future<List<Schedule>> getSchedule() async {
     try {
       final result = await _homeRepo.getSchedule();
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<FeedbackModel> postFeedBack({
+    required String name,
+    required String message,
+    required String phone,
+  }) async {
+    try {
+      final result = await _homeRepo.postFeedBack(
+          name: name, message: message, phone: phone);
       return result;
     } catch (e) {
       rethrow;

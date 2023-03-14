@@ -8,7 +8,7 @@ class ApiClient {
   }
   final _dio = Dio(
     BaseOptions(
-      baseUrl: 'http://161.35.29.179:8000/',
+      baseUrl: 'http://161.35.29.179:8001/',
       contentType: 'application/json',
       headers: {'Accept': 'application/json'},
     ),

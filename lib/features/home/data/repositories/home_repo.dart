@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:selim/core/error/dio_exceptions.dart';
+import 'package:selim/features/home/data/models/feedback/feedback_model.dart';
 import 'package:selim/features/home/data/models/main_info/main_info_model.dart';
 import 'package:selim/features/home/domain/entities/maininfo_entity.dart';
 
@@ -12,6 +13,11 @@ abstract class HomeRepo {
   Future<List<AboutUsEntity>> getAboutUs();
   Future<List<PhoneNumber>> getPhoneNumber();
   Future<List<Schedule>> getSchedule();
+  Future<FeedbackModel> postFeedBack({
+    required String name,
+    required String message,
+    required String phone,
+  });
 }
 
 @LazySingleton(as: HomeRepo)
@@ -33,8 +39,8 @@ class HomeRepoImpl implements HomeRepo {
   Future<List<AboutUsModel>> getAboutUs() async {
     try {
       final response = await _dio.get('main_info/about_us/');
-      final info = response.data;
-      return (info as List).map((e) => AboutUsModel.fromJson(e)).toList();
+      final aboutus = response.data;
+      return (aboutus as List).map((e) => AboutUsModel.fromJson(e)).toList();
     } on DioError catch (e) {
       throw DioException.fromDioError(e);
     }
@@ -44,8 +50,8 @@ class HomeRepoImpl implements HomeRepo {
   Future<List<PhoneNumber>> getPhoneNumber() async {
     try {
       final response = await _dio.get('main_info/phone_number/');
-      final info = response.data;
-      return (info as List).map((e) => PhoneNumber.fromJson(e)).toList();
+      final number = response.data;
+      return (number as List).map((e) => PhoneNumber.fromJson(e)).toList();
     } on DioError catch (e) {
       throw DioException.fromDioError(e);
     }
@@ -55,8 +61,26 @@ class HomeRepoImpl implements HomeRepo {
   Future<List<Schedule>> getSchedule() async {
     try {
       final response = await _dio.get('main_info/schedule/');
-      final info = response.data;
-      return (info as List).map((e) => Schedule.fromJson(e)).toList();
+      final schedule = response.data;
+      return (schedule as List).map((e) => Schedule.fromJson(e)).toList();
+    } on DioError catch (e) {
+      throw DioException.fromDioError(e);
+    }
+  }
+
+  @override
+  Future<FeedbackModel> postFeedBack(
+      {required String name,
+      required String message,
+      required String phone}) async {
+    try {
+      final response = await _dio.post('feedback/', data: {
+        'name': name,
+        'number': phone,
+        'message': message,
+      });
+
+      return FeedbackModel.fromJson(response.data);
     } on DioError catch (e) {
       throw DioException.fromDioError(e);
     }

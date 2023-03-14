@@ -93,6 +93,9 @@ class AppShows {
     showDialog(
       context: context,
       builder: (context) {
+        Future.delayed(const Duration(seconds: 5), () {
+          context.router.pop();
+        });
         return AlertDialog(
           content: SizedBox(
             height: context.height * 0.35,
@@ -101,7 +104,7 @@ class AppShows {
                 Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
-                      onPressed: () {},
+                      onPressed: () => context.router.pop(true),
                       icon: const Icon(
                         Icons.close,
                       )),
