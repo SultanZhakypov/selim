@@ -5,12 +5,14 @@ import 'package:selim/features/home/domain/entities/maininfo_entity.dart';
 
 import '../../data/models/main_info/main_info_model.dart';
 import '../entities/aboutus_entity.dart';
+import '../entities/product_entity.dart';
 
 abstract class HomeUseCase {
   Future<MainInfoEntity> getMainInfo();
   Future<AboutUsEntity> getAboutUs();
   Future<List<PhoneNumber>> getPhoneNumber();
   Future<List<Schedule>> getSchedule();
+  Future<List<ProductEntity>> getProduct();
   Future<FeedbackModel> postFeedBack({
     required String name,
     required String message,
@@ -47,6 +49,16 @@ class HomeUsecaseImpl implements HomeUseCase {
   Future<List<PhoneNumber>> getPhoneNumber() async {
     try {
       final result = await _homeRepo.getPhoneNumber();
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ProductEntity>> getProduct() async {
+    try {
+      final result = await _homeRepo.getProduct();
       return result;
     } catch (e) {
       rethrow;

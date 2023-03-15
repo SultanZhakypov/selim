@@ -11,24 +11,26 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:selim/features/home/data/repositories/home_repo.dart' as _i4;
 import 'package:selim/features/home/domain/usecases/home_usecases.dart' as _i5;
 import 'package:selim/features/home/presentation/cubit/about_us_cubit.dart'
-    as _i11;
+    as _i12;
 import 'package:selim/features/home/presentation/cubit/feedback_cubit.dart'
-    as _i13;
+    as _i14;
 import 'package:selim/features/home/presentation/cubit/main_info_cubit.dart'
     as _i6;
 import 'package:selim/features/home/presentation/cubit/phone_number_cubit.dart'
     as _i9;
-import 'package:selim/features/home/presentation/cubit/schedule_cubit.dart'
+import 'package:selim/features/home/presentation/cubit/product_cubit.dart'
     as _i10;
+import 'package:selim/features/home/presentation/cubit/schedule_cubit.dart'
+    as _i11;
 import 'package:selim/features/news/data/repositories/news_repo.dart' as _i7;
 import 'package:selim/features/news/domain/usecases/news_usecases.dart' as _i8;
 import 'package:selim/features/news/presentation/cubit/advantage_cubit.dart'
-    as _i12;
+    as _i13;
 import 'package:selim/features/news/presentation/cubit/detail_news.dart'
-    as _i15;
-import 'package:selim/features/news/presentation/cubit/news_cubit.dart' as _i14;
+    as _i16;
+import 'package:selim/features/news/presentation/cubit/news_cubit.dart' as _i15;
 
-import '../core/api_client/api_client.dart' as _i16;
+import '../core/api_client/api_client.dart' as _i17;
 
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
@@ -55,18 +57,20 @@ _i1.GetIt $initGetIt(
       () => _i8.NewsUseCaseImpl(gh<_i7.NewsRepo>()));
   gh.factory<_i9.PhoneNumberCubit>(
       () => _i9.PhoneNumberCubit(gh<_i5.HomeUsecaseImpl>()));
-  gh.factory<_i10.ScheduleCubit>(
-      () => _i10.ScheduleCubit(gh<_i5.HomeUsecaseImpl>()));
-  gh.factory<_i11.AboutUsCubit>(
-      () => _i11.AboutUsCubit(gh<_i5.HomeUsecaseImpl>()));
-  gh.factory<_i12.AdvantageOrServiceCubit>(
-      () => _i12.AdvantageOrServiceCubit(gh<_i8.NewsUseCaseImpl>()));
-  gh.factory<_i13.FeedbackCubit>(
-      () => _i13.FeedbackCubit(gh<_i5.HomeUsecaseImpl>()));
-  gh.factory<_i14.NewsCubit>(() => _i14.NewsCubit(gh<_i8.NewsUseCaseImpl>()));
-  gh.factory<_i15.NewsDetailCubit>(
-      () => _i15.NewsDetailCubit(gh<_i8.NewsUseCaseImpl>()));
+  gh.factory<_i10.ProductCubit>(
+      () => _i10.ProductCubit(gh<_i5.HomeUsecaseImpl>()));
+  gh.factory<_i11.ScheduleCubit>(
+      () => _i11.ScheduleCubit(gh<_i5.HomeUsecaseImpl>()));
+  gh.factory<_i12.AboutUsCubit>(
+      () => _i12.AboutUsCubit(gh<_i5.HomeUsecaseImpl>()));
+  gh.factory<_i13.AdvantageOrServiceCubit>(
+      () => _i13.AdvantageOrServiceCubit(gh<_i8.NewsUseCaseImpl>()));
+  gh.factory<_i14.FeedbackCubit>(
+      () => _i14.FeedbackCubit(gh<_i5.HomeUsecaseImpl>()));
+  gh.factory<_i15.NewsCubit>(() => _i15.NewsCubit(gh<_i8.NewsUseCaseImpl>()));
+  gh.factory<_i16.NewsDetailCubit>(
+      () => _i16.NewsDetailCubit(gh<_i8.NewsUseCaseImpl>()));
   return getIt;
 }
 
-class _$RegisterModule extends _i16.RegisterModule {}
+class _$RegisterModule extends _i17.RegisterModule {}

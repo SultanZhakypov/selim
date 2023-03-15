@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:selim/core/routes/routes.dart';
 import 'package:selim/features/home/presentation/cubit/about_us_cubit.dart';
+import 'package:selim/features/home/presentation/cubit/product_cubit.dart';
 import 'package:selim/features/home/presentation/widgets/buttons.dart';
 import 'package:selim/features/home/presentation/widgets/constants.dart';
 import 'package:selim/features/widgets/app_shows.dart';
@@ -296,7 +297,10 @@ class AdvantageOrService extends StatelessWidget {
             BlocBuilder<AdvantageOrServiceCubit, AdvantageOrServiceState>(
               builder: (context, state) {
                 if (state is AdvantageError) {
-                  return const Text('text');
+                  return Text(
+                    state.error,
+                    style: AppConstants.textBlackS14W500,
+                  );
                 }
                 if (state is AdvantageSuccess) {
                   return Expanded(
@@ -381,9 +385,17 @@ class NewsWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 10),
                         child: SizedBox(
                           width: context.width * 0.6,
-                          child: SuggestCard(
-                            height: context.height * 0.2,
-                            news: state.news[0],
+                          child: GestureDetector(
+                            onTap: () => context.router.push(
+                              DetailNewsScreenRoute(
+                                id: state.news[0].id,
+                                news: state.news,
+                              ),
+                            ),
+                            child: SuggestCard(
+                              height: context.height * 0.2,
+                              news: state.news[0],
+                            ),
                           ),
                         ),
                       ),
@@ -398,9 +410,17 @@ class NewsWidget extends StatelessWidget {
                       itemCount: state.news.length,
                       itemBuilder: (context, index) => SizedBox(
                         width: context.width * 0.6,
-                        child: SuggestCard(
-                          height: context.height * 0.2,
-                          news: state.news[index],
+                        child: GestureDetector(
+                          onTap: () => context.router.push(
+                            DetailNewsScreenRoute(
+                              id: state.news[index].id,
+                              news: state.news,
+                            ),
+                          ),
+                          child: SuggestCard(
+                            height: context.height * 0.2,
+                            news: state.news[index],
+                          ),
                         ),
                       ),
                       separatorBuilder: (context, index) => const SizedBox(
@@ -446,21 +466,60 @@ class UsWorkWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: context.height * 0.35,
-      child: Column(
-        children: const [
-          Center(
-            child: Text(
-              'Наши работы',
-              style: AppConstants.textBlackS16W700,
+    return BlocProvider(
+      create: (context) => sl<ProductCubit>()..getProduct(),
+      child: SizedBox(
+        height: context.height * 0.37,
+        child: Column(
+          children: [
+            const Center(
+              child: Text(
+                'Наши работы',
+                style: AppConstants.textBlackS16W700,
+              ),
             ),
-          ),
-          SizedBox(height: 15),
-          Expanded(
-            child: WorkCard(),
-          ),
-        ],
+            const SizedBox(height: 15),
+            BlocBuilder<ProductCubit, ProductState>(
+              builder: (context, state) {
+                if (state is ProductError) {
+                  return Expanded(
+                    child: Center(
+                      child: Text(
+                        state.error,
+                        style: AppConstants.textBlackS14W500,
+                      ),
+                    ),
+                  );
+                }
+                if (state is ProductLoading) {
+                  return Expanded(
+                    child: Center(
+                      child: LoadingAnimationWidget.horizontalRotatingDots(
+                          color: Colors.black, size: 50),
+                    ),
+                  );
+                }
+                if (state is ProductSuccess) {
+                  if (state.product.isEmpty) {
+                    return const Expanded(
+                      child: Center(
+                        child: Text(
+                          'Пусто',
+                          style: AppConstants.textBlackS14W500,
+                        ),
+                      ),
+                    );
+                  }
+
+                  return Expanded(
+                    child: WorkCard(product: state.product),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

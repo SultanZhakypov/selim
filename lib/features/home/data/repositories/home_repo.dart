@@ -2,10 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:selim/core/error/dio_exceptions.dart';
 import 'package:selim/features/home/data/models/feedback/feedback_model.dart';
+import 'package:selim/features/home/data/models/product/product_model.dart';
 import 'package:selim/features/home/data/models/main_info/main_info_model.dart';
 import 'package:selim/features/home/domain/entities/maininfo_entity.dart';
 
 import '../../domain/entities/aboutus_entity.dart';
+import '../../domain/entities/product_entity.dart';
 import '../models/about_us/about_us_model.dart';
 
 abstract class HomeRepo {
@@ -13,6 +15,7 @@ abstract class HomeRepo {
   Future<List<AboutUsEntity>> getAboutUs();
   Future<List<PhoneNumber>> getPhoneNumber();
   Future<List<Schedule>> getSchedule();
+  Future<List<ProductEntity>> getProduct();
   Future<FeedbackModel> postFeedBack({
     required String name,
     required String message,
@@ -63,6 +66,17 @@ class HomeRepoImpl implements HomeRepo {
       final response = await _dio.get('main_info/schedule/');
       final schedule = response.data;
       return (schedule as List).map((e) => Schedule.fromJson(e)).toList();
+    } on DioError catch (e) {
+      throw DioException.fromDioError(e);
+    }
+  }
+
+  @override
+  Future<List<ProductEntity>> getProduct() async {
+    try {
+      final response = await _dio.get('products/');
+      final image = response.data;
+      return (image as List).map((e) => ProductModel.fromJson(e)).toList();
     } on DioError catch (e) {
       throw DioException.fromDioError(e);
     }

@@ -1,8 +1,12 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
+
+import 'package:selim/features/home/domain/entities/product_entity.dart';
 import 'package:selim/features/widgets/cached_image.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
+
 import '../../resources/resources.dart';
 import '../news/data/models/news/news_model.dart';
 import '../news/domain/entities/news_image_entity.dart';
@@ -113,7 +117,10 @@ class ServiceCard extends StatelessWidget {
 class WorkCard extends StatefulWidget {
   const WorkCard({
     Key? key,
+    required this.product,
   }) : super(key: key);
+
+  final List<ProductEntity> product;
 
   @override
   State<WorkCard> createState() => _WorkCardState();
@@ -142,7 +149,7 @@ class _WorkCardState extends State<WorkCard> {
   Widget build(BuildContext context) {
     return PageView.builder(
       controller: pageController,
-      itemCount: 3,
+      itemCount: widget.product.length,
       itemBuilder: (context, index) {
         double scale = max(viewportFraction,
             (1 - (pageOffset! - index).abs()) + viewportFraction);
@@ -154,10 +161,7 @@ class _WorkCardState extends State<WorkCard> {
         }
         return Padding(
           padding: EdgeInsets.only(
-            right: 10,
-            left: 20,
-            top: 50 - scale * 25,
-            bottom: 50,
+            top: 20 - scale * 10,
           ),
           child: Transform(
             transform: Matrix4.identity()
@@ -165,9 +169,9 @@ class _WorkCardState extends State<WorkCard> {
               ..rotateY(angle),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                Images.usWork,
-                fit: BoxFit.cover,
+              child: CachedImage(
+                imageUrl: widget.product[index].image,
+                height: 0,
               ),
             ),
           ),
