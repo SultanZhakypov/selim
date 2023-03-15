@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selim/features/news/presentation/widgets/custom_appbar.dart';
+import 'package:selim/resources/extensions.dart';
 import '../../../widgets/footer_widget.dart';
 import '../../../widgets/items.dart';
 
@@ -29,11 +30,10 @@ class WorksScreen extends StatelessWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 childCount: 5,
-                (context, index) => const Padding(
+                (context, index) =>  Padding(
                   padding: EdgeInsets.only(bottom: 20, left: 16, right: 16),
                   child: SuggestCard(
-                    textOnCenter: false,
-                    noText: true,
+                    height: context.height * 0.2,
                   ),
                 ),
               ),

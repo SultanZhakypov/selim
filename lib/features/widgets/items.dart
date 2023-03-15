@@ -4,60 +4,108 @@ import 'package:selim/features/widgets/cached_image.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 import '../../resources/resources.dart';
+import '../news/data/models/news/news_model.dart';
+import '../news/domain/entities/news_image_entity.dart';
 
 class SuggestCard extends StatelessWidget {
   const SuggestCard({
     Key? key,
-    required this.textOnCenter,
-    required this.noText,
+    this.news,
+    required this.height,
   }) : super(key: key);
 
-  final bool textOnCenter;
-  final bool noText;
+  final NewsEntity? news;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: context.height * 0.3,
-      decoration: BoxDecoration(
-        image: const DecorationImage(
-          image: AssetImage(Images.justImage),
-          fit: BoxFit.fill,
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: [
+        CachedImage(
+          imageUrl: news?.image ?? '',
+          height: height,
         ),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: noText
-          ? const SizedBox.shrink()
-          : textOnCenter
-              ? const Padding(
-                  padding: EdgeInsets.only(left: 20),
-                  child: Center(
-                    child: Text(
-                      'РАСШИРЕНИЕ ДИЗАЙНА ВОРОТ СТАДНАРТНОЙ СЕРИИ RSD01SC BIW',
-                      style: AppConstants.textWhiteS10W800,
-                      softWrap: true,
-                    ),
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Center(
+            child: Text(
+              news?.title ?? '',
+              style: AppConstants.textWhiteS10W800,
+              softWrap: true,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class NewsImagesCard extends StatelessWidget {
+  const NewsImagesCard({
+    Key? key,
+    required this.news,
+  }) : super(key: key);
+
+  final NewsModel news;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: [
+        CachedImage(
+          imageUrl: news.image,
+          height: context.height * 0.4,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Center(
+            child: Text(
+              news.title,
+              style: AppConstants.textWhiteS10W800,
+              softWrap: true,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class ServiceCard extends StatelessWidget {
+  const ServiceCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Stack(
+          children: [
+            Image.asset(Images.justImage),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 6, left: 6),
+                child: Container(
+                  height: 32,
+                  width: context.width / 3,
+                  decoration: BoxDecoration(
+                    color: AppColors.colorBlack02,
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                )
-              : Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 6, left: 6),
-                    child: Container(
-                      height: 32,
-                      width: context.width / 3,
-                      decoration: BoxDecoration(
-                        color: AppColors.colorBlack02,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Center(
-                          child: Text(
-                        'Автоматика',
-                        style: AppConstants.textWhiteS16W800,
-                      )),
-                    ),
-                  ),
+                  child: const Center(
+                      child: Text(
+                    'Автоматика',
+                    style: AppConstants.textWhiteS16W800,
+                  )),
                 ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -151,7 +199,10 @@ class AdvantageCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CachedImage(imageUrl: image),
+          CachedImage(
+            imageUrl: image,
+            height: context.height * 0.095,
+          ),
           const SizedBox(height: 5),
           Text(
             title,

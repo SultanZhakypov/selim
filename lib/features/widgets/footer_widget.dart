@@ -197,7 +197,9 @@ class _FooterWidgetState extends State<FooterWidget> {
                               BlocBuilder<PhoneNumberCubit, PhoneNumberState>(
                                 builder: (context, state) {
                                   if (state is PhoneNumberError) {
-                                    return Text(state.error);
+                                    return SizedBox(
+                                        width: context.width * 0.3,
+                                        child: Text(state.error));
                                   }
                                   if (state is PhoneNumberLoading) {
                                     return LoadingAnimationWidget
@@ -207,12 +209,16 @@ class _FooterWidgetState extends State<FooterWidget> {
                                     );
                                   }
                                   if (state is PhoneNumberSuccess) {
-                                    return Column(
-                                      children: List.generate(
-                                        state.number.length,
-                                        (index) => Text(
-                                          state.number[index].number,
-                                          style: AppConstants.textBlackS12W500,
+                                    return SizedBox(
+                                      width: context.width * 0.3,
+                                      child: Column(
+                                        children: List.generate(
+                                          state.number.length,
+                                          (index) => Text(
+                                            state.number[index].number,
+                                            style:
+                                                AppConstants.textBlackS12W500,
+                                          ),
                                         ),
                                       ),
                                     );

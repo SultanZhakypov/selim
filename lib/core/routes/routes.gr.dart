@@ -15,6 +15,7 @@ import 'package:auto_route/auto_route.dart' as _i7;
 import 'package:flutter/material.dart' as _i8;
 
 import '../../features/home/presentation/screens/home_screen.dart' as _i6;
+import '../../features/news/data/models/news/news_model.dart' as _i9;
 import '../../features/news/presentation/screens/detail_news_screen.dart'
     as _i2;
 import '../../features/news/presentation/screens/detail_service_screen.dart'
@@ -40,9 +41,14 @@ class AppRouter extends _i7.RootStackRouter {
       );
     },
     DetailNewsScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<DetailNewsScreenRouteArgs>();
       return _i7.CustomPage<dynamic>(
         routeData: routeData,
-        child: const _i2.DetailNewsScreen(),
+        child: _i2.DetailNewsScreen(
+          key: args.key,
+          id: args.id,
+          news: args.news,
+        ),
         transitionsBuilder: _i7.TransitionsBuilders.fadeIn,
         opaque: true,
         barrierDismissible: false,
@@ -129,14 +135,42 @@ class DetailServiceScreenRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.DetailNewsScreen]
-class DetailNewsScreenRoute extends _i7.PageRouteInfo<void> {
-  const DetailNewsScreenRoute()
-      : super(
+class DetailNewsScreenRoute
+    extends _i7.PageRouteInfo<DetailNewsScreenRouteArgs> {
+  DetailNewsScreenRoute({
+    _i8.Key? key,
+    required int id,
+    required List<_i9.NewsModel> news,
+  }) : super(
           DetailNewsScreenRoute.name,
           path: '/detail-news',
+          args: DetailNewsScreenRouteArgs(
+            key: key,
+            id: id,
+            news: news,
+          ),
         );
 
   static const String name = 'DetailNewsScreenRoute';
+}
+
+class DetailNewsScreenRouteArgs {
+  const DetailNewsScreenRouteArgs({
+    this.key,
+    required this.id,
+    required this.news,
+  });
+
+  final _i8.Key? key;
+
+  final int id;
+
+  final List<_i9.NewsModel> news;
+
+  @override
+  String toString() {
+    return 'DetailNewsScreenRouteArgs{key: $key, id: $id, news: $news}';
+  }
 }
 
 /// generated route for

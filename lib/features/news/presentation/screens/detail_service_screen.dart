@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:selim/features/widgets/footer_widget.dart';
 import 'package:selim/features/news/presentation/widgets/custom_appbar.dart';
 import 'package:selim/resources/app_constants.dart';
+import 'package:selim/resources/extensions.dart';
 
 import '../../../widgets/items.dart';
 
@@ -42,11 +43,10 @@ class DetailServiceScreen extends StatelessWidget {
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   childCount: 5,
-                  (context, index) => const Padding(
-                    padding: EdgeInsets.only(bottom: 30),
+                  (context, index) => Padding(
+                    padding: const EdgeInsets.only(bottom: 30),
                     child: SuggestCard(
-                      textOnCenter: false,
-                      noText: false,
+                      height: context.height * 0.2,
                     ),
                   ),
                 ),

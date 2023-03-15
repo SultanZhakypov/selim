@@ -15,6 +15,7 @@ import '../../injectable/init_injectable.dart';
 import '../../resources/app_constants.dart';
 import '../home/presentation/cubit/main_info_cubit.dart';
 import '../news/presentation/cubit/advantage_cubit.dart';
+import '../news/presentation/cubit/news_cubit.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({Key? key, required this.controller}) : super(key: key);
@@ -211,19 +212,10 @@ class _SuggestWidgetState extends State<SuggestWidget> {
               child: PageView.builder(
                 controller: pageController,
                 itemCount: 5,
-                itemBuilder: (context, index) => Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: InkWell(
-                      onTap: () =>
-                          context.router.push(const DetailServiceScreenRoute()),
-                      child: const SuggestCard(
-                        noText: false,
-                        textOnCenter: false,
-                      ),
-                    ),
-                  ),
-                ),
+                itemBuilder: (context, index) => InkWell(
+                    onTap: () =>
+                        context.router.push(const DetailServiceScreenRoute()),
+                    child: const ServiceCard()),
               ),
             ),
             Padding(
@@ -343,56 +335,107 @@ class NewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: context.height * 0.4,
-      child: Column(
-        children: [
-          const Center(
-            child: Text(
-              'Последние новости',
-              style: AppConstants.textBlackS16W700,
+    return BlocProvider(
+      create: (context) => sl<NewsCubit>()..getNews(),
+      child: SizedBox(
+        height: context.height * 0.4,
+        child: Column(
+          children: [
+            const Center(
+              child: Text(
+                'Последние новости',
+                style: AppConstants.textBlackS16W700,
+              ),
             ),
-          ),
-          const SizedBox(height: 15),
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => SizedBox(
-                width: context.width * 0.6,
-                child: const SuggestCard(
-                  textOnCenter: true,
-                  noText: false,
+            const SizedBox(height: 15),
+            BlocBuilder<NewsCubit, NewsState>(
+              builder: (context, state) {
+                if (state is NewsLoading) {
+                  return LoadingAnimationWidget.horizontalRotatingDots(
+                      color: Colors.black, size: 50);
+                }
+                if (state is NewsError) {
+                  return Center(
+                    child: Text(
+                      state.error,
+                      style: AppConstants.textBlackS14W500,
+                    ),
+                  );
+                }
+                if (state is NewsSuccess) {
+                  if (state.news.isEmpty) {
+                    return SizedBox(
+                      height: context.height * 0.2,
+                      child: const Center(
+                        child: Text(
+                          'Пусто',
+                          style: AppConstants.textBlackS14W500,
+                        ),
+                      ),
+                    );
+                  }
+                  if (state.news.length == 1) {
+                    return SizedBox(
+                      height: context.height * 0.2,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: SizedBox(
+                          width: context.width * 0.6,
+                          child: SuggestCard(
+                            height: context.height * 0.2,
+                            news: state.news[0],
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+
+                  return SizedBox(
+                    height: context.height * 0.2,
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: state.news.length,
+                      itemBuilder: (context, index) => SizedBox(
+                        width: context.width * 0.6,
+                        child: SuggestCard(
+                          height: context.height * 0.2,
+                          news: state.news[index],
+                        ),
+                      ),
+                      separatorBuilder: (context, index) => const SizedBox(
+                        width: 20,
+                      ),
+                    ),
+                  );
+                }
+
+                return const SizedBox.shrink();
+              },
+            ),
+            const SizedBox(height: 15),
+            ElevatedButton(
+              onPressed: () => context.router.push(const NewsScreenRoute()),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                foregroundColor: Colors.black,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  side: const BorderSide(
+                    color: Colors.blue,
+                    width: 1,
+                  ),
                 ),
               ),
-              separatorBuilder: (context, index) => const SizedBox(
-                width: 20,
-              ),
-              itemCount: 5,
-            ),
-          ),
-          const SizedBox(height: 15),
-          ElevatedButton(
-            onPressed: () => context.router.push(const NewsScreenRoute()),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.transparent,
-              foregroundColor: Colors.black,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-                side: const BorderSide(
-                  color: Colors.blue,
-                  width: 1,
-                ),
+              child: const Text(
+                'все новости',
+                style: AppConstants.textWhiteInterS12W400,
               ),
             ),
-            child: const Text(
-              'все новости',
-              style: AppConstants.textWhiteInterS12W400,
-            ),
-          ),
-          const SizedBox(height: 32),
-        ],
+            const SizedBox(height: 32),
+          ],
+        ),
       ),
     );
   }
