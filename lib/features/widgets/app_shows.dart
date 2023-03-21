@@ -19,6 +19,17 @@ class AppShows {
   }
 
   static openPopUpMenu(BuildContext context) {
+    String? currentRoute = ModalRoute.of(context)!.settings.name;
+    void doRoute(BuildContext context, PageRouteInfo page) {
+      if (currentRoute != page.routeName) {
+        context.router.push(page);
+      } else {
+        null;
+      }
+
+      currentRoute = page.routeName;
+    }
+
     showMenu(
       context: context,
       shape: RoundedRectangleBorder(
@@ -27,7 +38,7 @@ class AppShows {
       position: const RelativeRect.fromLTRB(100, 0, 0, 100),
       items: [
         PopupMenuItem(
-          onTap: () => context.router.push(const HomeScreenRoute()),
+          onTap: () => doRoute(context, const HomeScreenRoute()),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -43,21 +54,21 @@ class AppShows {
           ),
         ),
         PopupMenuItem(
-          onTap: () => context.router.push(const ServicesScreenRoute()),
+          onTap: () => doRoute(context, const ServicesScreenRoute()),
           child: const Text(
             'Услуги',
             style: AppConstants.textBlueS14W600,
           ),
         ),
         PopupMenuItem(
-          onTap: () => context.router.push(const NewsScreenRoute()),
+          onTap: () => doRoute(context, const NewsScreenRoute()),
           child: const Text(
             'Новости',
             style: AppConstants.textBlueS14W600,
           ),
         ),
         PopupMenuItem(
-          onTap: () => context.router.push(const WorksScreenRoute()),
+          onTap: () => doRoute(context, const WorksScreenRoute()),
           child: const Text(
             'Наши работы',
             style: AppConstants.textBlueS14W600,

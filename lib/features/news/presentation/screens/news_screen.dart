@@ -55,8 +55,7 @@ class NewsScreen extends StatelessWidget {
                       );
                     }
                     if (state is NewsSuccess) {
-                      
-                      if (state.news.isEmpty) {
+                      if (state.news.results.isEmpty) {
                         return const SliverToBoxAdapter(
                           child: Center(
                             child: Text(
@@ -68,25 +67,22 @@ class NewsScreen extends StatelessWidget {
                       }
                       return SliverList(
                         delegate: SliverChildBuilderDelegate(
-                          childCount: state.news.length,
-                          (context, index) {
-                      
-                           return  Padding(
+                            childCount: state.news.results.length,
+                            (context, index) {
+                          return Padding(
                             padding: const EdgeInsets.only(bottom: 20),
                             child: GestureDetector(
                               onTap: () => context.router.push(
                                   DetailNewsScreenRoute(
-                                
-                                      news: state.news,
-                                      id: state.news[index].id)),
+                                      news: state.news.results,
+                                      id: state.news.results[index].id)),
                               child: SuggestCard(
                                 height: context.height * 0.3,
-                                news: state.news[index],
+                                news: state.news.results[index],
                               ),
                             ),
                           );
-                          }
-                        ),
+                        }),
                       );
                     }
                     return const SliverToBoxAdapter(

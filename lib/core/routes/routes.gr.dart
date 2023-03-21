@@ -14,8 +14,9 @@
 import 'package:auto_route/auto_route.dart' as _i7;
 import 'package:flutter/material.dart' as _i8;
 
+import '../../features/home/domain/entities/categories_entity.dart' as _i9;
 import '../../features/home/presentation/screens/home_screen.dart' as _i6;
-import '../../features/news/data/models/news/news_model.dart' as _i9;
+import '../../features/news/data/models/news/news_model.dart' as _i10;
 import '../../features/news/presentation/screens/detail_news_screen.dart'
     as _i2;
 import '../../features/news/presentation/screens/detail_service_screen.dart'
@@ -32,9 +33,13 @@ class AppRouter extends _i7.RootStackRouter {
   @override
   final Map<String, _i7.PageFactory> pagesMap = {
     DetailServiceScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<DetailServiceScreenRouteArgs>();
       return _i7.CustomPage<dynamic>(
         routeData: routeData,
-        child: const _i1.DetailServiceScreen(),
+        child: _i1.DetailServiceScreen(
+          key: args.key,
+          category: args.category,
+        ),
         transitionsBuilder: _i7.TransitionsBuilders.fadeIn,
         opaque: true,
         barrierDismissible: false,
@@ -123,14 +128,37 @@ class AppRouter extends _i7.RootStackRouter {
 
 /// generated route for
 /// [_i1.DetailServiceScreen]
-class DetailServiceScreenRoute extends _i7.PageRouteInfo<void> {
-  const DetailServiceScreenRoute()
-      : super(
+class DetailServiceScreenRoute
+    extends _i7.PageRouteInfo<DetailServiceScreenRouteArgs> {
+  DetailServiceScreenRoute({
+    _i8.Key? key,
+    required _i9.CategoriesEntity category,
+  }) : super(
           DetailServiceScreenRoute.name,
           path: '/detail_service',
+          args: DetailServiceScreenRouteArgs(
+            key: key,
+            category: category,
+          ),
         );
 
   static const String name = 'DetailServiceScreenRoute';
+}
+
+class DetailServiceScreenRouteArgs {
+  const DetailServiceScreenRouteArgs({
+    this.key,
+    required this.category,
+  });
+
+  final _i8.Key? key;
+
+  final _i9.CategoriesEntity category;
+
+  @override
+  String toString() {
+    return 'DetailServiceScreenRouteArgs{key: $key, category: $category}';
+  }
 }
 
 /// generated route for
@@ -140,7 +168,7 @@ class DetailNewsScreenRoute
   DetailNewsScreenRoute({
     _i8.Key? key,
     required int id,
-    required List<_i9.NewsModel> news,
+    required List<_i10.Result> news,
   }) : super(
           DetailNewsScreenRoute.name,
           path: '/detail-news',
@@ -165,7 +193,7 @@ class DetailNewsScreenRouteArgs {
 
   final int id;
 
-  final List<_i9.NewsModel> news;
+  final List<_i10.Result> news;
 
   @override
   String toString() {

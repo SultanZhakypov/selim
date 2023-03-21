@@ -34,7 +34,7 @@ class NewsLoading extends NewsState {}
 
 class NewsSuccess extends NewsState {
   const NewsSuccess(this.news);
-  final List<NewsModel> news;
+  final NewsModel news;
 
   @override
   List<Object?> get props => [news];

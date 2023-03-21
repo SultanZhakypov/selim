@@ -1,13 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:selim/core/error/dio_exceptions.dart';
+import 'package:selim/features/home/data/models/category/categories_model.dart';
 import 'package:selim/features/home/data/models/feedback/feedback_model.dart';
 import 'package:selim/features/home/data/models/product/product_model.dart';
 import 'package:selim/features/home/data/models/main_info/main_info_model.dart';
+import 'package:selim/features/home/data/models/review/review_model.dart';
+import 'package:selim/features/home/domain/entities/categories_entity.dart';
 import 'package:selim/features/home/domain/entities/maininfo_entity.dart';
-
 import '../../domain/entities/aboutus_entity.dart';
 import '../../domain/entities/product_entity.dart';
+import '../../domain/entities/review_entity.dart';
 import '../models/about_us/about_us_model.dart';
 
 abstract class HomeRepo {
@@ -15,7 +18,9 @@ abstract class HomeRepo {
   Future<List<AboutUsEntity>> getAboutUs();
   Future<List<PhoneNumber>> getPhoneNumber();
   Future<List<Schedule>> getSchedule();
+  Future<List<ReviewEntity>> getReview();
   Future<List<ProductEntity>> getProduct();
+  Future<List<CategoriesEntity>> getCategories();
   Future<FeedbackModel> postFeedBack({
     required String name,
     required String message,
@@ -95,6 +100,30 @@ class HomeRepoImpl implements HomeRepo {
       });
 
       return FeedbackModel.fromJson(response.data);
+    } on DioError catch (e) {
+      throw DioException.fromDioError(e);
+    }
+  }
+
+  @override
+  Future<List<CategoriesEntity>> getCategories() async {
+    try {
+      final response = await _dio.get('categories/');
+      final category = response.data;
+      return (category as List)
+          .map((e) => CategoriesModel.fromJson(e))
+          .toList();
+    } on DioError catch (e) {
+      throw DioException.fromDioError(e);
+    }
+  }
+
+  @override
+  Future<List<ReviewEntity>> getReview() async {
+    try {
+      final response = await _dio.get('review/');
+      final review = response.data;
+      return (review as List).map((e) => ReviewModel.fromJson(e)).toList();
     } on DioError catch (e) {
       throw DioException.fromDioError(e);
     }

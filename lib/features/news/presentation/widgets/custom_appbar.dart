@@ -1,7 +1,10 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:selim/features/widgets/app_shows.dart';
+import 'package:selim/core/routes/routes.dart';
 
+import 'package:selim/features/widgets/app_shows.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 import 'package:selim/resources/resources.dart';
@@ -28,7 +31,15 @@ class Appbar1 extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SvgPicture.asset(Svgs.selimBlacck),
+              InkWell(
+                  onTap: () {
+                    String? currentPage = ModalRoute.of(context)!.settings.name;
+                    if (currentPage == 'HomeScreenRoute') {
+                      null;
+                    }
+                    context.router.push(const HomeScreenRoute());
+                  },
+                  child: SvgPicture.asset(Svgs.selimBlacck)),
               InkWell(
                   onTap: () => AppShows.openPopUpMenu(context),
                   child: SvgPicture.asset(Svgs.menuBlack)),
@@ -53,19 +64,25 @@ class Appbar1 extends StatelessWidget {
 }
 
 class AppBar2 extends StatelessWidget {
-  const AppBar2({Key? key}) : super(key: key);
+  const AppBar2({
+    Key? key,
+    required this.image,
+    required this.title,
+  }) : super(key: key);
+  final String image;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: context.height / 4,
       width: context.width,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(Images.justImage),
+          image: CachedNetworkImageProvider(image),
           fit: BoxFit.cover,
         ),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomRight: Radius.circular(50),
         ),
       ),
@@ -76,15 +93,24 @@ class AppBar2 extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SvgPicture.asset(Svgs.selimG),
+                InkWell(
+                    onTap: () {
+                      String? currentPage =
+                          ModalRoute.of(context)!.settings.name;
+                      if (currentPage == 'HomeScreenRoute') {
+                        null;
+                      }
+                      context.router.push(const HomeScreenRoute());
+                    },
+                    child: SvgPicture.asset(Svgs.selimG)),
                 InkWell(
                     onTap: () => AppShows.openPopUpMenu(context),
                     child: SvgPicture.asset(Svgs.menu)),
               ],
             ),
-            const SizedBox(height: 18),
-            const Text(
-              'ПРОМЫШЛЕННЫЕ \n СЕКЦИОННЫЕ ВОРОТА',
+            const SizedBox(height: 32),
+            Text(
+              title.toUpperCase(),
               style: AppConstants.textWhiteS16W800,
               textAlign: TextAlign.center,
             ),

@@ -2,21 +2,24 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+
 import 'package:selim/core/routes/routes.dart';
 import 'package:selim/features/home/presentation/cubit/about_us_cubit.dart';
+import 'package:selim/features/home/presentation/cubit/categories_cubit.dart';
 import 'package:selim/features/home/presentation/cubit/product_cubit.dart';
 import 'package:selim/features/home/presentation/widgets/buttons.dart';
-import 'package:selim/features/home/presentation/widgets/constants.dart';
 import 'package:selim/features/widgets/app_shows.dart';
 import 'package:selim/features/widgets/items.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:selim/resources/extensions.dart';
 import 'package:selim/resources/resources.dart';
-import '../../injectable/init_injectable.dart';
-import '../../resources/app_constants.dart';
-import '../home/presentation/cubit/main_info_cubit.dart';
-import '../news/presentation/cubit/advantage_cubit.dart';
-import '../news/presentation/cubit/news_cubit.dart';
+
+import '../../../../injectable/init_injectable.dart';
+import '../../../../resources/app_constants.dart';
+import '../../../news/presentation/cubit/advantage_cubit.dart';
+import '../../../news/presentation/cubit/news_cubit.dart';
+import '../cubit/main_info_cubit.dart';
+import '../cubit/review_cubit.dart';
 
 class HeaderWidget extends StatelessWidget {
   const HeaderWidget({Key? key, required this.controller}) : super(key: key);
@@ -196,71 +199,115 @@ class _SuggestWidgetState extends State<SuggestWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: SizedBox(
-        height: context.height * 0.4,
-        child: Column(
-          children: [
-            const Center(
-              child: Text(
-                'Мы предлагаем',
-                style: AppConstants.textBlackS16W700,
+    return BlocProvider(
+      create: (context) => sl<CategoriesCubit>()..getCategories(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: SizedBox(
+          height: context.height * 0.4,
+          child: Column(
+            children: [
+              const Center(
+                child: Text(
+                  'Мы предлагаем',
+                  style: AppConstants.textBlackS16W700,
+                ),
               ),
-            ),
-            const SizedBox(height: 15),
-            Expanded(
-              child: PageView.builder(
-                controller: pageController,
-                itemCount: 5,
-                itemBuilder: (context, index) => InkWell(
-                    onTap: () =>
-                        context.router.push(const DetailServiceScreenRoute()),
-                    child: const ServiceCard()),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  AppArrowButton(
-                    onPress: () => pageController.previousPage(
-                      duration: const Duration(seconds: 1),
-                      curve: Curves.ease,
-                    ),
-                    icon: Icons.arrow_back_ios,
-                  ),
-                  ElevatedButton(
-                    onPressed: () =>
-                        context.router.push(const ServicesScreenRoute()),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.black,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        side: const BorderSide(
-                          color: Colors.blue,
-                          width: 1,
+              const SizedBox(height: 15),
+              BlocBuilder<CategoriesCubit, CategoriesState>(
+                builder: (context, state) {
+                  if (state is CategoriesError) {
+                    return Expanded(
+                      child: Center(
+                        child: Text(
+                          state.error,
+                          style: AppConstants.textBlackS14W500,
                         ),
                       ),
-                    ),
-                    child: const Text(
-                      'смотреть все',
-                      style: AppConstants.textWhiteInterS12W400,
-                    ),
-                  ),
-                  AppArrowButton(
-                    onPress: () => pageController.nextPage(
-                        duration: const Duration(seconds: 1),
-                        curve: Curves.ease),
-                    icon: Icons.arrow_forward_ios,
-                  ),
-                ],
+                    );
+                  }
+                  if (state is CategoriesLoading) {
+                    return Expanded(
+                      child: Center(
+                        child: LoadingAnimationWidget.horizontalRotatingDots(
+                            color: Colors.black, size: 50),
+                      ),
+                    );
+                  }
+                  if (state is CategoriesSuccess) {
+                    return Expanded(
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: PageView.builder(
+                              controller: pageController,
+                              itemCount: state.categories.length,
+                              itemBuilder: (context, index) => InkWell(
+                                onTap: () => context.router.push(
+                                  DetailServiceScreenRoute(
+                                      category: state.categories[index]),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: ServiceCard(
+                                    category: state.categories[index],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 13),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                AppArrowButton(
+                                  onPress: () => pageController.previousPage(
+                                    duration: const Duration(seconds: 1),
+                                    curve: Curves.ease,
+                                  ),
+                                  icon: Icons.arrow_back_ios,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () => context.router
+                                      .push(const ServicesScreenRoute()),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.transparent,
+                                    foregroundColor: Colors.black,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                      side: const BorderSide(
+                                        color: Colors.blue,
+                                        width: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    'смотреть все',
+                                    style: AppConstants.textWhiteInterS12W400,
+                                  ),
+                                ),
+                                AppArrowButton(
+                                  onPress: () => pageController.nextPage(
+                                      duration: const Duration(seconds: 1),
+                                      curve: Curves.ease),
+                                  icon: Icons.arrow_forward_ios,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -318,8 +365,8 @@ class AdvantageOrService extends StatelessWidget {
                       separatorBuilder: (context, index) =>
                           const SizedBox(width: 10),
                       itemCount: isService
-                          ? AppText.svgsServices.length
-                          : AppText.svgs.length,
+                          ? state.services.length
+                          : state.advantages.length,
                     ),
                   );
                 }
@@ -367,7 +414,7 @@ class NewsWidget extends StatelessWidget {
                   );
                 }
                 if (state is NewsSuccess) {
-                  if (state.news.isEmpty) {
+                  if (state.news.results.isEmpty) {
                     return SizedBox(
                       height: context.height * 0.2,
                       child: const Center(
@@ -378,7 +425,7 @@ class NewsWidget extends StatelessWidget {
                       ),
                     );
                   }
-                  if (state.news.length == 1) {
+                  if (state.news.results.length == 1) {
                     return SizedBox(
                       height: context.height * 0.2,
                       child: Padding(
@@ -388,13 +435,13 @@ class NewsWidget extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () => context.router.push(
                               DetailNewsScreenRoute(
-                                id: state.news[0].id,
-                                news: state.news,
+                                id: state.news.results[0].id,
+                                news: state.news.results,
                               ),
                             ),
                             child: SuggestCard(
                               height: context.height * 0.2,
-                              news: state.news[0],
+                              news: state.news.results[0],
                             ),
                           ),
                         ),
@@ -407,19 +454,19 @@ class NewsWidget extends StatelessWidget {
                     child: ListView.separated(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       scrollDirection: Axis.horizontal,
-                      itemCount: state.news.length,
+                      itemCount: state.news.results.length,
                       itemBuilder: (context, index) => SizedBox(
                         width: context.width * 0.6,
                         child: GestureDetector(
                           onTap: () => context.router.push(
                             DetailNewsScreenRoute(
-                              id: state.news[index].id,
-                              news: state.news,
+                              id: state.news.results[index].id,
+                              news: state.news.results,
                             ),
                           ),
                           child: SuggestCard(
                             height: context.height * 0.2,
-                            news: state.news[index],
+                            news: state.news.results[index],
                           ),
                         ),
                       ),
@@ -510,9 +557,8 @@ class UsWorkWidget extends StatelessWidget {
                       ),
                     );
                   }
-
                   return Expanded(
-                    child: WorkCard(product: state.product),
+                    child: WorkImages(state: state),
                   );
                 }
                 return const SizedBox.shrink();
@@ -542,48 +588,86 @@ class _FeedBackWidgetState extends State<FeedBackWidget> {
   }
 
   @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: context.height * 0.4,
-      child: Column(
-        children: [
-          const Center(
-            child: Text(
-              'Отзывы наших клиентов',
-              style: AppConstants.textBlackS16W700,
+    return BlocProvider(
+      create: (context) => sl<ReviewCubit>()..getReview(),
+      child: SizedBox(
+        height: context.height * 0.4,
+        child: Column(
+          children: [
+            const Center(
+              child: Text(
+                'Отзывы наших клиентов',
+                style: AppConstants.textBlackS16W700,
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: PageView.builder(
-              controller: pageController,
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return const Center(child: ClientCard());
+            const SizedBox(height: 20),
+            BlocBuilder<ReviewCubit, ReviewState>(
+              builder: (context, state) {
+                if (state is ReviewError) {
+                  return SizedBox(
+                    height: context.height * 0.1,
+                    child: Center(
+                      child: Text(
+                        state.error,
+                        style: AppConstants.textBlackS14W500,
+                      ),
+                    ),
+                  );
+                }
+                if (state is ReviewLoading) {
+                  return Center(
+                    child: LoadingAnimationWidget.horizontalRotatingDots(
+                        color: Colors.black, size: 50),
+                  );
+                }
+                if (state is ReviewSuccess) {
+                  return Expanded(
+                    child: PageView.builder(
+                      controller: pageController,
+                      itemCount: state.review.length,
+                      itemBuilder: (context, index) {
+                        return Center(
+                          child: ClientCard(
+                            review: state.review[index],
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
               },
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                AppArrowButton(
-                  onPress: () => pageController.previousPage(
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.ease,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  AppArrowButton(
+                    onPress: () => pageController.previousPage(
+                      duration: const Duration(seconds: 1),
+                      curve: Curves.ease,
+                    ),
+                    icon: Icons.arrow_back_ios,
                   ),
-                  icon: Icons.arrow_back_ios,
-                ),
-                AppArrowButton(
-                  onPress: () => pageController.nextPage(
-                      duration: const Duration(seconds: 1), curve: Curves.ease),
-                  icon: Icons.arrow_forward_ios,
-                ),
-              ],
-            ),
-          )
-        ],
+                  AppArrowButton(
+                    onPress: () => pageController.nextPage(
+                        duration: const Duration(seconds: 1),
+                        curve: Curves.ease),
+                    icon: Icons.arrow_forward_ios,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

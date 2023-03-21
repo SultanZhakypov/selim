@@ -20,9 +20,12 @@ class DioException implements Exception {
       case DioErrorType.badResponse:
         errorMessage = _handleStatusCode(dioError.response?.statusCode);
         break;
+      case DioErrorType.connectionError:
+        errorMessage = 'Нету подключения  к интернету';
+        break;
 
       default:
-        errorMessage = 'Нету подключения  к интернету';
+        errorMessage = 'Something wrong';
         break;
     }
   }

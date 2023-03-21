@@ -110,6 +110,9 @@ class _FooterWidgetState extends State<FooterWidget> {
                 listener: (context, state) {
                   if (state is FeedBackSuccess) {
                     AppShows.showSuccessDialog(context);
+                    _controller.clear();
+                    _controller2.clear();
+                    _controller3.clear();
                   }
                   if (state is FeedBackError) {
                     AppShows.showSnackBar(context, state.error);
@@ -166,7 +169,9 @@ class _FooterWidgetState extends State<FooterWidget> {
                               BlocBuilder<ScheduleCubit, ScheduleState>(
                                 builder: (context, state) {
                                   if (state is ScheduleError) {
-                                    return Text(state.error);
+                                    return SizedBox(
+                                        width: context.width * 0.3,
+                                        child: Text(state.error));
                                   }
                                   if (state is ScheduleLoading) {
                                     return LoadingAnimationWidget

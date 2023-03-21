@@ -1,25 +1,59 @@
-import 'dart:math';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import 'package:selim/features/home/domain/entities/product_entity.dart';
 import 'package:selim/features/widgets/cached_image.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 
-import '../../resources/resources.dart';
+import '../home/domain/entities/categories_entity.dart';
+import '../home/domain/entities/review_entity.dart';
+import '../home/presentation/cubit/product_cubit.dart';
 import '../news/data/models/news/news_model.dart';
-import '../news/domain/entities/news_image_entity.dart';
 
 class SuggestCard extends StatelessWidget {
-  const SuggestCard({
+  const SuggestCard({Key? key, this.news, required this.height})
+      : super(key: key);
+
+  final Result? news;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadiusDirectional.circular(16),
+        image: DecorationImage(
+          image: CachedNetworkImageProvider(news!.image),
+          fit: BoxFit.fill,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Center(
+          child: Text(
+            news!.title,
+            style: AppConstants.textWhiteS10W800,
+            softWrap: true,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+//TODO: ДОДЕЛАТЬ
+class CategoryTypes extends StatelessWidget {
+  const CategoryTypes({
     Key? key,
-    this.news,
     required this.height,
+    required this.image,
+    required this.title,
   }) : super(key: key);
 
-  final NewsEntity? news;
+  final String image;
   final double height;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +61,14 @@ class SuggestCard extends StatelessWidget {
       alignment: AlignmentDirectional.center,
       children: [
         CachedImage(
-          imageUrl: news?.image ?? '',
+          imageUrl: image,
           height: height,
         ),
         Padding(
           padding: const EdgeInsets.only(left: 20),
           child: Center(
             child: Text(
-              news?.title ?? '',
+              title,
               style: AppConstants.textWhiteS10W800,
               softWrap: true,
             ),
@@ -51,7 +85,7 @@ class NewsImagesCard extends StatelessWidget {
     required this.news,
   }) : super(key: key);
 
-  final NewsModel news;
+  final Result news;
 
   @override
   Widget build(BuildContext context) {
@@ -78,106 +112,100 @@ class NewsImagesCard extends StatelessWidget {
 }
 
 class ServiceCard extends StatelessWidget {
-  const ServiceCard({super.key});
+  const ServiceCard({
+    Key? key,
+    required this.category,
+  }) : super(key: key);
+
+  final CategoriesEntity category;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Stack(
-          children: [
-            Image.asset(Images.justImage),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 6, left: 6),
-                child: Container(
-                  height: 32,
-                  width: context.width / 3,
-                  decoration: BoxDecoration(
-                    color: AppColors.colorBlack02,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Center(
-                      child: Text(
-                    'Автоматика',
-                    style: AppConstants.textWhiteS16W800,
-                  )),
-                ),
+    return DecoratedBox(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+            image: CachedNetworkImageProvider(category.image),
+            fit: BoxFit.fill,
+          ),
+          borderRadius: BorderRadius.circular(30)),
+      child: Align(
+        alignment: Alignment.bottomLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10, bottom: 10),
+          child: Container(
+            height: context.height * 0.05,
+            width: context.width * 0.7,
+            decoration: BoxDecoration(
+              color: AppColors.colorBlack02,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Center(
+              child: Text(
+                category.title,
+                style: AppConstants.textWhiteS16W800,
               ),
             ),
-          ],
+          ),
         ),
-      ],
+      ),
     );
   }
 }
 
-class WorkCard extends StatefulWidget {
-  const WorkCard({
-    Key? key,
-    required this.product,
-  }) : super(key: key);
+class WorkImages extends StatefulWidget {
+  const WorkImages({Key? key, required this.state}) : super(key: key);
 
-  final List<ProductEntity> product;
+  final ProductSuccess state;
 
   @override
-  State<WorkCard> createState() => _WorkCardState();
+  State<WorkImages> createState() => _WorkImagesState();
 }
 
-class _WorkCardState extends State<WorkCard> {
-  PageController? pageController;
-
-  double viewportFraction = 0.8;
-
-  double? pageOffset = 0;
+class _WorkImagesState extends State<WorkImages> {
+  final _controller = PageController(viewportFraction: 0.8);
+  int _selectedIndex = 0;
 
   @override
-  void initState() {
-    super.initState();
-    pageController =
-        PageController(initialPage: 0, viewportFraction: viewportFraction)
-          ..addListener(() {
-            setState(() {
-              pageOffset = pageController!.page;
-            });
-          });
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
-      controller: pageController,
-      itemCount: widget.product.length,
-      itemBuilder: (context, index) {
-        double scale = max(viewportFraction,
-            (1 - (pageOffset! - index).abs()) + viewportFraction);
-
-        double angle = (pageOffset! - index).abs();
-
-        if (angle > 0.5) {
-          angle = 1 - angle;
-        }
-        return Padding(
-          padding: EdgeInsets.only(
-            top: 20 - scale * 10,
-          ),
-          child: Transform(
-            transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.001)
-              ..rotateY(angle),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: CachedImage(
-                imageUrl: widget.product[index].image,
-                height: 0,
+        controller: _controller,
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        itemCount: widget.state.product.length,
+        itemBuilder: (context, index) {
+          var scale = _selectedIndex == index ? 1.0 : 0.9;
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TweenAnimationBuilder(
+              duration: const Duration(milliseconds: 350),
+              tween: Tween(begin: scale, end: scale),
+              curve: Curves.ease,
+              builder: (context, value, child) => Transform.scale(
+                scale: value,
+                child: child,
+              ),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: CachedNetworkImageProvider(
+                        widget.state.product[index].image),
+                  ),
+                ),
               ),
             ),
-          ),
-        );
-      },
-    );
+          );
+        });
   }
 }
 
@@ -221,9 +249,8 @@ class AdvantageCard extends StatelessWidget {
 }
 
 class ClientCard extends StatelessWidget {
-  const ClientCard({
-    Key? key,
-  }) : super(key: key);
+  const ClientCard({Key? key, required this.review}) : super(key: key);
+  final ReviewEntity review;
 
   @override
   Widget build(BuildContext context) {
@@ -249,14 +276,17 @@ class ClientCard extends StatelessWidget {
                       padding: EdgeInsets.only(left: context.width / 5.5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
+                        children: [
                           Text(
-                            'Улан Султанов',
+                            '${review.firstName} ${review.lastName}',
                             style: AppConstants.textBlackS14W600,
                           ),
-                          Text(
-                            'ворота атоматические',
-                            style: AppConstants.textBlackS14W300,
+                          SizedBox(
+                            width: context.width * 0.4,
+                            child: Text(
+                              review.categoryName,
+                              style: AppConstants.textBlackS14W300,
+                            ),
                           ),
                         ],
                       ),
@@ -266,7 +296,7 @@ class ClientCard extends StatelessWidget {
                 const SizedBox(height: 14),
                 Expanded(
                   child: Text(
-                    'Ворота стоят уже более двух лет. За это время с ними не было никаких проблем. Спасибо, Selim Trade!',
+                    review.text,
                     style: AppConstants.textBlackS12W500.copyWith(height: 1.5),
                     overflow: TextOverflow.visible,
                   ),
@@ -275,11 +305,11 @@ class ClientCard extends StatelessWidget {
             ),
           ),
         ),
-        const Positioned(
+        Positioned(
           left: 10,
           child: CircleAvatar(
             radius: 25,
-            backgroundImage: AssetImage(Images.circleimage),
+            backgroundImage: CachedNetworkImageProvider(review.image),
           ),
         ),
       ],

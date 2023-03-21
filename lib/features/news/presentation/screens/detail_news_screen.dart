@@ -21,7 +21,7 @@ class DetailNewsScreen extends StatelessWidget {
   }) : super(key: key);
 
   final int id;
-  final List<NewsModel> news;
+  final List<Result> news;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class DetailNewsScreen extends StatelessWidget {
               }
 
               if (state is NewsDetailSuccess) {
-                List<NewsModel> similarNews = [...news];
+                List<Result> similarNews = [...news];
                 int? idOfSimilarNews;
                 String? img;
                 similarNews
