@@ -67,3 +67,37 @@ class AppButton extends StatelessWidget {
     );
   }
 }
+
+class AppButton2 extends StatelessWidget {
+  const AppButton2({
+    Key? key,
+    required this.onPress,
+    required this.title,
+  }) : super(key: key);
+
+  final Function() onPress;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPress,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: const BorderSide(
+            color: Colors.blue,
+            width: 1,
+          ),
+        ),
+      ),
+      child: Text(
+        title,
+        style: AppConstants.textWhiteInterS12W400,
+      ),
+    );
+  }
+}

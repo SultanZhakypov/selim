@@ -5,6 +5,10 @@ import 'package:selim/features/widgets/app_shows.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LaunchURLS {
+  static Future<void> launchPhone(BuildContext context,String phoneNumber) async {
+    await launchUrl(Uri.parse('tel://$phoneNumber'));
+  }
+
   static Future<void> launchURLS(BuildContext context,
       {required String url,
       required String showMessageIOS,

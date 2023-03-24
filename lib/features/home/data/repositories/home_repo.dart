@@ -101,7 +101,7 @@ class HomeRepoImpl implements HomeRepo {
 
       return FeedbackModel.fromJson(response.data);
     } on DioError catch (e) {
-      throw DioException.fromDioError(e);
+      throw e.response!.data['non_field_errors'];
     }
   }
 

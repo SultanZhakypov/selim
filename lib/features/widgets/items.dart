@@ -42,42 +42,6 @@ class SuggestCard extends StatelessWidget {
   }
 }
 
-//TODO: ДОДЕЛАТЬ
-class CategoryTypes extends StatelessWidget {
-  const CategoryTypes({
-    Key? key,
-    required this.height,
-    required this.image,
-    required this.title,
-  }) : super(key: key);
-
-  final String image;
-  final double height;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.center,
-      children: [
-        CachedImage(
-          imageUrl: image,
-          height: height,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: Center(
-            child: Text(
-              title,
-              style: AppConstants.textWhiteS10W800,
-              softWrap: true,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 class NewsImagesCard extends StatelessWidget {
   const NewsImagesCard({
@@ -114,17 +78,18 @@ class NewsImagesCard extends StatelessWidget {
 class ServiceCard extends StatelessWidget {
   const ServiceCard({
     Key? key,
-    required this.category,
+    required this.image,
+    required this.title,
   }) : super(key: key);
 
-  final CategoriesEntity category;
+  final String image,title;
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
           image: DecorationImage(
-            image: CachedNetworkImageProvider(category.image),
+            image: CachedNetworkImageProvider(image),
             fit: BoxFit.fill,
           ),
           borderRadius: BorderRadius.circular(30)),
@@ -141,7 +106,7 @@ class ServiceCard extends StatelessWidget {
             ),
             child: Center(
               child: Text(
-                category.title,
+                title,
                 style: AppConstants.textWhiteS16W800,
               ),
             ),
@@ -308,6 +273,7 @@ class ClientCard extends StatelessWidget {
         Positioned(
           left: 10,
           child: CircleAvatar(
+            backgroundColor: Colors.grey,
             radius: 25,
             backgroundImage: CachedNetworkImageProvider(review.image),
           ),

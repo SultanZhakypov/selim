@@ -79,7 +79,8 @@ class ServicesScreen extends StatelessWidget {
                               child: Padding(
                                 padding: const EdgeInsets.only(bottom: 30),
                                 child: ServiceCard(
-                                  category: state.categories[index],
+                                  image: state.categories[index].image,
+                                  title: state.categories[index].image,
                                 ),
                               ),
                             ),

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:selim/features/widgets/launch_url.dart';
 import 'package:selim/resources/extensions.dart';
 import 'package:selim/resources/resources.dart';
 import '../../core/routes/routes.gr.dart';
@@ -75,25 +76,28 @@ class AppShows {
           ),
         ),
         PopupMenuItem(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'г.Бишкек',
-                style: AppConstants.textBlueS14W500,
-              ),
-              const SizedBox(height: 5),
-              Row(
-                children: [
-                  SvgPicture.asset(Svgs.phone),
-                  const SizedBox(width: 5),
-                  const Text(
-                    '+996 (552) 57 07 55',
-                    style: AppConstants.textBlueS14W600,
-                  ),
-                ],
-              )
-            ],
+          child: InkWell(
+            onTap: () => LaunchURLS.launchPhone(context, '+996552570755'),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'г.Бишкек',
+                  style: AppConstants.textBlueS14W500,
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    SvgPicture.asset(Svgs.phone),
+                    const SizedBox(width: 5),
+                    const Text(
+                      '+996 (552) 57 07 55',
+                      style: AppConstants.textBlueS14W600,
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ],
@@ -107,41 +111,76 @@ class AppShows {
         Future.delayed(const Duration(seconds: 5), () {
           context.router.pop();
         });
-        return AlertDialog(
-          content: SizedBox(
-            height: context.height * 0.35,
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                      onPressed: () => context.router.pop(true),
-                      icon: const Icon(
-                        Icons.close,
-                      )),
-                ),
-                SvgPicture.asset(
-                  Svgs.success,
-                  height: context.height * 0.1,
-                  color: Colors.green,
-                ),
-                const SizedBox(height: 30),
-                const Text(
-                  'Заявка успешно \n отправлена',
-                  style: AppConstants.textBlackS20W700,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  'Ваша заявка отправлена рассмотрение. В ближайшее время с вами свяжется наш специалист',
-                  style: AppConstants.textBlackS14W300,
-                  textAlign: TextAlign.center,
-                )
-              ],
-            ),
-          ),
-        );
+        return const SuccessDialog();
       },
+    );
+  }
+}
+
+class SuccessDialog extends StatefulWidget {
+  const SuccessDialog({
+    super.key,
+  });
+
+  @override
+  State<SuccessDialog> createState() => _SuccessDialogState();
+}
+
+class _SuccessDialogState extends State<SuccessDialog>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> scaleAnimation;
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 650));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+    controller.addListener(() {
+      setState(() {});
+    });
+    controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: SizedBox(
+        height: context.height * 0.4,
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                  onPressed: () => context.router.pop(),
+                  icon: const Icon(
+                    Icons.close,
+                  )),
+            ),
+            ScaleTransition(
+              scale: scaleAnimation,
+              child: SvgPicture.asset(
+                Svgs.success,
+                height: context.height * 0.1,
+                color: Colors.green,
+              ),
+            ),
+            const SizedBox(height: 30),
+            const Text(
+              'Заявка успешно \n отправлена',
+              style: AppConstants.textBlackS20W700,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Ваша заявка отправлена рассмотрение. В ближайшее время с вами свяжется наш специалист',
+              style: AppConstants.textBlackS14W300,
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

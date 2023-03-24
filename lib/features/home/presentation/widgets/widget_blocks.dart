@@ -251,7 +251,8 @@ class _SuggestWidgetState extends State<SuggestWidget> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10),
                                   child: ServiceCard(
-                                    category: state.categories[index],
+                                    image: state.categories[index].image,
+                                    title: state.categories[index].title,
                                   ),
                                 ),
                               ),
@@ -270,26 +271,10 @@ class _SuggestWidgetState extends State<SuggestWidget> {
                                   ),
                                   icon: Icons.arrow_back_ios,
                                 ),
-                                ElevatedButton(
-                                  onPressed: () => context.router
-                                      .push(const ServicesScreenRoute()),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.transparent,
-                                    foregroundColor: Colors.black,
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                      side: const BorderSide(
-                                        color: Colors.blue,
-                                        width: 1,
-                                      ),
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    'смотреть все',
-                                    style: AppConstants.textWhiteInterS12W400,
-                                  ),
-                                ),
+                                AppButton2(
+                                    onPress: () => context.router
+                                        .push(const ServicesScreenRoute()),
+                                    title: 'смотреть все'),
                                 AppArrowButton(
                                   onPress: () => pageController.nextPage(
                                       duration: const Duration(seconds: 1),
@@ -401,10 +386,6 @@ class NewsWidget extends StatelessWidget {
             const SizedBox(height: 15),
             BlocBuilder<NewsCubit, NewsState>(
               builder: (context, state) {
-                if (state is NewsLoading) {
-                  return LoadingAnimationWidget.horizontalRotatingDots(
-                      color: Colors.black, size: 50);
-                }
                 if (state is NewsError) {
                   return Center(
                     child: Text(
@@ -414,7 +395,11 @@ class NewsWidget extends StatelessWidget {
                   );
                 }
                 if (state is NewsSuccess) {
-                  if (state.news.results.isEmpty) {
+                  if (state.isLoading) {
+                    return LoadingAnimationWidget.horizontalRotatingDots(
+                        color: Colors.black, size: 50);
+                  }
+                  if (state.news.isEmpty) {
                     return SizedBox(
                       height: context.height * 0.2,
                       child: const Center(
@@ -425,7 +410,7 @@ class NewsWidget extends StatelessWidget {
                       ),
                     );
                   }
-                  if (state.news.results.length == 1) {
+                  if (state.news.length == 1) {
                     return SizedBox(
                       height: context.height * 0.2,
                       child: Padding(
@@ -435,13 +420,13 @@ class NewsWidget extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () => context.router.push(
                               DetailNewsScreenRoute(
-                                id: state.news.results[0].id,
-                                news: state.news.results,
+                                id: state.news[0].id,
+                                news: state.news,
                               ),
                             ),
                             child: SuggestCard(
                               height: context.height * 0.2,
-                              news: state.news.results[0],
+                              news: state.news[0],
                             ),
                           ),
                         ),
@@ -454,19 +439,19 @@ class NewsWidget extends StatelessWidget {
                     child: ListView.separated(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       scrollDirection: Axis.horizontal,
-                      itemCount: state.news.results.length,
+                      itemCount: state.news.length,
                       itemBuilder: (context, index) => SizedBox(
                         width: context.width * 0.6,
                         child: GestureDetector(
                           onTap: () => context.router.push(
                             DetailNewsScreenRoute(
-                              id: state.news.results[index].id,
-                              news: state.news.results,
+                              id: state.news[index].id,
+                              news: state.news,
                             ),
                           ),
                           child: SuggestCard(
                             height: context.height * 0.2,
-                            news: state.news.results[index],
+                            news: state.news[index],
                           ),
                         ),
                       ),
@@ -481,24 +466,9 @@ class NewsWidget extends StatelessWidget {
               },
             ),
             const SizedBox(height: 15),
-            ElevatedButton(
-              onPressed: () => context.router.push(const NewsScreenRoute()),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                foregroundColor: Colors.black,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  side: const BorderSide(
-                    color: Colors.blue,
-                    width: 1,
-                  ),
-                ),
-              ),
-              child: const Text(
-                'все новости',
-                style: AppConstants.textWhiteInterS12W400,
-              ),
+            AppButton2(
+              onPress: () => context.router.push(const NewsScreenRoute()),
+              title: 'все новости',
             ),
             const SizedBox(height: 32),
           ],

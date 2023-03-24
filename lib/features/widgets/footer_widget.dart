@@ -115,7 +115,8 @@ class _FooterWidgetState extends State<FooterWidget> {
                     _controller3.clear();
                   }
                   if (state is FeedBackError) {
-                    AppShows.showSnackBar(context, state.error);
+                    AppShows.showSnackBar(context,
+                        state.error.substring(1, state.error.length - 1));
                   }
                 },
                 builder: (context, state) {
@@ -181,12 +182,16 @@ class _FooterWidgetState extends State<FooterWidget> {
                                     );
                                   }
                                   if (state is ScheduleSuccess) {
-                                    return Column(
-                                      children: List.generate(
-                                        state.schedule.length,
-                                        (index) => Text(
-                                          '${state.schedule[index].day} ${state.schedule[index].startTime} - ${state.schedule[index].endTime}',
-                                          style: AppConstants.textBlackS12W500,
+                                    return SizedBox(
+                                      width: context.width * 0.3,
+                                      child: Column(
+                                        children: List.generate(
+                                          state.schedule.length,
+                                          (index) => Text(
+                                            '${state.schedule[index].day} ${state.schedule[index].startTime} - ${state.schedule[index].endTime}',
+                                            style:
+                                                AppConstants.textBlackS12W500,
+                                          ),
                                         ),
                                       ),
                                     );
@@ -219,10 +224,15 @@ class _FooterWidgetState extends State<FooterWidget> {
                                       child: Column(
                                         children: List.generate(
                                           state.number.length,
-                                          (index) => Text(
-                                            state.number[index].number,
-                                            style:
-                                                AppConstants.textBlackS12W500,
+                                          (index) => InkWell(
+                                            onTap: () => LaunchURLS.launchPhone(
+                                                context,
+                                                state.number[index].number),
+                                            child: Text(
+                                              state.number[index].number,
+                                              style:
+                                                  AppConstants.textBlackS12W500,
+                                            ),
                                           ),
                                         ),
                                       ),

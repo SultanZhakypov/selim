@@ -1,6 +1,6 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:selim/features/news/domain/usecases/news_usecases.dart';
 
 import '../../data/models/news/news_model.dart';
@@ -10,34 +10,39 @@ class NewsCubit extends Cubit<NewsState> {
   final NewsUseCaseImpl _newsUseCase;
   NewsCubit(this._newsUseCase) : super(NewsInitial());
 
-  void getNews() async {
-    emit(NewsLoading());
-    try {
-      final news = await _newsUseCase.getNews();
+  int _offset = 0;
+  List<Result> allNews = [];
 
-      emit(NewsSuccess(news));
+  void getNews() async {
+    emit(NewsSuccess(news: allNews, isLoading: true));
+    try {
+      final result = await _newsUseCase.getNews(_offset);
+      allNews.addAll(result.results);
+      _offset = _offset + 2;
+      emit(NewsSuccess(
+        news: allNews,
+        isLoading: false,
+        nextPage: result.next,
+      ));
     } catch (e) {
       emit(NewsError(error: e.toString()));
     }
   }
 }
 
-abstract class NewsState extends Equatable {
+abstract class NewsState {
   const NewsState();
-  @override
-  List<Object?> get props => [];
 }
 
 class NewsInitial extends NewsState {}
 
-class NewsLoading extends NewsState {}
-
 class NewsSuccess extends NewsState {
-  const NewsSuccess(this.news);
-  final NewsModel news;
+  const NewsSuccess(
+      {required this.news, required this.isLoading, this.nextPage});
 
-  @override
-  List<Object?> get props => [news];
+  final List<Result> news;
+  final bool isLoading;
+  final String? nextPage;
 }
 
 class NewsError extends NewsState {

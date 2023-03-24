@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:selim/features/home/presentation/widgets/widget_blocks.dart';
 import 'package:selim/resources/app_constants.dart';
@@ -31,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(

@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import '../../../home/domain/entities/categories_entity.dart';
 import '../../data/models/news/news_model.dart';
 import '../../data/repositories/news_repo.dart';
 import '../entities/advantage_entity.dart';
@@ -6,7 +7,8 @@ import '../entities/advantage_entity.dart';
 abstract class NewsUseCase {
   Future<List<AdvantageOrServiceEntity>> getAdvanteges();
   Future<List<AdvantageOrServiceEntity>> getServices();
-  Future<NewsModel> getNews();
+  Future<List<CategoriesEntity>> getTypeCategoriesInDetail(int id);
+  Future<NewsModel> getNews(int offset);
   Future<Result> getDetailNews(int id);
 }
 
@@ -36,9 +38,9 @@ class NewsUseCaseImpl implements NewsUseCase {
   }
 
   @override
-  Future<NewsModel> getNews() async {
+  Future<NewsModel> getNews(int offset) async {
     try {
-      final result = await _newsRepo.getNews();
+      final result = await _newsRepo.getNews(offset);
       return result;
     } catch (e) {
       rethrow;
@@ -49,6 +51,16 @@ class NewsUseCaseImpl implements NewsUseCase {
   Future<Result> getDetailNews(int id) async {
     try {
       final result = await _newsRepo.getDetailNews(id);
+      return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<CategoriesEntity>> getTypeCategoriesInDetail(int id) async {
+    try {
+      final result = await _newsRepo.getTypeCategoriesInDetail(id);
       return result;
     } catch (e) {
       rethrow;
