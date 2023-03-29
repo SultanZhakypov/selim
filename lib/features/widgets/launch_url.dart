@@ -5,14 +5,15 @@ import 'package:selim/features/widgets/app_shows.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LaunchURLS {
-  static Future<void> launchPhone(BuildContext context,String phoneNumber) async {
+  static Future<void> launchPhone(
+      BuildContext context, String phoneNumber) async {
     await launchUrl(Uri.parse('tel://$phoneNumber'));
   }
 
   static Future<void> launchURLS(BuildContext context,
       {required String url,
       required String showMessageIOS,
-      required String urlForMarket,
+      String? urlForMarket,
       String? urlForIOS}) async {
     if (Platform.isIOS) {
       if (await canLaunchUrl(Uri.parse(urlForIOS ?? ''))) {
@@ -28,7 +29,7 @@ class LaunchURLS {
       if (await canLaunchUrl(Uri.parse(url))) {
         await launchUrl(Uri.parse(url));
       } else {
-        await launchUrl(Uri.parse(urlForMarket));
+        await launchUrl(Uri.parse(urlForMarket ?? ''));
       }
     }
   }
@@ -52,12 +53,11 @@ class LaunchURLS {
     );
   }
 
-  static Future open2gis(BuildContext context) async {
+  static Future openMAP(BuildContext context,String mapUrl) async {
     return await launchURLS(
       context,
-      url: "dgis://2gis.kg/bishkek/geo/70000001033618938",
-      showMessageIOS: '2GIS не установлен',
-      urlForMarket: 'market://details?id=ru.dublgis.dgismobile',
+      url: mapUrl,
+      showMessageIOS: 'Google Maps не установлен',
     );
   }
 }

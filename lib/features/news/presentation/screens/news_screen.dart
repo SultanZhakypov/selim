@@ -1,11 +1,14 @@
+import 'dart:developer';
+
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:selim/core/routes/routes.dart';
 import 'package:selim/features/news/presentation/cubit/news_cubit.dart';
 import 'package:selim/features/news/presentation/widgets/custom_appbar.dart';
-import 'package:selim/injectable/init_injectable.dart';
 import 'package:selim/resources/extensions.dart';
-
+import '../../../../injectable/init_injectable.dart';
 import '../../../home/presentation/widgets/buttons.dart';
 import '../../../widgets/footer_widget.dart';
 import '../../../widgets/items.dart';
@@ -15,8 +18,8 @@ class NewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<NewsCubit>()..getNews(),
+    return BlocProvider.value(
+      value: sl<NewsCubit>()..getNews(),
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
@@ -35,12 +38,18 @@ class NewsScreen extends StatelessWidget {
                     if (state is NewsSuccess) {
                       return Column(
                         children: [
+                         
                           for (final item in state.news)
                             Padding(
                               padding: const EdgeInsets.all(16),
-                              child: SuggestCard(
-                                height: context.height * 0.3,
-                                news: item,
+                              child: InkWell(
+                                onTap: () => context.router.push(
+                                    DetailNewsScreenRoute(
+                                        id: item.id, news: state.news)),
+                                child: SuggestCard(
+                                  height: context.height * 0.3,
+                                  news: item,
+                                ),
                               ),
                             ),
                           state.isLoading
@@ -59,7 +68,9 @@ class NewsScreen extends StatelessWidget {
                                               .getNews()),
                                     ),
                         ],
+                        
                       );
+                    
                     }
                     if (state is NewsError) {
                       return const Text('error');

@@ -18,7 +18,7 @@ class NewsCubit extends Cubit<NewsState> {
     try {
       final result = await _newsUseCase.getNews(_offset);
       allNews.addAll(result.results);
-      _offset = _offset + 2;
+      _offset = _offset + 4;
       emit(NewsSuccess(
         news: allNews,
         isLoading: false,

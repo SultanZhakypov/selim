@@ -14,8 +14,8 @@ class WorksScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<ProductCubit>()..getProduct(),
+    return BlocProvider.value(
+      value: sl<ProductCubit>()..getProduct(),
       child: Scaffold(
         body: SafeArea(
           child: CustomScrollView(

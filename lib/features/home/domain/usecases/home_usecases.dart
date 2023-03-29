@@ -5,6 +5,7 @@ import 'package:selim/features/home/domain/entities/categories_entity.dart';
 import 'package:selim/features/home/domain/entities/maininfo_entity.dart';
 import '../../data/models/main_info/main_info_model.dart';
 import '../entities/aboutus_entity.dart';
+import '../entities/main_info_map_entity.dart';
 import '../entities/product_entity.dart';
 import '../entities/review_entity.dart';
 
@@ -13,6 +14,7 @@ typedef Home<T> = Future<List<T>>;
 abstract class HomeUseCase {
   Future<MainInfoEntity> getMainInfo();
   Future<AboutUsEntity> getAboutUs();
+  Future<MainInfoMapEntity> getMap();
   Home<PhoneNumber> getPhoneNumber();
   Home<Schedule> getSchedule();
   Home<ProductEntity> getProduct();
@@ -110,6 +112,16 @@ class HomeUsecaseImpl implements HomeUseCase {
     try {
       final result = await _homeRepo.getReview();
       return result;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<MainInfoMapEntity> getMap() async {
+    try {
+      final result = await _homeRepo.getMap();
+      return result.first;
     } catch (e) {
       rethrow;
     }

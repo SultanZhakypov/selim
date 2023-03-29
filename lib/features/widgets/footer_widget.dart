@@ -1,17 +1,23 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+
 import 'package:selim/features/home/presentation/cubit/feedback_cubit.dart';
+import 'package:selim/features/home/presentation/cubit/map_cubit.dart';
 import 'package:selim/features/home/presentation/cubit/phone_number_cubit.dart';
 import 'package:selim/features/home/presentation/cubit/schedule_cubit.dart';
 import 'package:selim/features/widgets/app_shows.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
+
 import '../../injectable/init_injectable.dart';
 import '../../resources/resources.dart';
-import 'custom_textfield.dart';
 import '../home/presentation/widgets/buttons.dart';
+import 'custom_textfield.dart';
 import 'launch_url.dart';
 
 class FooterWidget extends StatefulWidget {
@@ -55,6 +61,9 @@ class _FooterWidgetState extends State<FooterWidget> {
         BlocProvider(
           create: (context) => sl<FeedbackCubit>(),
         ),
+        BlocProvider(
+          create: (context) => sl<MapCubit>()..getMap(),
+        ),
       ],
       child: Form(
         key: _formKey,
@@ -62,14 +71,14 @@ class _FooterWidgetState extends State<FooterWidget> {
           padding: const EdgeInsets.only(top: 15),
           child: Column(
             children: [
-              const SizedBox(height: 32),
+              32.sizedBoxHeight,
               const Center(
                 child: Text(
                   'ОСТАЛИСЬ ВОПРОСЫ?',
                   style: AppConstants.textBlackS16W700,
                 ),
               ),
-              const SizedBox(height: 25),
+              25.sizedBoxHeight,
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SizedBox(
@@ -105,7 +114,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                   ),
                 ),
               ),
-              const SizedBox(height: 15),
+              15.sizedBoxHeight,
               BlocConsumer<FeedbackCubit, FeedBackState>(
                 listener: (context, state) {
                   if (state is FeedBackSuccess) {
@@ -199,7 +208,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                                   return const SizedBox.shrink();
                                 },
                               ),
-                              const SizedBox(height: 10),
+                              10.sizedBoxHeight,
                               const Text(
                                 'TЕЛЕФОН',
                                 style: AppConstants.textBlackS12W500,
@@ -243,22 +252,37 @@ class _FooterWidgetState extends State<FooterWidget> {
                               ),
                             ],
                           ),
-                          InkWell(
-                            onTap: () async => LaunchURLS.open2gis(context),
-                            child: Container(
-                              height: context.height * 0.15,
-                              width: context.height / 6,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(Images.map),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
+                          BlocBuilder<MapCubit, MapState>(
+                            builder: (context, state) {
+                              if (state is MapError) {
+                                return Text(
+                                  state.error,
+                                  style: AppConstants.textBlackS14W500,
+                                );
+                              }
+                              if (state is MapLoading) {
+                                return LoadingAnimationWidget
+                                    .horizontalRotatingDots(
+                                        color: Colors.black, size: 50);
+                              }
+                              if (state is MapSuccess) {
+                                return InkWell(
+                                  onDoubleTap: () async => LaunchURLS.openMAP(
+                                    context,
+                                    state.map.stationName,
+                                  ),
+                                  child: GoogleMapWidget(
+                                    lat: state.map.latitude,
+                                    long: state.map.longitude,
+                                  ),
+                                );
+                              }
+                              return const SizedBox.shrink();
+                            },
                           ),
                         ],
                       ),
-                      const SizedBox(height: 15),
+                      15.sizedBoxHeight,
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -272,14 +296,14 @@ class _FooterWidgetState extends State<FooterWidget> {
                                   style: AppConstants.textBlackS12W500,
                                 ),
                               ),
-                              const SizedBox(height: 5),
+                              5.0.sizedBoxHeight,
                               Row(
                                 children: [
                                   InkWell(
                                       onTap: () async =>
                                           LaunchURLS.openInsta(context),
                                       child: SvgPicture.asset(Svgs.instagram)),
-                                  const SizedBox(width: 5),
+                                  5.sizedBoxWidth,
                                   InkWell(
                                       onTap: () async =>
                                           LaunchURLS.openWhatsapp(context),
@@ -336,5 +360,44 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       ),
     );
+  }
+}
+
+class GoogleMapWidget extends StatefulWidget {
+  const GoogleMapWidget({
+    Key? key,
+    required this.lat,
+    required this.long,
+  }) : super(key: key);
+  final double lat;
+  final double long;
+
+  @override
+  State<GoogleMapWidget> createState() => GoogleMapWidgetState();
+}
+
+class GoogleMapWidgetState extends State<GoogleMapWidget> {
+  late Completer<GoogleMapController> _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = Completer<GoogleMapController>();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 150,
+        width: 150,
+        child: GoogleMap(
+          mapType: MapType.normal,
+          initialCameraPosition: CameraPosition(
+            target: LatLng(widget.lat, widget.long),
+            zoom: 18,
+          ),
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+        ));
   }
 }

@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   HeaderWidget(controller: _scrollController),
                   SizedBox(height: context.height * 0.18),
-                  const MainInfoWidget(),
+                  const AboutUSWidget(),
                   SizedBox(height: context.height * 0.1),
                   const SuggestWidget(),
                   SizedBox(height: context.height * 0.03),
@@ -51,15 +51,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: 'Наши преимущества',
                   ),
                   const NewsWidget(),
-                  const SizedBox(height: 32),
+                  32.sizedBoxHeight,
                   const UsWorkWidget(),
                   const AdvantageOrService(
                     isService: true,
                     title: 'Сервис',
                   ),
-                  const SizedBox(height: 32),
+                  32.sizedBoxHeight,
                   const FeedBackWidget(),
-                  const SizedBox(height: 32),
+                  32.sizedBoxHeight,
                   const FooterWidget()
                 ],
               ),

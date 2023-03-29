@@ -16,8 +16,8 @@ class ServicesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<CategoriesCubit>()..getCategories(),
+    return BlocProvider.value(
+      value: sl<CategoriesCubit>()..getCategories(),
       child: Scaffold(
         body: SafeArea(
           child: CustomScrollView(
@@ -80,7 +80,7 @@ class ServicesScreen extends StatelessWidget {
                                 padding: const EdgeInsets.only(bottom: 30),
                                 child: ServiceCard(
                                   image: state.categories[index].image,
-                                  title: state.categories[index].image,
+                                  title: state.categories[index].title,
                                 ),
                               ),
                             ),

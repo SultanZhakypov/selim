@@ -49,7 +49,7 @@ class NewsRepoImpl implements NewsRepo {
   @override
   Future<NewsModel> getNews(int offset) async {
     try {
-      final response = await _dio.get('news/?limit=2&offset=$offset');
+      final response = await _dio.get('news/?limit=4&offset=$offset');
 
       return NewsModel.fromJson(response.data);
     } on DioError catch (e) {

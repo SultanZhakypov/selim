@@ -3,12 +3,14 @@ import 'package:injectable/injectable.dart';
 import 'package:selim/core/error/dio_exceptions.dart';
 import 'package:selim/features/home/data/models/category/categories_model.dart';
 import 'package:selim/features/home/data/models/feedback/feedback_model.dart';
+import 'package:selim/features/home/data/models/main_info_map/main_info_map.dart';
 import 'package:selim/features/home/data/models/product/product_model.dart';
 import 'package:selim/features/home/data/models/main_info/main_info_model.dart';
 import 'package:selim/features/home/data/models/review/review_model.dart';
 import 'package:selim/features/home/domain/entities/categories_entity.dart';
 import 'package:selim/features/home/domain/entities/maininfo_entity.dart';
 import '../../domain/entities/aboutus_entity.dart';
+import '../../domain/entities/main_info_map_entity.dart';
 import '../../domain/entities/product_entity.dart';
 import '../../domain/entities/review_entity.dart';
 import '../models/about_us/about_us_model.dart';
@@ -19,6 +21,7 @@ abstract class HomeRepo {
   Future<List<PhoneNumber>> getPhoneNumber();
   Future<List<Schedule>> getSchedule();
   Future<List<ReviewEntity>> getReview();
+  Future<List<MainInfoMapEntity>> getMap();
   Future<List<ProductEntity>> getProduct();
   Future<List<CategoriesEntity>> getCategories();
   Future<FeedbackModel> postFeedBack({
@@ -124,6 +127,17 @@ class HomeRepoImpl implements HomeRepo {
       final response = await _dio.get('review/');
       final review = response.data;
       return (review as List).map((e) => ReviewModel.fromJson(e)).toList();
+    } on DioError catch (e) {
+      throw DioException.fromDioError(e);
+    }
+  }
+  
+  @override
+  Future<List<MainInfoMapEntity>> getMap() async {
+    try {
+      final response = await _dio.get('main_info/map/');
+       final map = response.data;
+      return (map as List).map((e) => MainInfoMap.fromJson(e)).toList();
     } on DioError catch (e) {
       throw DioException.fromDioError(e);
     }

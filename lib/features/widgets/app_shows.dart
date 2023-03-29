@@ -85,11 +85,11 @@ class AppShows {
                   'г.Бишкек',
                   style: AppConstants.textBlueS14W500,
                 ),
-                const SizedBox(height: 5),
+                5.sizedBoxHeight,
                 Row(
                   children: [
                     SvgPicture.asset(Svgs.phone),
-                    const SizedBox(width: 5),
+                    5.sizedBoxWidth,
                     const Text(
                       '+996 (552) 57 07 55',
                       style: AppConstants.textBlueS14W600,
@@ -166,13 +166,13 @@ class _SuccessDialogState extends State<SuccessDialog>
                 color: Colors.green,
               ),
             ),
-            const SizedBox(height: 30),
+            30.sizedBoxHeight,
             const Text(
               'Заявка успешно \n отправлена',
               style: AppConstants.textBlackS20W700,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 10),
+            10.sizedBoxHeight,
             const Text(
               'Ваша заявка отправлена рассмотрение. В ближайшее время с вами свяжется наш специалист',
               style: AppConstants.textBlackS14W300,

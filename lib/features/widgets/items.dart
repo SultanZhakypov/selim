@@ -1,11 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
 import 'package:selim/features/widgets/cached_image.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
-
-import '../home/domain/entities/categories_entity.dart';
 import '../home/domain/entities/review_entity.dart';
 import '../home/presentation/cubit/product_cubit.dart';
 import '../news/data/models/news/news_model.dart';
@@ -41,7 +38,6 @@ class SuggestCard extends StatelessWidget {
     );
   }
 }
-
 
 class NewsImagesCard extends StatelessWidget {
   const NewsImagesCard({
@@ -82,7 +78,8 @@ class ServiceCard extends StatelessWidget {
     required this.title,
   }) : super(key: key);
 
-  final String image,title;
+  final String image;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -92,19 +89,22 @@ class ServiceCard extends StatelessWidget {
             image: CachedNetworkImageProvider(image),
             fit: BoxFit.fill,
           ),
-          borderRadius: BorderRadius.circular(30)),
+          borderRadius: BorderRadius.circular(20)),
       child: Align(
         alignment: Alignment.bottomLeft,
         child: Padding(
           padding: const EdgeInsets.only(left: 10, bottom: 10),
           child: Container(
-            height: context.height * 0.05,
-            width: context.width * 0.7,
+            constraints: const BoxConstraints(
+              maxWidth: 250.0,
+              minWidth: 50.0,
+            ),
             decoration: BoxDecoration(
               color: AppColors.colorBlack02,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
               child: Text(
                 title,
                 style: AppConstants.textWhiteS16W800,
@@ -149,7 +149,7 @@ class _WorkImagesState extends State<WorkImages> {
         itemBuilder: (context, index) {
           var scale = _selectedIndex == index ? 1.0 : 0.9;
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: TweenAnimationBuilder(
               duration: const Duration(milliseconds: 350),
               tween: Tween(begin: scale, end: scale),
@@ -164,7 +164,8 @@ class _WorkImagesState extends State<WorkImages> {
                   image: DecorationImage(
                     fit: BoxFit.fill,
                     image: CachedNetworkImageProvider(
-                        widget.state.product[index].image),
+                      widget.state.product[index].image,
+                    ),
                   ),
                 ),
               ),
@@ -191,7 +192,7 @@ class AdvantageCard extends StatelessWidget {
           color: AppColors.colorWhite,
           borderRadius: BorderRadius.circular(10),
           boxShadow: const [
-            BoxShadow(color: Color.fromARGB(95, 151, 149, 149), blurRadius: 0.5)
+            BoxShadow(color: Color.fromARGB(95, 68, 68, 68), blurRadius: 0.5)
           ]),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -229,7 +230,7 @@ class ClientCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               boxShadow: const [
                 BoxShadow(
-                    color: Color.fromARGB(95, 151, 149, 149), blurRadius: 0.5)
+                    color: Color.fromARGB(95, 68, 68, 68), blurRadius: 0.5)
               ]),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 9),
@@ -245,6 +246,7 @@ class ClientCard extends StatelessWidget {
                           Text(
                             '${review.firstName} ${review.lastName}',
                             style: AppConstants.textBlackS14W600,
+                            softWrap: true,
                           ),
                           SizedBox(
                             width: context.width * 0.4,

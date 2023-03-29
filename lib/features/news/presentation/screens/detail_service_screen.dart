@@ -20,7 +20,7 @@ class DetailServiceScreen extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         create: (context) =>
-            sl<TypeCategoriesInDetail>()..getCategories(category.id),
+            sl<TypeCategoriesInDetail>()..getCategories(category.category),
         child: SafeArea(
           child: CustomScrollView(
             slivers: [
@@ -99,9 +99,9 @@ class DetailServiceScreen extends StatelessWidget {
                                   child: SizedBox(
                                     height: context.height * 0.25,
                                     child: ServiceCard(
+                                      title: state.categories[index].title,
                                       image:
                                           "http://161.35.29.179:8001${state.categories[index].image}",
-                                      title: state.categories[index].title,
                                     ),
                                   ),
                                 ),
@@ -112,61 +112,51 @@ class DetailServiceScreen extends StatelessWidget {
                   return const SizedBox.shrink();
                 },
               ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 15),
-                  child: Center(
-                      child: Text(
-                    'ОСНОВНЫЕ ПРЕИМУЩЕСТВА',
-                    style: AppConstants.textBlackS16W700,
-                  )),
-                ),
-              ),
+              category.categoryAdvantages.isEmpty
+                  ? const SliverToBoxAdapter()
+                  : const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 15),
+                        child: Center(
+                            child: Text(
+                          'ОСНОВНЫЕ ПРЕИМУЩЕСТВА',
+                          style: AppConstants.textBlackS16W700,
+                        )),
+                      ),
+                    ),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                sliver: category.categoryAdvantages.isEmpty
-                    ? SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: context.height * 0.2,
-                          child: const Center(
-                            child: Text(
-                              'Пусто',
-                              style: AppConstants.textBlackS14W500,
-                            ),
-                          ),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                      childCount: category.categoryAdvantages.length,
+                      (context, index) {
+                    int categoryIndex = index + 1;
+                    return Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        Text(
+                          categoryIndex.toString(),
+                          style: AppConstants.textWhiteS229W800,
                         ),
-                      )
-                    : SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                            childCount: category.categoryAdvantages.length,
-                            (context, index) {
-                          int categoryIndex = index + 1;
-                          return Stack(
-                            alignment: AlignmentDirectional.center,
-                            children: [
-                              Text(
-                                categoryIndex.toString(),
-                                style: AppConstants.textWhiteS229W800,
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    category.categoryAdvantages[index].title,
-                                    style: AppConstants.textBlackS20W600,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    category.categoryAdvantages[index].text,
-                                    style: AppConstants.textBlackS14W300
-                                        .copyWith(height: 1.5),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        }),
-                      ),
+                        Column(
+                          children: [
+                            Text(
+                              category.categoryAdvantages[index].title,
+                              style: AppConstants.textBlackS20W600,
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              category.categoryAdvantages[index].text,
+                              style: AppConstants.textBlackS14W300
+                                  .copyWith(height: 1.5),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  }),
+                ),
               ),
               const SliverToBoxAdapter(
                 child: FooterWidget(),

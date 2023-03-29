@@ -12,7 +12,7 @@ class FeedbackCubit extends Cubit<FeedBackState> {
       {required String name,
       required String phone,
       required String message}) async {
-    emit(FeedbackLoading());
+    
     try {
       await _homeUseCase.postFeedBack(
           message: message, phone: phone, name: name);

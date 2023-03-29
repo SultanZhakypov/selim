@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 import '../../../domain/entities/maininfo_entity.dart';
-
 part 'main_info_model.freezed.dart';
 part 'main_info_model.g.dart';
 
