@@ -152,7 +152,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                   );
                 },
               ),
-              SizedBox(height: context.height * 0.15),
+              SizedBox(height: context.height * 0.1),
               DecoratedBox(
                 decoration: const BoxDecoration(
                   image: DecorationImage(

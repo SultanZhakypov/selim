@@ -130,12 +130,12 @@ class DetailServiceScreen extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                       childCount: category.categoryAdvantages.length,
                       (context, index) {
-                    int categoryIndex = index + 1;
+                    String categoryIndex = '${index + 1}';
                     return Stack(
                       alignment: AlignmentDirectional.center,
                       children: [
                         Text(
-                          categoryIndex.toString(),
+                          categoryIndex,
                           style: AppConstants.textWhiteS229W800,
                         ),
                         Column(

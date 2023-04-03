@@ -8,11 +8,13 @@ import '../home/presentation/cubit/product_cubit.dart';
 import '../news/data/models/news/news_model.dart';
 
 class SuggestCard extends StatelessWidget {
-  const SuggestCard({Key? key, this.news, required this.height})
+  const SuggestCard(
+      {Key? key, this.news, required this.height, this.textSize = false})
       : super(key: key);
 
   final Result? news;
   final double height;
+  final bool textSize;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,9 @@ class SuggestCard extends StatelessWidget {
         child: Center(
           child: Text(
             news!.title,
-            style: AppConstants.textWhiteS10W800,
+            style: textSize
+                ? AppConstants.textWhiteS14W800
+                : AppConstants.textWhiteS12W800,
             softWrap: true,
           ),
         ),
@@ -61,7 +65,7 @@ class NewsImagesCard extends StatelessWidget {
           child: Center(
             child: Text(
               news.title,
-              style: AppConstants.textWhiteS10W800,
+              style: AppConstants.textWhiteS12W800,
               softWrap: true,
             ),
           ),
