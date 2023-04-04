@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:selim/features/news/domain/entities/news_image_entity.dart';
 import '../../../home/domain/entities/categories_entity.dart';
 import '../../data/models/news/news_model.dart';
 import '../../data/repositories/news_repo.dart';
@@ -8,7 +9,7 @@ abstract class NewsUseCase {
   Future<List<AdvantageOrServiceEntity>> getAdvanteges();
   Future<List<AdvantageOrServiceEntity>> getServices();
   Future<List<CategoriesEntity>> getTypeCategoriesInDetail(int id);
-  Future<NewsModel> getNews(int offset);
+  Future<NewsEntity> getNews(int offset);
   Future<Result> getDetailNews(int id);
 }
 
@@ -38,7 +39,7 @@ class NewsUseCaseImpl implements NewsUseCase {
   }
 
   @override
-  Future<NewsModel> getNews(int offset) async {
+  Future<NewsEntity> getNews(int offset) async {
     try {
       final result = await _newsRepo.getNews(offset);
       return result;

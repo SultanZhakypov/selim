@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../domain/usecases/home_usecases.dart';
+import '../features/home/domain/usecases/home_usecases.dart';
 
 @injectable
 class FeedbackCubit extends Cubit<FeedBackState> {

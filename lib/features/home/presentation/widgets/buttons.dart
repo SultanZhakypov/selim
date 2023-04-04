@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:selim/resources/app_constants.dart';
+import 'package:selim/resources/extensions.dart';
 import 'package:selim/resources/resources.dart';
 
 class AppArrowButton extends StatelessWidget {
@@ -43,26 +44,35 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPress,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.colorLightBlue,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          isVisibleIcon
-              ? SvgPicture.asset(Svgs.zakazatVorota)
-              : const SizedBox.shrink(),
-          const SizedBox(width: 18),
-          Text(
-            title,
-            style: AppConstants.textWhiteInterS15W900,
+    return SizedBox(
+      width: context.width * 0.55,
+      child: ElevatedButton(
+        onPressed: onPress,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.colorLightBlue,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
           ),
-        ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            isVisibleIcon
+                ? SvgPicture.asset(Svgs.zakazatVorota)
+                : const SizedBox.shrink(),
+            const SizedBox(width: 18),
+            Flexible(
+              child: SizedBox(
+                width: context.width * 0.35,
+                child: Text(
+                  title,
+                  style: AppConstants.textWhiteInterS15W900,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:selim/features/news/data/models/news/news_model.dart';
-import 'package:selim/features/news/domain/entities/news_image_entity.dart';
 import 'package:selim/features/news/domain/usecases/news_usecases.dart';
 
 @injectable

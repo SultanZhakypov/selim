@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:selim/features/widgets/cached_image.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 import '../home/domain/entities/review_entity.dart';
-import '../home/presentation/cubit/product_cubit.dart';
+import '../../cubits/product_cubit.dart';
 import '../news/data/models/news/news_model.dart';
 
 class SuggestCard extends StatelessWidget {
@@ -22,22 +22,29 @@ class SuggestCard extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         borderRadius: BorderRadiusDirectional.circular(16),
-        image: DecorationImage(
-          image: CachedNetworkImageProvider(news!.image),
-          fit: BoxFit.fill,
-        ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Center(
-          child: Text(
-            news!.title,
-            style: textSize
-                ? AppConstants.textWhiteS14W800
-                : AppConstants.textWhiteS12W800,
-            softWrap: true,
+      child: Stack(
+        children: [
+          SizedBox(
+            width: context.width,
+            child: CachedNetworkImage(
+              imageUrl: news!.image,
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Center(
+              child: Text(
+                news!.title,
+                style: textSize
+                    ? AppConstants.textWhiteS14W800
+                    : AppConstants.textWhiteS12W800,
+                softWrap: true,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -56,9 +63,15 @@ class NewsImagesCard extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
-        CachedImage(
+        CachedNetworkImage(
           imageUrl: news.image,
-          height: context.height * 0.4,
+          fit: BoxFit.fill,
+          progressIndicatorBuilder: (context, url, progress) => Center(
+            child: LoadingAnimationWidget.horizontalRotatingDots(
+              color: Colors.black,
+              size: 50,
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 20),
@@ -87,35 +100,41 @@ class ServiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-            image: CachedNetworkImageProvider(image),
-            fit: BoxFit.fill,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: Stack(
+        children: [
+          SizedBox(
+            height: context.height,
+            child: CachedNetworkImage(
+              imageUrl: image,
+              fit: BoxFit.fill,
+            ),
           ),
-          borderRadius: BorderRadius.circular(20)),
-      child: Align(
-        alignment: Alignment.bottomLeft,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10, bottom: 10),
-          child: Container(
-            constraints: const BoxConstraints(
-              maxWidth: 250.0,
-              minWidth: 50.0,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.colorBlack02,
-              borderRadius: BorderRadius.circular(12),
-            ),
+          Align(
+            alignment: Alignment.bottomLeft,
             child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                title,
-                style: AppConstants.textWhiteS16W800,
+              padding: const EdgeInsets.only(left: 10, bottom: 10),
+              child: Container(
+                constraints: const BoxConstraints(
+                  maxWidth: 250.0,
+                  minWidth: 50.0,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.colorBlack02,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    title,
+                    style: AppConstants.textWhiteS16W800,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -143,39 +162,42 @@ class _WorkImagesState extends State<WorkImages> {
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
-        controller: _controller,
-        onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        itemCount: widget.state.product.length,
-        itemBuilder: (context, index) {
-          var scale = _selectedIndex == index ? 1.0 : 0.9;
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: TweenAnimationBuilder(
-              duration: const Duration(milliseconds: 350),
-              tween: Tween(begin: scale, end: scale),
-              curve: Curves.ease,
-              builder: (context, value, child) => Transform.scale(
-                scale: value,
-                child: child,
-              ),
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: CachedNetworkImageProvider(
-                      widget.state.product[index].image,
-                    ),
+      controller: _controller,
+      onPageChanged: (index) {
+        setState(() {
+          _selectedIndex = index;
+        });
+      },
+      itemCount: widget.state.product.length,
+      itemBuilder: (context, index) {
+        var scale = _selectedIndex == index ? 1.0 : 0.9;
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: TweenAnimationBuilder(
+            duration: const Duration(milliseconds: 350),
+            tween: Tween(begin: scale, end: scale),
+            curve: Curves.ease,
+            builder: (context, value, child) => Transform.scale(
+              scale: value,
+              child: child,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: widget.state.product[index].image,
+                progressIndicatorBuilder: (context, url, progress) => Center(
+                  child: LoadingAnimationWidget.horizontalRotatingDots(
+                    color: Colors.black,
+                    size: 50,
                   ),
                 ),
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 }
 
@@ -201,9 +223,15 @@ class AdvantageCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CachedImage(
+          CachedNetworkImage(
+            progressIndicatorBuilder: (context, url, progress) => Center(
+              child: LoadingAnimationWidget.horizontalRotatingDots(
+                color: Colors.black,
+                size: 50,
+              ),
+            ),
             imageUrl: image,
-            height: context.height * 0.095,
+            fit: BoxFit.fill,
           ),
           const SizedBox(height: 5),
           Text(

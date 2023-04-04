@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:selim/features/home/domain/entities/product_entity.dart';
-import '../../domain/usecases/home_usecases.dart';
+import '../features/home/domain/usecases/home_usecases.dart';
 
 @injectable
 class ProductCubit extends Cubit<ProductState> {

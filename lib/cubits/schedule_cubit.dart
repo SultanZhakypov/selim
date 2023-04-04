@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../data/models/main_info/main_info_model.dart';
-import '../../domain/usecases/home_usecases.dart';
+import '../features/home/data/models/main_info/main_info_model.dart';
+import '../features/home/domain/usecases/home_usecases.dart';
 
 @injectable
 class ScheduleCubit extends Cubit<ScheduleState> {

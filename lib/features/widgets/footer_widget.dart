@@ -1,19 +1,16 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-
-import 'package:selim/features/home/presentation/cubit/feedback_cubit.dart';
-import 'package:selim/features/home/presentation/cubit/map_cubit.dart';
-import 'package:selim/features/home/presentation/cubit/phone_number_cubit.dart';
-import 'package:selim/features/home/presentation/cubit/schedule_cubit.dart';
+import 'package:selim/cubits/feedback_cubit.dart';
+import 'package:selim/cubits/map_cubit.dart';
+import 'package:selim/cubits/phone_number_cubit.dart';
+import 'package:selim/cubits/schedule_cubit.dart';
 import 'package:selim/features/widgets/app_shows.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
-
 import '../../injectable/init_injectable.dart';
 import '../../resources/resources.dart';
 import '../home/presentation/widgets/buttons.dart';
@@ -71,14 +68,14 @@ class _FooterWidgetState extends State<FooterWidget> {
           padding: const EdgeInsets.only(top: 15),
           child: Column(
             children: [
-              32.sizedBoxHeight,
+              const SizedBox(height: 32),
               const Center(
                 child: Text(
                   'ОСТАЛИСЬ ВОПРОСЫ?',
                   style: AppConstants.textBlackS16W700,
                 ),
               ),
-              25.sizedBoxHeight,
+              const SizedBox(height: 25),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SizedBox(
@@ -114,7 +111,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                   ),
                 ),
               ),
-              15.sizedBoxHeight,
+              const SizedBox(height: 15),
               BlocConsumer<FeedbackCubit, FeedBackState>(
                 listener: (context, state) {
                   if (state is FeedBackSuccess) {
@@ -192,7 +189,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                                   }
                                   if (state is ScheduleSuccess) {
                                     return SizedBox(
-                                      width: context.width * 0.3,
+                                      width: context.width * 0.35,
                                       child: Column(
                                         children: List.generate(
                                           state.schedule.length,
@@ -208,7 +205,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                                   return const SizedBox.shrink();
                                 },
                               ),
-                              10.sizedBoxHeight,
+                              const SizedBox(height: 10),
                               const Text(
                                 'TЕЛЕФОН',
                                 style: AppConstants.textBlackS12W500,
@@ -266,7 +263,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                                         color: Colors.black, size: 50);
                               }
                               if (state is MapSuccess) {
-                                return InkWell(
+                                return GestureDetector(
                                   onDoubleTap: () async => LaunchURLS.openMAP(
                                     context,
                                     state.map.stationName,
@@ -282,7 +279,7 @@ class _FooterWidgetState extends State<FooterWidget> {
                           ),
                         ],
                       ),
-                      15.sizedBoxHeight,
+                      const SizedBox(height: 15),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -296,14 +293,14 @@ class _FooterWidgetState extends State<FooterWidget> {
                                   style: AppConstants.textBlackS12W500,
                                 ),
                               ),
-                              5.0.sizedBoxHeight,
+                              const SizedBox(height: 5),
                               Row(
                                 children: [
                                   InkWell(
                                       onTap: () async =>
                                           LaunchURLS.openInsta(context),
                                       child: SvgPicture.asset(Svgs.instagram)),
-                                  5.sizedBoxWidth,
+                                  const SizedBox(width: 5),
                                   InkWell(
                                       onTap: () async =>
                                           LaunchURLS.openWhatsapp(context),

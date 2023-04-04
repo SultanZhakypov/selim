@@ -6,7 +6,7 @@ import 'package:selim/features/news/presentation/widgets/custom_appbar.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 import '../../../../injectable/init_injectable.dart';
-import '../../../home/presentation/cubit/product_cubit.dart';
+import '../../../../cubits/product_cubit.dart';
 import '../../../widgets/footer_widget.dart';
 
 class WorksScreen extends StatelessWidget {
