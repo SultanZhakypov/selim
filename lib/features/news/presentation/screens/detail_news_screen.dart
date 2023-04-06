@@ -50,7 +50,6 @@ class DetailNewsScreen extends StatelessWidget {
 
               if (state is NewsDetailSuccess) {
                 return CustomScrollView(
-                  physics: const ClampingScrollPhysics(),
                   slivers: [
                     SliverPadding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -71,20 +70,17 @@ class DetailNewsScreen extends StatelessWidget {
                             state.news.newsImages.isEmpty
                                 ? const SizedBox.shrink()
                                 : ListView.separated(
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     itemBuilder: (context, index) =>
                                         CachedNetworkImage(
-                                      progressIndicatorBuilder:
-                                          (context, url, progress) => Center(
-                                        child: LoadingAnimationWidget
-                                            .horizontalRotatingDots(
-                                          color: Colors.black,
-                                          size: 50,
-                                        ),
-                                      ),
                                       imageUrl:
                                           state.news.newsImages[index].image,
-                                      fit: BoxFit.fill,
+                                      errorWidget: (context, url, error) =>
+                                          const Center(
+                                        child: Icon(Icons.error_outline),
+                                      ),
                                     ),
                                     separatorBuilder: (context, index) =>
                                         const SizedBox(height: 20),
@@ -111,10 +107,11 @@ class DetailNewsScreen extends StatelessWidget {
                         child: SizedBox(
                           height: context.height * 0.25,
                           child: ListView.separated(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
                             scrollDirection: Axis.horizontal,
                             itemCount: news.length,
                             itemBuilder: (context, index) => SizedBox(
-                              width: context.width * 0.8,
+                              width: context.width * 0.7,
                               child: GestureDetector(
                                 onTap: () => context.router.push(
                                   DetailNewsScreenRoute(
@@ -122,7 +119,10 @@ class DetailNewsScreen extends StatelessWidget {
                                     news: news,
                                   ),
                                 ),
-                                child: NewsImagesCard(news: news[index]),
+                                child: SuggestCard(
+                                  height: context.height,
+                                  news: news[index],
+                                ),
                               ),
                             ),
                             separatorBuilder: (context, index) =>

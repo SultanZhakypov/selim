@@ -11,26 +11,11 @@ class CategoriesModel with _$CategoriesModel implements CategoriesEntity {
     @Default('') String title,
     @Default('') String image,
     @Default('') String description,
-    @Default(1) int category,
-    @JsonKey(name: 'category_advantages')
-    @Default([])
-        List<CategoryAdvantage> categoryAdvantages,
+    @JsonKey(name:'parent_category')@Default(1) int parentCategory,
+    
   }) = _CategoriesModel;
 
   factory CategoriesModel.fromJson(Map<String, dynamic> json) =>
       _$CategoriesModelFromJson(json);
 }
 
-@freezed
-class CategoryAdvantage with _$CategoryAdvantage {
-  const factory CategoryAdvantage({
-    @Default(1) int id,
-    @Default('') String title,
-    @Default('') String text,
-    @Default(1) int category,
-    @JsonKey(name: 'category_name') @Default('') String categoryName,
-  }) = _CategoryAdvantage;
-
-  factory CategoryAdvantage.fromJson(Map<String, dynamic> json) =>
-      _$CategoryAdvantageFromJson(json);
-}

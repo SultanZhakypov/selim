@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../features/home/domain/usecases/home_usecases.dart';
@@ -12,7 +11,6 @@ class FeedbackCubit extends Cubit<FeedBackState> {
       {required String name,
       required String phone,
       required String message}) async {
-    
     try {
       await _homeUseCase.postFeedBack(
           message: message, phone: phone, name: name);
@@ -24,10 +22,8 @@ class FeedbackCubit extends Cubit<FeedBackState> {
   }
 }
 
-abstract class FeedBackState extends Equatable {
+abstract class FeedBackState {
   const FeedBackState();
-  @override
-  List<Object?> get props => [];
 }
 
 class FeedbackInitial extends FeedBackState {}

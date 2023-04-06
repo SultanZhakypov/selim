@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:selim/features/widgets/cached_image.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
 import '../home/domain/entities/review_entity.dart';
@@ -8,9 +8,12 @@ import '../../cubits/product_cubit.dart';
 import '../news/data/models/news/news_model.dart';
 
 class SuggestCard extends StatelessWidget {
-  const SuggestCard(
-      {Key? key, this.news, required this.height, this.textSize = false})
-      : super(key: key);
+  const SuggestCard({
+    Key? key,
+    this.news,
+    required this.height,
+    this.textSize = false,
+  }) : super(key: key);
 
   final Result? news;
   final double height;
@@ -23,28 +26,20 @@ class SuggestCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadiusDirectional.circular(16),
       ),
-      child: Stack(
-        children: [
-          SizedBox(
-            width: context.width,
-            child: CachedNetworkImage(
-              imageUrl: news!.image,
-              fit: BoxFit.fill,
+      child: CachedImage(
+        widget: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Center(
+            child: Text(
+              news!.title,
+              style: textSize
+                  ? AppConstants.textWhiteS14W800
+                  : AppConstants.textWhiteS12W800,
+              softWrap: true,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Center(
-              child: Text(
-                news!.title,
-                style: textSize
-                    ? AppConstants.textWhiteS14W800
-                    : AppConstants.textWhiteS12W800,
-                softWrap: true,
-              ),
-            ),
-          ),
-        ],
+        ),
+        imageurl: news?.image ?? '',
       ),
     );
   }
@@ -60,30 +55,15 @@ class NewsImagesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.center,
-      children: [
-        CachedNetworkImage(
-          imageUrl: news.image,
-          fit: BoxFit.fill,
-          progressIndicatorBuilder: (context, url, progress) => Center(
-            child: LoadingAnimationWidget.horizontalRotatingDots(
-              color: Colors.black,
-              size: 50,
-            ),
-          ),
+    return Center(
+      child: CachedImage(
+        imageurl: news.image,
+        widget: Text(
+          news.title,
+          style: AppConstants.textWhiteS12W800,
+          softWrap: true,
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: Center(
-            child: Text(
-              news.title,
-              style: AppConstants.textWhiteS12W800,
-              softWrap: true,
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -106,29 +86,28 @@ class ServiceCard extends StatelessWidget {
         children: [
           SizedBox(
             height: context.height,
-            child: CachedNetworkImage(
-              imageUrl: image,
-              fit: BoxFit.fill,
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, bottom: 10),
-              child: Container(
-                constraints: const BoxConstraints(
-                  maxWidth: 250.0,
-                  minWidth: 50.0,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.colorBlack02,
-                  borderRadius: BorderRadius.circular(12),
-                ),
+            child: CachedImage(
+              imageurl: image,
+              widget: Align(
+                alignment: Alignment.bottomLeft,
                 child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(
-                    title,
-                    style: AppConstants.textWhiteS16W800,
+                  padding: const EdgeInsets.only(left: 10, bottom: 10),
+                  child: Container(
+                    constraints: const BoxConstraints(
+                      maxWidth: 250.0,
+                      minWidth: 50.0,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.colorBlack02,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        title,
+                        style: AppConstants.textWhiteS16W800,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -183,16 +162,7 @@ class _WorkImagesState extends State<WorkImages> {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child: CachedNetworkImage(
-                fit: BoxFit.fill,
-                imageUrl: widget.state.product[index].image,
-                progressIndicatorBuilder: (context, url, progress) => Center(
-                  child: LoadingAnimationWidget.horizontalRotatingDots(
-                    color: Colors.black,
-                    size: 50,
-                  ),
-                ),
-              ),
+              child: CachedImage(imageurl: widget.state.product[index].image),
             ),
           ),
         );
@@ -223,22 +193,20 @@ class AdvantageCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CachedNetworkImage(
-            progressIndicatorBuilder: (context, url, progress) => Center(
-              child: LoadingAnimationWidget.horizontalRotatingDots(
-                color: Colors.black,
-                size: 50,
-              ),
+          CachedImage(
+              imageurl: image,
+              widget: SizedBox(
+                height: context.height * 0.09,
+                width: context.height * 0.09,
+              )),
+          Padding(
+            padding: const EdgeInsets.only(top: 5),
+            child: Text(
+              title,
+              style: AppConstants.textBlackS14W600,
+              textAlign: TextAlign.center,
+              softWrap: true,
             ),
-            imageUrl: image,
-            fit: BoxFit.fill,
-          ),
-          const SizedBox(height: 5),
-          Text(
-            title,
-            style: AppConstants.textBlackS14W600,
-            textAlign: TextAlign.center,
-            softWrap: true,
           ),
         ],
       ),

@@ -22,35 +22,27 @@ class NewsScreen extends StatelessWidget {
       child: Scaffold(
         body: SafeArea(
           bottom: false,
-          child: CustomScrollView(
-            slivers: [
-              const SliverToBoxAdapter(
-                child: Padding(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Appbar1(
-                      title: 'НОВОСТИ КОМПАНИИ',
-                      subTitle:
-                          'К вашему вниманию Здесь мы собрали все актуальные новости нашей компании'),
+                    title: 'НОВОСТИ КОМПАНИИ',
+                    subTitle:
+                        'К вашему вниманию Здесь мы собрали все актуальные новости нашей компании',
+                  ),
                 ),
-              ),
-              BlocBuilder<NewsCubit, NewsState>(
-                builder: (context, state) {
-                  if (state is NewsError) {
-                    return Center(
-                        child: Text(
-                      state.error,
-                      style: AppConstants.textBlackS14W500,
-                    ));
-                  }
-                  if (state is NewsSuccess) {
-                    return SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
+                BlocBuilder<NewsCubit, NewsState>(
+                  builder: (context, state) {
+                    if (state is NewsSuccess) {
+                      return Column(
+                        children: [
                           ...List.generate(
                             state.news.length,
                             (index) => Padding(
                               padding: const EdgeInsets.all(16),
-                              child: InkWell(
+                              child: GestureDetector(
                                 onTap: () => context.router.push(
                                     DetailNewsScreenRoute(
                                         id: state.news[index].id,
@@ -79,56 +71,25 @@ class NewsScreen extends StatelessWidget {
                                               .getNews()),
                                     ),
                         ],
-                      ),
-                    );
-                  }
-                  return const SizedBox.shrink();
-                },
-              ),
-              const SliverToBoxAdapter(
-                child: FooterWidget(),
-              ),
-            ],
+                      );
+                    }
+                    if (state is NewsError) {
+                      return Center(
+                          child: Text(
+                        state.error,
+                        style: AppConstants.textBlackS14W500,
+                      ));
+                    }
+
+                    return const SizedBox.shrink();
+                  },
+                ),
+                const FooterWidget(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-
-// Column(
-//             children: [
-//               const Padding(
-//                 padding: EdgeInsets.symmetric(horizontal: 16),
-//                 child: Appbar1(
-//                   title: 'НОВОСТИ КОМПАНИИ',
-//                   subTitle:
-//                       'К вашему вниманию Здесь мы собрали все актуальные новости нашей компании',
-//                 ),
-//               ),
-//               BlocBuilder<NewsCubit, NewsState>(
-//                 builder: (context, state) {
-//                   if (state is NewsSuccess) {
-//                     return Expanded(
-//                       child: ListView.builder(
-//                         itemCount: state.news.length,
-//                         itemBuilder: (context, index) {
-//                           return 
-//                         },
-//                       ),
-//                     );
-//                   }
-//                   if (state is NewsError) {
-//                     return Center(
-//                         child: Text(
-//                       state.error,
-//                       style: AppConstants.textBlackS14W500,
-//                     ));
-//                   }
-
-//                   return const SizedBox.shrink();
-//                 },
-//               ),
-//               const FooterWidget(),
-//             ],
-//           ),

@@ -231,7 +231,7 @@ class _SuggestWidgetState extends State<SuggestWidget> {
                       itemBuilder: (context, index) => InkWell(
                         onTap: () => context.router.push(
                           DetailServiceScreenRoute(
-                              category: state.categories[index]),
+                              id: state.categories[index].id),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -294,54 +294,55 @@ class AdvantageOrService extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: context.height * 0.3,
-      child: Column(
-        children: [
-          const SizedBox(height: 32),
-          Center(
-            child: Text(
-              title,
-              style: AppConstants.textBlackS16W700,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 32),
+        child: Column(
+          children: [
+            Center(
+              child: Text(
+                title,
+                style: AppConstants.textBlackS16W700,
+              ),
             ),
-          ),
-          const SizedBox(height: 15),
-          BlocBuilder<AdvantageOrServiceCubit, AdvantageOrServiceState>(
-            builder: (context, state) {
-              if (state is AdvantageError) {
-                return Expanded(
-                  child: Center(
-                    child: Text(
-                      state.error,
-                      style: AppConstants.textBlackS14W500,
+            const SizedBox(height: 15),
+            BlocBuilder<AdvantageOrServiceCubit, AdvantageOrServiceState>(
+              builder: (context, state) {
+                if (state is AdvantageError) {
+                  return Expanded(
+                    child: Center(
+                      child: Text(
+                        state.error,
+                        style: AppConstants.textBlackS14W500,
+                      ),
                     ),
-                  ),
-                );
-              }
-              if (state is AdvantageSuccess) {
-                return Expanded(
-                  child: ListView.separated(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => AdvantageCard(
-                      image: isService
-                          ? state.services[index].image
-                          : state.advantages[index].image,
-                      title: isService
-                          ? state.services[index].text
-                          : state.advantages[index].text,
+                  );
+                }
+                if (state is AdvantageSuccess) {
+                  return Expanded(
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => AdvantageCard(
+                        image: isService
+                            ? state.services[index].image
+                            : state.advantages[index].image,
+                        title: isService
+                            ? state.services[index].text
+                            : state.advantages[index].text,
+                      ),
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(width: 10),
+                      itemCount: isService
+                          ? state.services.length
+                          : state.advantages.length,
                     ),
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(width: 10),
-                    itemCount: isService
-                        ? state.services.length
-                        : state.advantages.length,
-                  ),
-                );
-              }
-              return const SizedBox.shrink();
-            },
-          ),
-          const SizedBox(height: 32),
-        ],
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -427,14 +428,13 @@ class NewsWidget extends StatelessWidget {
                         ),
                       ),
                       child: SuggestCard(
-                        height: context.height * 0.2,
+                        height: context.height,
                         news: state.news[index],
                       ),
                     ),
                   ),
-                  separatorBuilder: (context, index) => const SizedBox(
-                    width: 20,
-                  ),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 20),
                 ),
               );
             }

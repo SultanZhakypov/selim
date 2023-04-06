@@ -8,25 +8,20 @@
 import 'package:dio/dio.dart' as _i3;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
+import 'package:selim/cubits/categories_cubit.dart' as _i17;
+import 'package:selim/cubits/feedback_cubit.dart' as _i18;
+import 'package:selim/cubits/map_cubit.dart' as _i7;
+import 'package:selim/cubits/phone_number_cubit.dart' as _i10;
+import 'package:selim/cubits/product_cubit.dart' as _i11;
+import 'package:selim/cubits/schedule_cubit.dart' as _i13;
 import 'package:selim/features/home/data/repositories/home_repo.dart' as _i4;
 import 'package:selim/features/home/domain/usecases/home_usecases.dart' as _i5;
 import 'package:selim/features/home/presentation/cubit/about_us_cubit.dart'
     as _i15;
-import 'package:selim/cubits/categories_cubit.dart'
-    as _i17;
-import 'package:selim/cubits/feedback_cubit.dart'
-    as _i18;
 import 'package:selim/features/home/presentation/cubit/main_info_cubit.dart'
     as _i6;
-import 'package:selim/cubits/map_cubit.dart' as _i7;
-import 'package:selim/cubits/phone_number_cubit.dart'
-    as _i10;
-import 'package:selim/cubits/product_cubit.dart'
-    as _i11;
 import 'package:selim/features/home/presentation/cubit/review_cubit.dart'
     as _i12;
-import 'package:selim/cubits/schedule_cubit.dart'
-    as _i13;
 import 'package:selim/features/news/data/repositories/news_repo.dart' as _i8;
 import 'package:selim/features/news/domain/usecases/news_usecases.dart' as _i9;
 import 'package:selim/features/news/presentation/cubit/advantage_cubit.dart'
