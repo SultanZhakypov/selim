@@ -1,16 +1,18 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+import 'package:selim/core/routes/routes.dart';
 import 'package:selim/cubits/feedback_cubit.dart';
 import 'package:selim/cubits/map_cubit.dart';
 import 'package:selim/cubits/phone_number_cubit.dart';
 import 'package:selim/cubits/schedule_cubit.dart';
 import 'package:selim/features/widgets/app_shows.dart';
+import 'package:selim/features/widgets/map_widget.dart';
 import 'package:selim/resources/app_constants.dart';
 import 'package:selim/resources/extensions.dart';
+
 import '../../injectable/init_injectable.dart';
 import '../../resources/resources.dart';
 import '../home/presentation/widgets/buttons.dart';
@@ -18,7 +20,11 @@ import 'custom_textfield.dart';
 import 'launch_url.dart';
 
 class FooterWidget extends StatefulWidget {
-  const FooterWidget({super.key});
+  const FooterWidget({
+    Key? key
+   
+  }) : super(key: key);
+  
 
   @override
   State<FooterWidget> createState() => _FooterWidgetState();
@@ -305,44 +311,90 @@ class _FooterWidgetState extends State<FooterWidget> {
                                       onTap: () async =>
                                           LaunchURLS.openWhatsapp(context),
                                       child: SvgPicture.asset(Svgs.whatsapp)),
+                                  const SizedBox(width: 5),
+                                  InkWell(
+                                      onTap: () async =>
+                                          LaunchURLS.openTelegramBot(context),
+                                      child: SvgPicture.asset(
+                                        Svgs.telegram,
+                                        height: 38,
+                                      )),
                                 ],
                               ),
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 32),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  'Главная',
-                                  style: AppConstants.textBlackS12W500,
+                              children: [
+                                InkWell(
+                                  onTap: () => AppShows.doRoute(
+                                      context,
+                                      const HomeScreenRoute()
+                                      ),
+                                  child: const Text(
+                                    'Главная',
+                                    style: AppConstants.textBlackS12W500,
+                                  ),
                                 ),
-                                Text(
-                                  'О нас',
-                                  style: AppConstants.textBlackS12W500,
+                                InkWell(
+                                  onTap: () => AppShows.doRoute(
+                                      context,
+                                      const HomeScreenRoute()
+                                     ),
+                                  child: const Text(
+                                    'О нас',
+                                    style: AppConstants.textBlackS12W500,
+                                  ),
                                 ),
-                                Text(
-                                  'Услуги',
-                                  style: AppConstants.textBlackS12W500,
+                                InkWell(
+                                  onTap: () => AppShows.doRoute(
+                                      context,
+                                      const ServicesScreenRoute()
+                                     ),
+                                  child: const Text(
+                                    'Услуги',
+                                    style: AppConstants.textBlackS12W500,
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                'Работы',
-                                style: AppConstants.textBlackS12W500,
+                            children: [
+                              InkWell(
+                                onTap: () => AppShows.doRoute(
+                                    context,
+                                    const WorksScreenRoute()
+                                   ),
+                                child: const Text(
+                                  'Работы',
+                                  style: AppConstants.textBlackS12W500,
+                                ),
                               ),
-                              Text(
-                                'Отзывы',
-                                style: AppConstants.textBlackS12W500,
+                              InkWell(
+                                onTap: () =>
+                                  AppShows.doRoute(
+                                      context,
+                                      const HomeScreenRoute()
+                                  ),
+                                
+                                child: const Text(
+                                  'Отзывы',
+                                  style: AppConstants.textBlackS12W500,
+                                ),
                               ),
-                              Text(
-                                'Новости',
-                                style: AppConstants.textBlackS12W500,
+                              InkWell(
+                                onTap: () => AppShows.doRoute(
+                                    context,
+                                    const NewsScreenRoute()
+                                   ),
+                                child: const Text(
+                                  'Новости',
+                                  style: AppConstants.textBlackS12W500,
+                                ),
                               ),
                             ],
                           ),
@@ -357,44 +409,5 @@ class _FooterWidgetState extends State<FooterWidget> {
         ),
       ),
     );
-  }
-}
-
-class GoogleMapWidget extends StatefulWidget {
-  const GoogleMapWidget({
-    Key? key,
-    required this.lat,
-    required this.long,
-  }) : super(key: key);
-  final double lat;
-  final double long;
-
-  @override
-  State<GoogleMapWidget> createState() => GoogleMapWidgetState();
-}
-
-class GoogleMapWidgetState extends State<GoogleMapWidget> {
-  late Completer<GoogleMapController> _controller;
-  @override
-  void initState() {
-    super.initState();
-    _controller = Completer<GoogleMapController>();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-        height: 150,
-        width: 150,
-        child: GoogleMap(
-          mapType: MapType.normal,
-          initialCameraPosition: CameraPosition(
-            target: LatLng(widget.lat, widget.long),
-            zoom: 18,
-          ),
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-        ));
   }
 }

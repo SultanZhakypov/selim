@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 32),
                     const FeedBackWidget(),
                     const SizedBox(height: 32),
-                    const FooterWidget()
+                    FooterWidget()
                   ],
                 ),
               ],

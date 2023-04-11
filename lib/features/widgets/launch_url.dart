@@ -44,6 +44,15 @@ class LaunchURLS {
     );
   }
 
+  static Future openTelegramBot(BuildContext context) async {
+    return await launchURLS(
+      context,
+      url: "tg://resolve?domain=megalab_chat_bot",
+      urlForIOS: "https://t.me/megalab_chat_bot",
+      showMessageIOS: 'Ватсап не установлен',
+    );
+  }
+
   static Future openInsta(BuildContext context) async {
     return await launchURLS(
       context,
@@ -53,7 +62,7 @@ class LaunchURLS {
     );
   }
 
-  static Future openMAP(BuildContext context,String mapUrl) async {
+  static Future openMAP(BuildContext context, String mapUrl) async {
     return await launchURLS(
       context,
       url: mapUrl,

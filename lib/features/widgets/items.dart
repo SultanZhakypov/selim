@@ -21,25 +21,25 @@ class SuggestCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadiusDirectional.circular(16),
-      ),
-      child: CachedImage(
-        widget: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Center(
-            child: Text(
-              news!.title,
-              style: textSize
-                  ? AppConstants.textWhiteS14W800
-                  : AppConstants.textWhiteS12W800,
-              softWrap: true,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: SizedBox(
+        height: height,
+        child: CachedImage(
+          widget: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Center(
+              child: Text(
+                news!.title,
+                style: textSize
+                    ? AppConstants.textWhiteS14W800
+                    : AppConstants.textWhiteS12W800,
+                softWrap: true,
+              ),
             ),
           ),
+          imageurl: news?.image ?? '',
         ),
-        imageurl: news?.image ?? '',
       ),
     );
   }

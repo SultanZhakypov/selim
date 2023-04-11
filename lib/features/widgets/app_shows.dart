@@ -19,18 +19,18 @@ class AppShows {
     );
   }
 
-  static openPopUpMenu(BuildContext context) {
+  static doRoute(BuildContext context, PageRouteInfo page) {
     String? currentRoute = ModalRoute.of(context)!.settings.name;
-    void doRoute(BuildContext context, PageRouteInfo page) {
-      if (currentRoute != page.routeName) {
-        context.router.push(page);
-      } else {
-        null;
-      }
-
-      currentRoute = page.routeName;
+    if (currentRoute != page.routeName) {
+      context.router.push(page);
+    } else {
+      null;
     }
 
+    currentRoute = page.routeName;
+  }
+
+  static openPopUpMenu(BuildContext context) {
     showMenu(
       context: context,
       shape: RoundedRectangleBorder(
