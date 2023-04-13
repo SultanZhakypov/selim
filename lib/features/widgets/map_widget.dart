@@ -27,17 +27,18 @@ class GoogleMapWidgetState extends State<GoogleMapWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: context.height * 0.18,
-        width: context.height * 0.18,
-        child: GoogleMap(
-          mapType: MapType.normal,
-          initialCameraPosition: CameraPosition(
-            target: LatLng(widget.lat, widget.long),
-            zoom: 18,
-          ),
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-        ));
+      height: context.height * 0.18,
+      width: context.height * 0.18,
+      child: GoogleMap(
+        mapType: MapType.normal,
+        initialCameraPosition: CameraPosition(
+          target: LatLng(widget.lat, widget.long),
+          zoom: 18,
+        ),
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
+      ),
+    );
   }
 }
